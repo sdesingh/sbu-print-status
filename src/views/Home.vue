@@ -1,18 +1,31 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <printer-summary v-for="(item, index) in printerData" :key="index" :status="item"/>
+    <button type="submit" @click="get">Refresh</button>
+    
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import PrinterSummary from '@/components/PrinterSummary.vue'
 
 export default {
   name: 'home',
   components: {
-    HelloWorld
+    PrinterSummary
+  },
+  methods: {
+    get(){
+      this.$store.dispatch('getData')
+    }
+  },
+  computed: {
+    printerData() {
+      
+      return this.$store.state.printer_data.printers
+    }
   }
+    
 }
 </script>
