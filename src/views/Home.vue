@@ -1,10 +1,23 @@
 <template>
   <div class="home">
-    <printer-summary v-for="(item, index) in printerData" :key="index" :status="item"/>
     <button type="submit" @click="get">Refresh</button>
+    <div id="printers">
+      <printer-summary v-for="(item, index) in printerData" :key="index" :status="item"/>
+    </div>
+    
+    
     
   </div>
 </template>
+
+<style scoped>
+  #printers {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+  }
+</style>
+
 
 <script>
 // @ is an alias to /src
@@ -18,14 +31,19 @@ export default {
   methods: {
     get(){
       this.$store.dispatch('getData')
-    }
+    },
   },
   computed: {
     printerData() {
-      
       return this.$store.state.printer_data.printers
     }
-  }
+  },
+  mounted() {
+      console.log('Initializing')
+      this.$store.dispatch('init')
+      console.log('getting data...')
+      this.$store.dispatch('getData')
+    }
     
 }
 </script>

@@ -42,6 +42,8 @@ function parseStatus(data, printerData){
     printerData.trays[i].capacity = $(elem).text()
   })
 
+  printerData.trays.splice(0, 1)
+
 }
 
 function parseSupplies(data, printerData){
@@ -50,7 +52,12 @@ function parseSupplies(data, printerData){
 
   $('#supplytd13').each((i, elem) => {
 
+    // Remove the 'remaining' text
     let data = $(elem).text()
+    if(data.indexOf(' Remaining') != -1){
+      data = data.substring(0, data.indexOf(' Remaining'))
+    }
+    
     switch(i){
       case 0: 
         printerData.supplies.toner = data
@@ -68,6 +75,7 @@ function parseSupplies(data, printerData){
   })
 
 }
+
 
 export default {
   getSupplies,
