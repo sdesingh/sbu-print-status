@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Settings from '../printerSettings'
+import { printer_urls, get_default_printer } from '../printerSettings'
 import Scraper from '../scraper'
 import axios from 'axios'
 
@@ -7,34 +7,28 @@ export default {
 
   state: {
     printers: [],
-    printer_urls: Settings.printer_urls
+    printer_urls: printer_urls
   },
   mutations: { 
-    updatePrinterData(state, new_data){
+    initializePrinterData(state, new_data){
       state.printers = new_data
     },
-    updateDataFor(state, printerData){
+    updatePrinterData(state, printerData){
       Vue.set(state.printers, printerData.index, printerData.data)
     }
 
   },
   actions: {
+
+    /**
+     * Retrieves the data for all printers then updates the state.
+     * @param {*} context 
+     */
     getData(context){
 
       context.state.printer_urls.forEach((printer_url, index) => {
 
-        let printerData = {
-          data: {
-            name: printer_url.name,
-            supplies: {
-              toner: '',
-              drum: '',
-              maintenance: ''
-            },
-            trays: []
-          },
-          index: index
-        }
+        let printerData = get_default_printer(printer_url, index)
       
         axios.all([Scraper.getStatus(printer_url.url), Scraper.getSupplies(printer_url.url)])
           .then(axios.spread((status, supplies) => {
@@ -43,40 +37,38 @@ export default {
             Scraper.parseStatus(status.data, printerData.data)
             Scraper.parseSupplies(supplies.data, printerData.data)
       
-            // context.commit('updatedData', printerData, index)
-            // new_data[index] = printerData
-            context.commit('updateDataFor', printerData);
+            context.commit('updatePrinterData', printerData);
 
             
 
           }))
-          .catch( error =>  console.log(error) )
+          .catch( error =>  {
+              console.log(error)
+              context.commit('updatePrinterData', printerData);
+            } 
+          )
           
       });
       
     
     },
+    /**
+     * Loads the default data for the printers.
+     * @param {*} context 
+     */
     init(context){
 
       let new_data = []
 
-      context.state.printer_urls.forEach((url) => {
+      context.state.printer_urls.forEach((printer_url, index) => {
 
-        let printerData = {
-          name: url.name,
-          supplies: {
-            toner: 'Loading...',
-            drum: 'Loading...',
-            maintenance: 'Loading...'
-          },
-          trays: [{tray: 'Loading', size: '', capacity: ''}]
-        }
+        let printerData = get_default_printer(printer_url, index)
 
-        new_data.push(printerData)
+        new_data.push(printerData.data)
 
       })
 
-      context.commit('updatePrinterData', new_data);
+      context.commit('initializePrinterData', new_data);
 
     }
     

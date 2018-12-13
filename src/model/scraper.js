@@ -9,11 +9,18 @@ let options = {
   crossdomain: true
 }
 
-
+/**
+ * Returns a promise with the HTML content of the status page.
+ * @param {String} printer_url 
+ */
 function getStatus(printer_url){
   return axios.get(printer_url + '/status.html', options)
 }
 
+/**
+ * Returns a promise with the HTML content of the consumables page. 
+ * @param {String} printer_url 
+ */
 function getSupplies(printer_url){
   return axios.get(printer_url + '/consumables.html', options)
 }
