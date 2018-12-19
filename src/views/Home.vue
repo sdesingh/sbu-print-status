@@ -2,7 +2,7 @@
   <div class="home">
     <button type="submit" @click="get">Refresh</button>
     <div id="printers">
-      <printer-summary v-for="(item, index) in printerData" :key="index" :status="item"/>
+      <printer-summary class="printer" v-for="(item, index) in printerData" :key="index" :status="item"/>
     </div>
     
     
@@ -14,8 +14,13 @@
   #printers {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-gap: 20px;
+    grid-gap: 10px;
   }
+
+  .printer {
+    cursor: default;
+  }
+
 </style>
 
 
@@ -39,9 +44,7 @@ export default {
     }
   },
   mounted() {
-      console.log('Initializing')
       this.$store.dispatch('init')
-      console.log('getting data...')
       this.$store.dispatch('getData')
     }
     
