@@ -1,3 +1,10 @@
+
+
+/**
+ *  ADD PRINTERS HERE
+ * 
+ *  {url: 'LINK TO THE PRINTER'S SITE', name: 'NAME OF LOCATION'}
+ */
 export const printer_urls = [
 
   {url: 'http://cr-irvxrx1.sinc.stonybrook.edu', name: 'Irving'},
@@ -19,8 +26,10 @@ export const printer_urls = [
 
 export const settings = {
 
-  timeout: 3000,
-  supplyThreshold: 1000
+  timeout: 4000,
+  refreshRate: 5, // In minutes
+  supplyThreshold: 1000,
+  loadTestData: false
 
 }
 
@@ -40,8 +49,8 @@ export function get_default_printer(url, index) {
         drum: {status: 'Loading...', statusCode: 3},
         maintenance: {status: 'Loading...', statusCode: 3}
       },
-      // trays[0]: ${item.tray} ${item.size} ${item.capacity}
-      trays: [],
+      
+      trays: [/* tray size capacity */],
     },
     index: index,
   }

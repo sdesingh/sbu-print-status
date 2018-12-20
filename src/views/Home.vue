@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <button type="submit" @click="get">Refresh</button>
+    <counter/>
     <div id="printers">
       <printer-summary class="printer" v-for="(item, index) in printerData" :key="index" :status="item"/>
     </div>
@@ -27,11 +28,13 @@
 <script>
 // @ is an alias to /src
 import PrinterSummary from '@/components/PrinterSummary.vue'
+import Counter from '@/components/Counter.vue'
 
 export default {
   name: 'home',
   components: {
-    PrinterSummary
+    PrinterSummary,
+    Counter
   },
   methods: {
     get(){

@@ -43,13 +43,17 @@ export default {
             Scraper.parseSupplies(supplies.data, printerData.data)
             Scraper.trayStatus(printerData.data.trays)
             
+            // Computes the status of the printer.
             printerData.data.statusCode = Scraper.printerStatus(printerData.data)
+
+            // Commit data.
             context.commit('updatePrinterData', printerData);
 
           // Error retrieving data.   
           }))
           .catch( error =>  {
               console.log(error)
+              // Set the STATUS CODE to 3. Indicating the printer is offline.
               printerData.data.statusCode = 3
               context.commit('updatePrinterData', printerData);
             } 

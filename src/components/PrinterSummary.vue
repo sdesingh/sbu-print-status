@@ -6,7 +6,7 @@
       {{ status.name}} 
     </div>
 
-    <div id="status">
+    <div id="status" v-if="status.trays.length != 0 || status.statusCode != 3">
 
       <div id="paper-status">
           <div class="tray" v-for="(tray, index) in status.trays" :key="index"> 
@@ -19,12 +19,10 @@
       <div id="supplies-status">
         <div class="supply" id="toner"> Toner </div>
         <div class="supply" id="drum"> Drum </div>
-        <div class="supply" id="maintenance"> Maintenance </div>
+        <div class="supply" id="maintenance"> Kit </div>
       </div>
 
     </div>
-
-    
 
   </div>
 </template>
@@ -47,21 +45,23 @@
     background: white;
     padding: 10px 20px;
     display: grid;
-    grid-gap: 20px;
-    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    grid-template-columns: 60% 40%;
   }
 
   #paper-status {
     display: grid;
-    grid-column: 1 / 3;
+    line-height: 30px;
     grid-gap: 10px;
+    grid-auto-rows: 30px;
     grid-auto-columns: 1fr;
   }
 
   #supplies-status {
-    text-align: right;
-    grid-column: 3;
+    display: grid;
+    grid-auto-rows: 30px;
     grid-gap: 10px;
+    text-align: right;
   }
 
   #title-bar {
@@ -100,7 +100,12 @@
     font-style: italic;
     font-weight: 700;
     color: white;
-    background: #34495e;
+    background: #1DD1A1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 45px;
   }
 
 </style>
