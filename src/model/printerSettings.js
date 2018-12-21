@@ -27,7 +27,7 @@ export const printer_urls = [
 export const settings = {
 
   timeout: 4000,
-  refreshRate: 5, // In minutes
+  refreshRate: 1, // In minutes
   supplyThreshold: 1000,
   loadTestData: false
 

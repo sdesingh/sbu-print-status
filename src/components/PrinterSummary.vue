@@ -3,6 +3,7 @@
 
 
     <div id="title-bar" :style="printerStyle.titlebar"> 
+      <i id="status-icon" :class="statusIcon()"></i>
       {{ status.name}} 
     </div>
 
@@ -35,8 +36,9 @@
   }
 
   #status-icon {
-    width: 30px;
-    height: 30px;
+    /* width: 10px; */
+    font-size: 25px;
+
   }
 
   #status {
@@ -46,7 +48,7 @@
     padding: 10px 20px;
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: 60% 40%;
+    grid-template-columns: 70% 30%;
   }
 
   #paper-status {
@@ -66,7 +68,7 @@
 
   #title-bar {
     padding: 10px 0px;
-    padding-left: 20px;
+    padding-left: 15px;
     font-family: 'Google Sans';
     font-size: 30px;
     font-weight: 600;
@@ -136,15 +138,26 @@ export default {
       }
     },
     statusIcon(){
-      const prefix = '../assets/status_icons/'
+
+      let classes = ['fas']
 
       switch(this.status.statusCode){
-        case 0: return require(prefix + 'check.svg')
-        case 1: return require(prefix + 'warning.svg')
-        case 2: return require(prefix + 'stop.svg')
-        case 3: return require(prefix + 'offline.svg')
-        default: return require(prefix + 'offline.svg')
+       
+        case 0: classes.push('fa-check-circle')
+        break;
+
+        case 1: classes.push('fa-exclamation-triangle')
+        break;
+
+        case 2: classes.push('fa-hand-paper')
+        break;
+
+        case 3: classes.push('fa-power-off')
+        break;
+
       }
+
+      return classes
     }
   },
   computed: {

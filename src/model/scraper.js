@@ -120,6 +120,9 @@ function printerStatus(printerData){
     // Special case for Smaller printers
     if(totalTrays != 2){
       trayStatus = 1 // STATUS CODE 1. One tray with paper left.
+    }else {
+      if(traysLow + traysFull == 1)
+      trayStatus = 1
     }
     
   }
