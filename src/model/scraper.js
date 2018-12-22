@@ -130,7 +130,6 @@ function printerStatus(printerData){
     trayStatus = 2 // STATUS CODE 2. // No trays with paper.
   }
 
-
   // Compute the status of the supplies.
   let tonerStatus = 0
   let drumStatus = 0
@@ -144,6 +143,8 @@ function printerStatus(printerData){
     if(pages < settings.supplyThreshold) tonerStatus = 1
   }
 
+  printerSupplies.toner.statusCode = tonerStatus
+
   // Find drum status.
   if(printerSupplies.drum.status == 'Replace') drumStatus = 2
   else {
@@ -151,6 +152,7 @@ function printerStatus(printerData){
 
     if(pages < settings.supplyThreshold) drumStatus = 1
   }
+  printerSupplies.drum.statusCode = drumStatus
 
   // Find maintenance kit status.
   if(printerSupplies.maintenance.status == 'Replace') maintKitStatus = 2
@@ -159,6 +161,8 @@ function printerStatus(printerData){
 
     if(pages < settings.supplyThreshold) tonerStatus = 1
   }
+
+  printerSupplies.maintenance.statusCode = maintKitStatus
 
   return Math.max(tonerStatus, drumStatus, maintKitStatus, trayStatus)
 

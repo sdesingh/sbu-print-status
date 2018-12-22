@@ -2,7 +2,7 @@
   <div id="summary">
 
 
-    <div id="title-bar" :style="printerStyle.titlebar"> 
+    <div id="title-bar" :style="printerStyle(status.statusCode).titlebar"> 
       <i id="status-icon" :class="statusIcon()"></i>
       {{ status.name}} 
     </div>
@@ -18,9 +18,9 @@
       </div>
 
       <div id="supplies-status">
-        <div class="supply" id="toner"> Toner </div>
-        <div class="supply" id="drum"> Drum </div>
-        <div class="supply" id="maintenance"> Kit </div>
+        <div class="supply" id="toner" :style="printerStyle(status.supplies.toner.statusCode).titlebar"> Toner </div>
+        <div class="supply" id="drum" :style="printerStyle(status.supplies.drum.statusCode).titlebar" > Drum </div>
+        <div class="supply" id="maintenance" :style="printerStyle(status.supplies.maintenance.statusCode).titlebar"> Kit </div>
       </div>
 
     </div>
@@ -158,11 +158,9 @@ export default {
       }
 
       return classes
-    }
-  },
-  computed: {
-    printerStyle(){
-      switch(this.status.statusCode){
+    },
+    printerStyle(code){
+      switch(code){
 
         case 0: return printerStyles._GOOD
 
@@ -176,6 +174,8 @@ export default {
 
       }
     },
+  },
+  computed: {
   },
   props: ['status']
 }

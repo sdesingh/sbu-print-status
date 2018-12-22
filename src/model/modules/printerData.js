@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { printer_urls, get_default_printer } from '../printerSettings'
+import { printer_urls, get_default_printer,get_test_printer, settings } from '../printerSettings'
 import Scraper from '../scraper'
 import axios from 'axios'
 
@@ -16,7 +16,6 @@ export default {
     updatePrinterData(state, printerData){
       Vue.set(state.printers, printerData.index, printerData.data)
     }
-
   },
   actions: {
 
@@ -25,6 +24,20 @@ export default {
      * @param {*} context 
      */
     getData(context){
+
+      if(settings.loadTestData){
+        context.state.printer_urls.forEach((printer_url, index) => {
+
+          let printerData = get_test_printer(printer_url, index)
+          
+          printerData.data.statusCode = Scraper.printerStatus(printerData.data)
+          context.commit('updatePrinterData', printerData)
+
+        })
+        return
+      }
+
+
 
       // Loop through all the printer urls.
       context.state.printer_urls.forEach((printer_url, index) => {

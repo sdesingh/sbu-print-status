@@ -1,5 +1,3 @@
-
-
 /**
  *  ADD PRINTERS HERE
  * 
@@ -29,7 +27,7 @@ export const settings = {
   timeout: 4000,
   refreshRate: 1, // In minutes
   supplyThreshold: 1000,
-  loadTestData: false
+  loadTestData: true
 
 }
 
@@ -55,7 +53,44 @@ export function get_default_printer(url, index) {
     index: index,
   }
 }
+
+export function get_test_printer(url, index){
+  let printer = get_default_printer(url, index)
+
+  for(let i = 1; i <= 4; i++){
+
+    const rng = (Math.random() * (100-1)) + 1
+
+    if(rng <= 5 * 5-i){
+      printer.data.trays.push({tray: `Tray ${i+1}`, size: 'Letter', capacity: 'Empty', statusCode: 2})
+    }else {
+      printer.data.trays.push({tray: `Tray ${i+1}`, size: 'Letter', capacity: 'Full', statusCode: 0})
+    }
+
+  }
+
   
+  const rng = (Math.random() * (100-1)) + 1
+  console.log(rng)
+  if(rng < 10 && rng > 5){
+    console.log('near')
+    printer.data.supplies.toner.status = '800-1002 Pages Remaining'
+  }
+  else if(rng < 5){
+    console.log('empty')
+    printer.data.supplies.toner.status = 'Replace'
+    
+  }
+  else{
+    printer.data.supplies.toner.status = '21003-23005 Pages Remaining'
+  }
+
+  printer.data.supplies.drum.status = '11000-12043 Pages Remaining'
+  printer.data.supplies.maintenance.status = '100231 Pages Remaining'
+
+  return printer
+
+}
 
 export default {
   printer_urls,
