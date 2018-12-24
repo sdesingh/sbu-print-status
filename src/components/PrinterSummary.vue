@@ -119,10 +119,6 @@ import { printerStyles, trayStyles } from './Styles.js'
 
 
 export default {
-  data(){
-    return {
-    }
-  },
   methods: {
     trayStyle(tray_status_code){
       switch(tray_status_code){

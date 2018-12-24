@@ -37,8 +37,6 @@ export default {
         return
       }
 
-
-
       // Loop through all the printer urls.
       context.state.printer_urls.forEach((printer_url, index) => {
 

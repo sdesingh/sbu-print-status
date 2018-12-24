@@ -15,7 +15,12 @@ export default {
     }
   },
   mounted(){
+    this.$store.dispatch('update')
+
     setInterval(() => {
+
+      this.$store.dispatch('update')
+
       if(this.count == 1){
         this.count = 60 * settings.refreshRate
         this.$store.dispatch('getData')

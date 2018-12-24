@@ -54,6 +54,13 @@ export function get_default_printer(url, index) {
   }
 }
 
+/**
+ * Loads random data for printer. 
+ * FOR TESTING ONLY.
+ * 
+ * @param {*} url 
+ * @param {*} index 
+ */
 export function get_test_printer(url, index){
   let printer = get_default_printer(url, index)
 
@@ -71,13 +78,10 @@ export function get_test_printer(url, index){
 
   
   const rng = (Math.random() * (100-1)) + 1
-  console.log(rng)
   if(rng < 10 && rng > 5){
-    console.log('near')
     printer.data.supplies.toner.status = '800-1002 Pages Remaining'
   }
   else if(rng < 5){
-    console.log('empty')
     printer.data.supplies.toner.status = 'Replace'
     
   }
