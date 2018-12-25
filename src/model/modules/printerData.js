@@ -25,6 +25,7 @@ export default {
      */
     getData(context){
 
+      // Test Data Enabled
       if(settings.loadTestData){
         context.state.printer_urls.forEach((printer_url, index) => {
 

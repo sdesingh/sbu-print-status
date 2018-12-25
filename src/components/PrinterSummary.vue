@@ -1,7 +1,6 @@
 <template>
   <div id="summary">
 
-
     <div id="title-bar" :style="printerStyle(status.statusCode).titlebar"> 
       <i id="status-icon" :class="statusIcon()"></i>
       {{ status.name}} 

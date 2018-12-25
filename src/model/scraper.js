@@ -159,7 +159,7 @@ function printerStatus(printerData){
   else {
     let pages = parseInt(printerSupplies.maintenance.status)
 
-    if(pages < settings.supplyThreshold) tonerStatus = 1
+    if(pages < settings.supplyThreshold) maintKitStatus = 1
   }
 
   printerSupplies.maintenance.statusCode = maintKitStatus

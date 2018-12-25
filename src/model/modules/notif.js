@@ -8,7 +8,7 @@ export default {
     // Called every minute.
     update(context){
       const now = moment()
-      context.state.currentTime = now.format('LTS')
+      context.state.currentTime = now.format('LT')
     }
   }
 }
