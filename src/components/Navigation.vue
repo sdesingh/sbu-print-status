@@ -2,14 +2,19 @@
   
   <div id="navigation">
 
-    <!-- <div id="time"> 
-      <div id="current-time"> {{ $store.state.notif.currentTime }} </div>
-      <counter id="counter"/>
-    </div> -->
-
     <div class="topnav" id="myTopnav" :class="{ 'responsive': menuClicked }">
-      <router-link class="active link" to="/">Home</router-link>
-      <router-link class="link" to="/about">About</router-link>
+
+      <router-link class="link" to="/"> 
+          <i class="link-icon fas fa-home"></i> Home
+      </router-link>
+
+      <router-link class="link" to="/about"> 
+          <i class="link-icon fas fa-question-circle"></i> About
+      </router-link>
+
+      <div class="link" v-on:click="$store.commit('toggleSettings')">
+        <i class="link-icon fas fa-cog"></i> Settings
+      </div>
 
       <div class="button" @click="$store.dispatch('getData')">
         <i class="fas fa-sync-alt"></i>
@@ -18,9 +23,11 @@
       <a class="icon link" v-on:click="menuClicked = !menuClicked">
         <i class="fa fa-bars"></i>
       </a>
-    </div>    
-    
 
+      <div id="time"> 
+        <counter id="counter"/>
+      </div>
+    </div>    
 
   </div>
   
@@ -29,10 +36,10 @@
 <style scoped>
 
   #time {
-    position: absolute;
-    top: 2px;
-    right: 5px;
-    text-align: right;
+    display: block;
+    float: right;
+        padding: 15px 16px;
+    text-align: center;
   }
 
   #current-time {
@@ -43,9 +50,10 @@
   }
 
   #counter {
+    font-family: 'Google Sans', sans-serif;
     color: white;
-    font-size: 10px;
-    margin-top: -1px;
+    font-size: 15px;
+    
   }
 
   /* Add a black background color to the top navigation */
@@ -67,6 +75,8 @@
     padding: 15px 16px;
     text-decoration: none;
     font-size: 17px;
+
+    transition: 0.15s linear;
   }
 
 
@@ -85,6 +95,10 @@
 
   .link {
     float: left;
+  }
+
+  .link-icon {
+    margin-right: 5px;
   }
 
   /* Add an active class to highlight the current page */

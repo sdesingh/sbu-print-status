@@ -15,7 +15,6 @@ export default {
     }
   },
   mounted(){
-    this.$store.dispatch('update')
 
     setInterval(() => {
       

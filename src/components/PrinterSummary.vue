@@ -52,6 +52,7 @@
 
   #paper-status {
     display: grid;
+    margin: auto 0;
     line-height: 30px;
     grid-gap: 10px;
     grid-auto-rows: 30px;
