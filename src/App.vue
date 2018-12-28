@@ -41,7 +41,7 @@
   }
 
   #router-view {
-    margin-top: 120px;
+    margin-top: 75px;
     z-index: 1;
     height: 100%;
   }
@@ -50,7 +50,7 @@
     position: fixed;
     overflow: hidden;
     top: 0;
-    height: 100px;
+    /* height: 100px; */
     width: 100%;
     z-index: 2;
 

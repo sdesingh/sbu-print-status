@@ -25,9 +25,9 @@ export const printer_urls = [
 export const settings = {
 
   timeout: 4000,
-  refreshRate: 1, // In minutes
+  refreshRate: 5, // In minutes
   supplyThreshold: 1000,
-  loadTestData: true
+  loadTestData: false
 
 }
 
@@ -64,7 +64,10 @@ export function get_default_printer(url, index) {
 export function get_test_printer(url, index){
   let printer = get_default_printer(url, index)
 
-  for(let i = 1; i <= 4; i++){
+  var j = 4
+  if(index > 5) j = 2
+
+  for(let i = 1; i <= j; i++){
 
     const rng = (Math.random() * (100-1)) + 1
 

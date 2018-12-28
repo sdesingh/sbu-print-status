@@ -46,7 +46,7 @@
     background: white;
     padding: 10px 20px;
     display: grid;
-    grid-gap: 10px;
+    grid-gap: 5px;
     grid-template-columns: 70% 30%;
   }
 
