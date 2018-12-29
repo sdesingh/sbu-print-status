@@ -13,8 +13,8 @@
     </div>
 
     <div class="setting">
-      <div class="setting-name">Refresh Rate</div>
-      <input type="text" class="option text-input" >
+      <div class="setting-name">Refresh Rate (Minutes)</div>
+      <input type="text" class="option text-input" maxlength="2">
     </div>
 
     
@@ -37,11 +37,13 @@
   }
 
   .text-input {
+    outline: none;
     font-family: 'Open Sans', sans-serif;
     font-weight: 700;
     font-size: 20px;
     font-style: italic;
 
+    text-align: center;
     padding: 0px 10px;
     width: 30px;
   }

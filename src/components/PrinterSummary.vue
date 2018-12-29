@@ -21,6 +21,7 @@
         <div class="supply" id="drum" :style="printerStyle(status.supplies.drum.statusCode).titlebar" > Drum </div>
         <div class="supply" id="maintenance" :style="printerStyle(status.supplies.maintenance.statusCode).titlebar"> Kit </div>
       </div>
+ 
 
     </div>
 
@@ -44,26 +45,27 @@
     font-family: 'Open Sans', sans-serif;
     border: 1px solid #e9e9e9;
     background: white;
-    padding: 10px 20px;
+    padding: 5px 20px;
     display: grid;
     grid-gap: 5px;
-    grid-template-columns: 70% 30%;
   }
 
   #paper-status {
     display: grid;
-    margin: auto 0;
+    padding: 10px 0;
     line-height: 30px;
     grid-gap: 10px;
     grid-auto-rows: 30px;
-    grid-auto-columns: 1fr;
+    grid-template-columns: 1fr;
+    border-bottom: 0.5px solid rgba(0,0,0, 0.1)
   }
 
   #supplies-status {
+    padding: 10px 0;
     display: grid;
-    grid-auto-rows: 30px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
     grid-gap: 10px;
-    text-align: right;
   }
 
   #title-bar {
@@ -108,6 +110,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 45px;
+    padding: 5px 0px;
   }
 
 </style>
