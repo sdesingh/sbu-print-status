@@ -8,9 +8,7 @@
     <navigation/>
 
     <modal id="settings" :show-modal="showSettings" :toggle=" 'toggleSettings' "> 
-
       <settings/>
-
     </modal>  
   
     <router-view id="router-view"/>

@@ -121,6 +121,7 @@ import { printerStyles, trayStyles } from './Styles.js'
 
 export default {
   methods: {
+    // Set a different style for the tray icon depending on the status of the tray.
     trayStyle(tray_status_code){
       switch(tray_status_code){
 
@@ -134,6 +135,7 @@ export default {
 
       }
     },
+    // Set a different icon depending on the status code of the printer.
     statusIcon(){
 
       let classes = ['fas']
@@ -156,6 +158,7 @@ export default {
 
       return classes
     },
+    // Set a different style for the printer depending on the status code of the printer.
     printerStyle(code){
       switch(code){
 

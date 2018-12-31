@@ -24,15 +24,15 @@ export default {
      */
     getData({state, commit, dispatch, rootState}){
 
-      const settings = rootState.settings
+      const app_settings = rootState.settings
 
       // Test Data Enabled
-      if(settings.useTestData){
-        rootState.settings.printerURLs.forEach((printer_url, index) => {
+      if(app_settings.useTestData){
+        app_settings.printerURLs.forEach((printer_url, index) => {
 
           let printerData = PrinterModel.RandomPrinter(printer_url, index)
           
-          printerData.data.statusCode = PrinterModel.computePrinterStatusCode(printerData.data, settings)
+          printerData.data.statusCode = PrinterModel.computePrinterStatusCode(printerData.data, app_settings)
           commit('updatePrinterData', printerData)
 
         })
@@ -40,12 +40,12 @@ export default {
       }
 
       const request_settings = {
-        timeout: settings.timeout,
+        timeout: app_settings.timeout,
         responseType: 'text'
       }
 
       // Loop through all the printer urls.
-      settings.printerURLs.forEach((printer_url, index) => {
+      app_settings.printerURLs.forEach((printer_url, index) => {
 
         // Get default data object.
         let printerData = PrinterModel.Printer(printer_url, index)
@@ -62,7 +62,7 @@ export default {
             Scraper.trayStatus(printerData.data.trays)
             
             // Computes the status code of the printer.
-            printerData.data.statusCode = PrinterModel.computePrinterStatusCode(printerData.data)
+            printerData.data.statusCode = PrinterModel.computePrinterStatusCode(printerData.data, app_settings)
 
             // Commit data.
             commit('updatePrinterData', printerData);
