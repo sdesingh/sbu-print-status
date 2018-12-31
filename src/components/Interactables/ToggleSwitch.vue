@@ -2,7 +2,7 @@
   <div>
 
     <label class="switch">
-      <input type="checkbox">
+      <input type="checkbox" v-model="check" @input="$store.commit(toggle)">
       <span class="slider round"></span>
     </label>
 
@@ -75,3 +75,15 @@
   }
   
 </style>
+
+<script>
+export default {
+  data() {
+    return {
+      check: this.checked
+    }
+  },
+  props: ['checked', 'toggle'],
+  methods: {},
+}
+</script>

@@ -10,7 +10,7 @@ import { setInterval } from 'timers';
 export default {
   computed: {
     count(){
-      return this.$store.state.notifications.counter
+      return this.$store.state.dispatcher.counter
     }
   }
 }

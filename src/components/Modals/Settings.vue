@@ -4,17 +4,17 @@
 
     <div class="setting">
       <div class="setting-name">Use Test Data</div>
-      <toggle-switch class="option"/>
+      <toggle-switch class="option" :checked="$store.state.settings.useTestData" :toggle="'toggleUseTestData'"/>
     </div>
 
     <div class="setting">
       <div class="setting-name">Notifications</div>
-      <toggle-switch class="option"/>
+      <toggle-switch class="option" :checked="$store.state.settings.showNotifications" :toggle="'toggleNotifications'"/>
     </div>
 
     <div class="setting">
       <div class="setting-name">Refresh Rate (Minutes)</div>
-      <input type="text" class="option text-input" maxlength="2">
+      <input type="text" class="option text-input" maxlength="2" v-model="$store.state.settings.refreshRate">
     </div>
 
     
@@ -71,7 +71,7 @@ import ToggleSwitch from '@/components/Interactables/ToggleSwitch.vue'
 export default {
   components: {
     ToggleSwitch
-  }
+  },
 }
 
 </script>

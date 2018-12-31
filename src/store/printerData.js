@@ -39,6 +39,11 @@ export default {
         return
       }
 
+      const request_settings = {
+        timeout: settings.timeout,
+        responseType: 'text'
+      }
+
       // Loop through all the printer urls.
       settings.printerURLs.forEach((printer_url, index) => {
 
@@ -46,7 +51,7 @@ export default {
         let printerData = PrinterModel.Printer(printer_url, index)
         
         // Make get request for the tray and supply status of the printer.
-        axios.all([Scraper.getStatus(printer_url.url), Scraper.getSupplies(printer_url.url)])
+        axios.all([Scraper.getStatus(printer_url.url, request_settings), Scraper.getSupplies(printer_url.url, request_settings)])
 
           // Parse the data if the request is successfull.
           .then(axios.spread((status, supplies) => {

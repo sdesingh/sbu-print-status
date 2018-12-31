@@ -6,7 +6,8 @@ export default {
     refreshRate: refreshRate,
     useTestData: true,
     supplyThreshold: 1000,
-    showNotifications: false,
+    timeout: 1000,
+    showNotifications: true,
     printerURLs: printer_URLs
   },
   mutations: {
@@ -15,6 +16,12 @@ export default {
     },
     setRefreshRate(state, refreshRate){
       state.refreshRate = refreshRate
+    },
+    toggleUseTestData(state){
+      state.useTestData = !state.useTestData
+    },
+    toggleNotifications(state){
+      state.showNotifications = !state.showNotifications
     }
   }
 }
