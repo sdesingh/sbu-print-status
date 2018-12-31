@@ -14,7 +14,11 @@
 
     <div class="setting">
       <div class="setting-name">Refresh Rate (Minutes)</div>
-      <input type="text" class="option text-input" maxlength="2" v-model="$store.state.settings.refreshRate">
+
+      <input type="text" class="option text-input" maxlength="2" 
+        v-model="$store.state.settings.refreshRate" 
+        @input="$store.dispatch('resetCounter')"
+      />
     </div>
 
     
@@ -71,7 +75,7 @@ import ToggleSwitch from '@/components/Interactables/ToggleSwitch.vue'
 export default {
   components: {
     ToggleSwitch
-  },
+  }
 }
 
 </script>

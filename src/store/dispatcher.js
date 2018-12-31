@@ -32,9 +32,12 @@ export default {
         dispatch('getData') // Update data.
 
       }else {
-
         commit('decrementCounter') // Decrement Counter.
       }
     },
+    resetCounter({commit, rootState}){
+      const refreshRate = rootState.settings.refreshRate
+      commit('setCounter', refreshRate * 60)
+    }
   }
 }

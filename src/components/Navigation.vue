@@ -9,7 +9,7 @@
       </router-link>
 
       <router-link class="link" to="/about"> 
-          <i class="link-icon fas fa-question-circle"></i> About
+          <i class="link-icon fas fa-scroll"></i> Paper
       </router-link>
 
       <div class="link" v-on:click="$store.commit('toggleSettings')">
