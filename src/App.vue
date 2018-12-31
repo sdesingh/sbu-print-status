@@ -39,6 +39,13 @@
       showSettings() {return this.$store.state.ui.showSettings }
 
     },
+    mounted() {
+      
+      setInterval(() => {
+        this.$store.dispatch('update')
+      }, 1000)
+
+    }
   }
 </script>
 

@@ -117,9 +117,7 @@
 
 <script>
 
-import { settings } from '../model/printerSettings.js'
 import { printerStyles, trayStyles } from './Styles.js'
-
 
 export default {
   methods: {
@@ -173,8 +171,6 @@ export default {
 
       }
     },
-  },
-  computed: {
   },
   props: ['status']
 }

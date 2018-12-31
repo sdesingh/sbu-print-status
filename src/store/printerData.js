@@ -1,13 +1,12 @@
 import Vue from 'vue'
-import { printer_urls, get_default_printer,get_test_printer, settings } from '../printerSettings'
-import Scraper from '../scraper'
+import PrinterModel from '../model/Printer'
+import Scraper from '../util/scraper'
 import axios from 'axios'
 
 export default {
 
   state: {
     printers: [],
-    printer_urls: printer_urls
   },
   mutations: { 
     initializePrinterData(state, new_data){
@@ -23,26 +22,28 @@ export default {
      * Retrieves the data for all printers then updates the state.
      * @param {*} context 
      */
-    getData(context){
+    getData({state, commit, dispatch, rootState}){
+
+      const settings = rootState.settings
 
       // Test Data Enabled
-      if(settings.loadTestData){
-        context.state.printer_urls.forEach((printer_url, index) => {
+      if(settings.useTestData){
+        rootState.settings.printerURLs.forEach((printer_url, index) => {
 
-          let printerData = get_test_printer(printer_url, index)
+          let printerData = PrinterModel.RandomPrinter(printer_url, index)
           
-          printerData.data.statusCode = Scraper.printerStatus(printerData.data)
-          context.commit('updatePrinterData', printerData)
+          printerData.data.statusCode = PrinterModel.computePrinterStatusCode(printerData.data, settings)
+          commit('updatePrinterData', printerData)
 
         })
         return
       }
 
       // Loop through all the printer urls.
-      context.state.printer_urls.forEach((printer_url, index) => {
+      settings.printerURLs.forEach((printer_url, index) => {
 
         // Get default data object.
-        let printerData = get_default_printer(printer_url, index)
+        let printerData = PrinterModel.Printer(printer_url, index)
         
         // Make get request for the tray and supply status of the printer.
         axios.all([Scraper.getStatus(printer_url.url), Scraper.getSupplies(printer_url.url)])
@@ -55,11 +56,11 @@ export default {
             Scraper.parseSupplies(supplies.data, printerData.data)
             Scraper.trayStatus(printerData.data.trays)
             
-            // Computes the status of the printer.
-            printerData.data.statusCode = Scraper.printerStatus(printerData.data)
+            // Computes the status code of the printer.
+            printerData.data.statusCode = PrinterModel.computePrinterStatusCode(printerData.data)
 
             // Commit data.
-            context.commit('updatePrinterData', printerData);
+            commit('updatePrinterData', printerData);
 
           // Error retrieving data.   
           }))
@@ -67,7 +68,7 @@ export default {
               console.log(error)
               // Set the STATUS CODE to 3. Indicating the printer is offline.
               printerData.data.statusCode = 3
-              context.commit('updatePrinterData', printerData);
+              commit('updatePrinterData', printerData);
             } 
           )
           
@@ -79,19 +80,20 @@ export default {
      * Generates the default data for the printers.
      * @param {*} context 
      */
-    init(context){
-
+    init({rootState, commit}){
+      
       let new_data = []
+      const printerURLs = rootState.settings.printerURLs
 
-      context.state.printer_urls.forEach((printer_url, index) => {
+      printerURLs.forEach((printer_url, index) => {
 
-        let printerData = get_default_printer(printer_url, index)
+        let printerData = PrinterModel.Printer(printer_url, index)
 
         new_data.push(printerData.data)
 
       })
 
-      context.commit('initializePrinterData', new_data);
+      commit('initializePrinterData', new_data);
 
     }
     

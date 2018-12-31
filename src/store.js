@@ -1,16 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import printer_data from './model/modules/printerData'
-import notif from './model/modules/notif'
-import ui from './model/modules/ui'
+
+import printer_data from './store/printerData'
+import dispatcher from './store/dispatcher'
+import ui from './store/ui'
+import settings from './store/settings'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
     printer_data,
-    notif,
-    ui
+    dispatcher,
+    ui,
+    settings
   },
 
 })

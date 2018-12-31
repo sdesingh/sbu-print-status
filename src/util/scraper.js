@@ -1,21 +1,20 @@
 import axios from 'axios'
 import cheerio from 'cheerio'
-import { settings, options } from './printerSettings'
 
 /**
  * Returns a promise with the HTML content of the status page.
  * @param {String} printer_url 
  */
-function getStatus(printer_url){
-  return axios.get(printer_url + '/status.html', options)
+function getStatus(printer_url, request_options){
+  return axios.get(printer_url + '/status.html', request_options)
 }
 
 /**
  * Returns a promise with the HTML content of the consumables page. 
  * @param {String} printer_url 
  */
-function getSupplies(printer_url){
-  return axios.get(printer_url + '/consumables.html', options)
+function getSupplies(printer_url, request_options){
+  return axios.get(printer_url + '/consumables.html', request_options)
 }
 
 function parseStatus(data, printerData){
@@ -77,6 +76,43 @@ function parseSupplies(data, printerData){
 
 }
 
+// Takes an array of Tray objects then computes the status for each tray.
+/**
+ *  STATUS CODES
+ *  0 -> Full  | 1 -> Low | 2 -> Empty | 3 -> Missing
+ * 
+ * @param {JSON[]} trays 
+ */
+function trayStatus(trays){
+
+  trays.forEach(tray => {
+
+    let statusCode = 0
+
+    switch(tray.capacity){
+
+      case 'Full': statusCode = 0
+      break;
+
+      case 'Low': statusCode = 1
+      break;
+
+      case 'Empty': statusCode = 2
+      break;
+
+      case 'Missing': statusCode = 3
+      break;
+
+      default: statusCode = 3
+
+    }
+
+    tray.statusCode = statusCode
+
+  })
+
+}
+
 /**
  * Takes a JSON object and then computes the printer's status.
  *  STATUS CODES
@@ -84,7 +120,7 @@ function parseSupplies(data, printerData){
  * 
  * @param {JSON} printerData 
  */
-function printerStatus(printerData){
+function printerStatus(printerData, settings){
 
   const printerSupplies = printerData.supplies
   const printerTrays = printerData.trays
@@ -168,49 +204,12 @@ function printerStatus(printerData){
 
 }
 
-/**
- * Takes an array of JSON objects then computes the status for each tray.
- *  STATUS CODES
- *  0 -> Full  | 1 -> Low | 2 -> Empty | 3 -> Missing
- * 
- * @param {JSON[]} trays 
- */
-function trayStatus(trays){
-
-  trays.forEach(tray => {
-
-    let statusCode = 0
-
-    switch(tray.capacity){
-
-      case 'Full': statusCode = 0
-      break;
-
-      case 'Low': statusCode = 1
-      break;
-
-      case 'Empty': statusCode = 2
-      break;
-
-      case 'Missing': statusCode = 3
-      break;
-
-      default: statusCode = 3
-
-    }
-
-    tray.statusCode = statusCode
-
-  })
-
-}
-
 
 export default {
   getSupplies,
   getStatus,
   parseStatus,
   parseSupplies,
+  trayStatus,
   printerStatus,
-  trayStatus
 }

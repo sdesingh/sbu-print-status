@@ -37,9 +37,10 @@
 
   #time {
     display: block;
-    float: right;
-        padding: 15px 16px;
+    float: right; 
+    padding: 17px 16px;
     text-align: center;
+    
   }
 
   #current-time {
@@ -67,6 +68,7 @@
   /* Style the links inside the navigation bar */
   .topnav>.link,
   .topnav>.button{
+    font-family: 'Open Sans', sans-serif;
     user-select: none;
     cursor: pointer;
     display: block;

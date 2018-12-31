@@ -1,31 +1,34 @@
 <template>
-  <div>
+  <div id="container">
 
-    <!-- The Modal -->
-    <div id="myModal" class="modal" :style="{display: display}">
+    <transition name="fade">
       
-
-      <!-- Modal content -->
-      <div class="modal-content">
+      <!-- The Modal -->
+      <div id="myModal" class="modal" v-if="showModal">
         
-        <!-- Close Button -->
-        <span class="close" @click="$store.commit(toggle)"> &times; </span>
 
-        <!-- Title -->
-        <div id="title"> Settings </div>
+        <!-- Modal content -->
+        <div class="modal-content">
+          
+          <!-- Close Button -->
+          <span class="close" @click="$store.commit(toggle)"> &times; </span>
 
-        <!-- Content for the modal. -->
-        <slot/>
+          <!-- Title -->
+          <div id="title"> Settings </div>
 
-        <div class="footer"></div>
+          <!-- Content for the modal. -->
+          <slot/>
 
+          <div class="footer"></div>
+
+        </div>
+
+        <div class="bg" @click="$store.commit(toggle)"></div>
+        
       </div>
 
-       <div class="bg" @click="$store.commit(toggle)"></div>
-       
-      
 
-    </div>
+    </transition>
 
   </div>
 </template>
@@ -63,6 +66,7 @@
 
   /* The Modal (background) */
   .modal {
+    display: block;
     position: fixed; /* Stay in place */
     left: 0;
     top: 0;
@@ -73,13 +77,12 @@
 
   /* Modal Content/Box */
   .modal-content {
-    position: absolute;
+    position: fixed;
     z-index: 3;
     left: 0;
     right: 0;
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
-    /* padding: 20px; */
     width: 40%; /* Could be more or less, depending on screen size */
   }
 
@@ -100,8 +103,18 @@
     cursor: pointer;
   }
 
-  @media screen and (max-width: 1000px) {
 
+  /* ANIMATIONS */
+  .fade-enter-active, .fade-leave-active{
+    transition: all .2s ease;
+  }
+
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
+
+
+  @media screen and (max-width: 1000px) {
     .modal-content {width: 70%;}
   }
 

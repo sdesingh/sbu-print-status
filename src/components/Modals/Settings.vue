@@ -40,11 +40,11 @@
     outline: none;
     font-family: 'Open Sans', sans-serif;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 16px;
     font-style: italic;
 
     text-align: center;
-    padding: 0px 10px;
+    padding: 2px 10px;
     width: 30px;
   }
 
