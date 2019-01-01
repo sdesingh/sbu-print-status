@@ -52,7 +52,7 @@
 
     /* Position the tooltip text */
     position: absolute;
-    z-index: 3;
+    z-index: 1;
     top: 110%;
 
     /* Fade in tooltip */
@@ -154,6 +154,7 @@
 
   .supply {
     position: relative;
+    z-index: 1;
 
     font-family: 'Open Sans', sans-serif;
     font-size: 15px;

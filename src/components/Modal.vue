@@ -68,6 +68,7 @@
   .modal {
     display: block;
     position: fixed; /* Stay in place */
+    z-index: 3;
     left: 0;
     top: 0;
     width: 100%; /* Full width */
