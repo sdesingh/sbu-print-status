@@ -22,7 +22,7 @@
     </div>
 
     <div class="setting">
-      <div class="setting-name">Supply Threshold (Pages)</div>
+      <div class="setting-name">Supply Threshold</div>
 
       <input type="text" class="option text-input" maxlength="4" 
         v-model="$store.state.settings.supplyThreshold" 
@@ -57,7 +57,7 @@
 
     text-align: center;
     padding: 2px 10px;
-    width: 50px;
+    width: 40px;
   }
 
   .setting-name {

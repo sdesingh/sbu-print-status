@@ -13,7 +13,7 @@
 
   #printers {
     display: grid;
-    margin: 50px 20px;
+    margin: 100px 100px;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     grid-gap: 10px;
   }

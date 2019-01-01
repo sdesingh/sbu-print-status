@@ -17,9 +17,20 @@
       </div>
 
       <div id="supplies-status">
-        <div class="supply" id="toner" :style="printerStyle(status.supplies.toner.statusCode).titlebar"> Toner </div>
-        <div class="supply" id="drum" :style="printerStyle(status.supplies.drum.statusCode).titlebar" > Drum </div>
-        <div class="supply" id="maintenance" :style="printerStyle(status.supplies.maintenance.statusCode).titlebar"> Kit </div>
+
+        <div class="supply" id="toner" :style="printerStyle(status.supplies.toner.statusCode).titlebar"> 
+          Toner 
+          <div class="tooltip"> {{ status.supplies.toner.status }} </div>
+        </div>
+
+        <div class="supply" id="drum" :style="printerStyle(status.supplies.drum.statusCode).titlebar" > 
+          Drum 
+          <div class="tooltip"> {{ status.supplies.drum.status }} </div>
+        </div>
+        <div class="supply" id="maintenance" :style="printerStyle(status.supplies.maintenance.statusCode).titlebar">
+           Kit 
+          <div class="tooltip"> {{ status.supplies.maintenance.status }} </div>
+        </div>
       </div>
  
 
@@ -29,6 +40,49 @@
 </template>
 
 <style scoped>
+
+  .tooltip {
+    visibility: hidden;
+    width: 100px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 3;
+    top: 110%;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+
+    /* Font */
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+  }
+
+  .tooltip::after {
+    content: " ";
+    position: absolute;
+    bottom: 100%;  /* At the top of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+  }
+
+  /* Show the tooltip text when you mouse over the tooltip container */
+  .supply:hover .tooltip{
+    visibility: visible;
+    opacity: 1;
+  }
+
 
   #summary {
     /* border: 1px solid grey; */
@@ -99,6 +153,8 @@
   }
 
   .supply {
+    position: relative;
+
     font-family: 'Open Sans', sans-serif;
     font-size: 15px;
     font-style: italic;
