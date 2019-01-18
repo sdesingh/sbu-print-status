@@ -113,8 +113,8 @@ function trayStatus(trays){
 
 }
 
+// Takes a JSON object and then computes the printer's status.
 /**
- * Takes a JSON object and then computes the printer's status.
  *  STATUS CODES
  *  0 -> Good  | 1 -> Warning | 2 -> Emergency | 3 -> Offline
  * 
@@ -149,16 +149,18 @@ function printerStatus(printerData, settings){
   let trayStatus = 0 // Status code for the trays.
 
   if(traysFull + traysLow > 1){
+
     trayStatus = 0 // STATUS CODE 0. More than one tray with paper.
+    
   }
-  else if(traysFull + traysLow == 1){
+  else if(traysFull + traysLow === 1){
     
     // Special case for Smaller printers
-    if(totalTrays != 2){
+    if(totalTrays > 2){
       trayStatus = 1 // STATUS CODE 1. One tray with paper left.
-    }else {
-      if(traysLow + traysFull == 1)
-      trayStatus = 0
+    }
+    else {
+      trayStatus = (traysFull === 1 ? 0 : 1)
     }
     
   }

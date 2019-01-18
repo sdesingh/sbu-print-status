@@ -1,4 +1,4 @@
-import { printer_URLs, refreshRate } from '../printerSettings'
+import { printer_URLs, refreshRate, timeout } from '../printerSettings'
 
 export default {
   // Load settings to be the default values.
@@ -6,7 +6,7 @@ export default {
     refreshRate: refreshRate,
     useTestData: true,
     supplyThreshold: 1000,
-    timeout: 1000,
+    timeout: timeout,
     showNotifications: true,
     printerURLs: printer_URLs
   },

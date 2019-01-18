@@ -4,6 +4,9 @@
     <!-- Fonts -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
+
+    <onboard v-if="showOnboarding"/>
+
     <navigation/>
 
     <modal id="settings" :show-modal="showSettings" :toggle=" 'toggleSettings' "> 
@@ -20,6 +23,7 @@
   import Navigation from '@/components/Navigation.vue'
   import Modal from '@/components/Modal.vue'
   import Settings from '@/components/Modals/Settings.vue'
+  import Onboard from '@/components/Onboarding.vue'
 
   export default {
     data() {
@@ -30,14 +34,22 @@
     components: {
       Navigation,
       Modal,
-      Settings
+      Settings,
+      Onboard,
     },
     computed: {
-      showSettings() {return this.$store.state.ui.showSettings }
+      showSettings() {return this.$store.state.ui.showSettings },
+      showOnboarding() { return this.$store.state.ui.showOnboarding }
 
     },
     mounted() {
-      
+
+      // Hide onboarding screen after 2 seconds.
+      setTimeout(() => {
+        this.$store.commit('toggleOnboarding')
+      }, 4000);
+
+
       setInterval(() => {
         this.$store.dispatch('update')
       }, 1000)
