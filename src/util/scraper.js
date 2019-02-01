@@ -43,7 +43,7 @@ function parseStatus(data, printerData){
   })
 
   printerData.trays.splice(0, 2)
-
+  printerData.statusSummary = $('#statboxtbl').text()
 }
 
 function parseSupplies(data, printerData){
@@ -172,6 +172,7 @@ function printerStatus(printerData, settings){
   let tonerStatus = 0
   let drumStatus = 0
   let maintKitStatus = 0
+  let jamStatus = 0
 
   // Find toner status.
   if(printerSupplies.toner.status == 'Replace') tonerStatus = 2
@@ -202,7 +203,7 @@ function printerStatus(printerData, settings){
 
   printerSupplies.maintenance.statusCode = maintKitStatus
 
-  return Math.max(tonerStatus, drumStatus, maintKitStatus, trayStatus)
+  return Math.max(tonerStatus, drumStatus, maintKitStatus, trayStatus, jamStatus)
 
 }
 

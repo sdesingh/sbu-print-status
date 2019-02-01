@@ -47,7 +47,7 @@
       // Hide onboarding screen after 2 seconds.
       setTimeout(() => {
         this.$store.commit('toggleOnboarding')
-      }, 4000);
+      }, 1000);
 
 
       setInterval(() => {

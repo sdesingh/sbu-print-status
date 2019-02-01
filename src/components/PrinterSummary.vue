@@ -1,12 +1,14 @@
 <template>
-  <div id="summary">
+  <div id="summary" :style="printerStyle(status.statusCode).status_summary">
 
     <div id="title-bar" :style="printerStyle(status.statusCode).titlebar"> 
       <i id="status-icon" :class="statusIcon()"></i>
       {{ status.name}} 
     </div>
 
-    <div id="status" v-if="status.trays.length != 0 || status.statusCode != 3">
+    <div id="status-summary" > {{status.statusSummary}} </div>
+
+    <div id="status-detail" v-if="status.trays.length != 0 || status.statusCode != 3">
 
       <div id="paper-status">
           <div class="tray" v-for="(tray, index) in status.trays" :key="index"> 
@@ -95,9 +97,16 @@
 
   }
 
-  #status {
+  #status-summary {
+    font-family: 'Google Sans', sans-serif;
+    text-align: center; 
+    padding: 10px;
+    background: white;
+  }
+
+  #status-detail {
     font-family: 'Open Sans', sans-serif;
-    border: 1px solid #e9e9e9;
+    /* border: 1px solid #e9e9e9; */
     background: white;
     padding: 5px 20px;
     display: grid;

@@ -3,7 +3,8 @@ export function Printer(url, index) {
   return {
     data: {
       name: url.name,
-      statusCode: 0,
+      statusCode: 3,
+      statusSummary: 'Loading...',
       supplies: {
         toner: {status: 'Loading...', statusCode: 3},
         drum: {status: 'Loading...', statusCode: 3},
@@ -114,6 +115,7 @@ export function computePrinterStatusCode(printerData, settings){
   let tonerStatus = 0
   let drumStatus = 0
   let maintKitStatus = 0
+  let jamStatus = 0
 
   // Find toner status.
   if(printerSupplies.toner.status == 'Replace') tonerStatus = 2
@@ -142,9 +144,13 @@ export function computePrinterStatusCode(printerData, settings){
     if(pages < settings.supplyThreshold) maintKitStatus = 1
   }
 
+  if(printerData.statusSummary.includes('Jam') || printerData.statusSummary.includes('JAM')){
+    jamStatus = 2
+  }
+
   printerSupplies.maintenance.statusCode = maintKitStatus
 
-  return Math.max(tonerStatus, drumStatus, maintKitStatus, trayStatus)
+  return Math.max(tonerStatus, drumStatus, maintKitStatus, trayStatus, jamStatus)
 
 }
 

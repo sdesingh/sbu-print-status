@@ -7,6 +7,10 @@ export const printerStyles = {
     titlebar: {
       color: 'white',
       background: '#707070'
+    },
+
+    status_summary: {
+      border: '3px solid #707070',
     }
 
   },
@@ -16,8 +20,11 @@ export const printerStyles = {
     titlebar: {
       color: 'white',
       background: '#1DD1A1'
-    }
+    },
 
+    status_summary: {
+      border: '3px solid #1DD1A1',
+    }
   },
 
   _WARNING: {
@@ -25,6 +32,10 @@ export const printerStyles = {
     titlebar: {
       color: 'white',
       background: '#FF9F43'
+    },
+
+    status_summary: {
+      border: '3px solid #FF9F43',
     }
 
   },
@@ -34,7 +45,12 @@ export const printerStyles = {
     titlebar: {
       color: 'white',
       background: '#EE5253'
+    },
+
+    status_summary: {
+      border: '3px solid #EE5253',
     }
+
 
   }
   
