@@ -1,6 +1,6 @@
 # sbu-print-stats
 
-A dashboard to monitoring printers across campus. In order to access the printer data, you need to be on the Campus Residences and enable CORS in your web browser for testing purposes. Otherwise, use the Test Data option to see how the dashboard looks.
+A mobile responsive dashboard for monitoring printers across campus. In order to access the printer data, you need to be on the Campus Residences and enable CORS in your web browser for testing purposes. Otherwise, use the Test Data option to see how the dashboard looks.
 
 <img src="https://i.imgur.com/IknKYph.png">
 
