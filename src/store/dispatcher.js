@@ -38,6 +38,9 @@ export default {
     resetCounter({commit, rootState}){
       const refreshRate = rootState.settings.refreshRate
       commit('setCounter', refreshRate * 60)
+    },
+    loadCookies(){
+
     }
   }
 }

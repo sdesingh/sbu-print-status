@@ -22,6 +22,11 @@ export default {
     },
     toggleNotifications(state){
       state.showNotifications = !state.showNotifications
+    },
+  },
+  actions: {
+    loadDefaultSettings(){
+      
     }
   }
 }
