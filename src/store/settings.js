@@ -17,8 +17,14 @@ export default {
     },
     setRefreshRate(state, refreshRate){
       state.refreshRate = refreshRate
-      
       cookies.set('refreshRate', refreshRate, -1)
+    },
+    setSupplyThreshold(state, threshold){
+      if(threshold < 1){
+        threshold = 1
+      }
+      state.supplyThreshold = threshold
+      cookies.set('supplyThreshold', threshold, -1)
     },
     toggleUseTestData(state){
       state.useTestData = !state.useTestData
@@ -31,9 +37,9 @@ export default {
     setDefaultSettings(state, settings){
       state.refreshRate = settings.refreshRate
       state.useTestData = settings.useTestData === "true" ? true : false
-      state.supplyThreshold = settings.supplyThreshold
+      state.supplyThreshold = parseInt(settings.supplyThreshold)
       state.showNotifications = settings.showNotifications === "true" ? true : false
-    }
+    },
     
   },
   actions: {

@@ -17,7 +17,7 @@
 
       <input type="text" class="option text-input" maxlength="2" 
         v-model="refreshRate" 
-        @input="$store.dispatch('resetCounter')"
+        @input="changeRefreshRate"
       />
     </div>
 
@@ -79,6 +79,7 @@
 <script>
 
 import ToggleSwitch from '@/components/Interactables/ToggleSwitch.vue'
+import cookies from 'vue-cookies'
 
 export default {
   components: {
@@ -87,10 +88,27 @@ export default {
   computed: {
     useTestData(){return this.$store.state.settings.useTestData},
     showNotifications(){return this.$store.state.settings.showNotifications},
-    refreshRate(){return this.$store.state.settings.refreshRate},
-    supplyThreshold(){return this.$store.state.settings.supplyThreshold}
-
-  }
+    refreshRate: {
+      get(){return this.$store.state.settings.refreshRate},
+      set(refreshRate){
+        this.$store.commit('setRefreshRate', refreshRate)
+        this.$store.dispatch('resetCounter')
+      }
+    },
+    supplyThreshold:{
+      get(){return this.$store.state.settings.supplyThreshold},
+      set(supplyThreshold){
+        this.$store.commit('setSupplyThreshold', supplyThreshold)
+      }
+    }
+  },
+  methods: {
+    changeRefreshRate(){
+    },
+    changeSupplyThreshold(){
+      cookies.set('supplyThreshold', this.supplyThreshold, -1)
+    }
+  },
 }
 
 </script>

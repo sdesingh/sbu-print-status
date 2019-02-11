@@ -22,6 +22,6 @@ export const printer_URLs = [
 
 ]
 
+// Defaults.
 export const refreshRate = 1
-
 export const timeout = 5000
