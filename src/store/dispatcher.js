@@ -28,7 +28,6 @@ export default {
 
         const counter_value = rootState.settings.refreshRate * 60
         commit('setCounter', counter_value) // Reset the counter.
-
         dispatch('getData') // Update data.
 
       }else {
@@ -39,8 +38,5 @@ export default {
       const refreshRate = rootState.settings.refreshRate
       commit('setCounter', refreshRate * 60)
     },
-    loadCookies(){
-
-    }
   }
 }

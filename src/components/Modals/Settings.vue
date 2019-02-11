@@ -4,19 +4,19 @@
 
     <div class="setting">
       <div class="setting-name">Use Test Data</div>
-      <toggle-switch class="option" :checked="$store.state.settings.useTestData" :toggle="'toggleUseTestData'"/>
+      <toggle-switch class="option" :checked="useTestData" :toggle="'toggleUseTestData'"/>
     </div>
 
     <div class="setting">
       <div class="setting-name">Notifications</div>
-      <toggle-switch class="option" :checked="$store.state.settings.showNotifications" :toggle="'toggleNotifications'"/>
+      <toggle-switch class="option" :checked="showNotifications" :toggle="'toggleNotifications'"/>
     </div>
 
     <div class="setting">
       <div class="setting-name">Refresh Rate (Minutes)</div>
 
       <input type="text" class="option text-input" maxlength="2" 
-        v-model="$store.state.settings.refreshRate" 
+        v-model="refreshRate" 
         @input="$store.dispatch('resetCounter')"
       />
     </div>
@@ -25,7 +25,7 @@
       <div class="setting-name">Supply Threshold</div>
 
       <input type="text" class="option text-input" maxlength="4" 
-        v-model="$store.state.settings.supplyThreshold" 
+        v-model="supplyThreshold" 
       />
     </div>
 
@@ -83,6 +83,13 @@ import ToggleSwitch from '@/components/Interactables/ToggleSwitch.vue'
 export default {
   components: {
     ToggleSwitch
+  },
+  computed: {
+    useTestData(){return this.$store.state.settings.useTestData},
+    showNotifications(){return this.$store.state.settings.showNotifications},
+    refreshRate(){return this.$store.state.settings.refreshRate},
+    supplyThreshold(){return this.$store.state.settings.supplyThreshold}
+
   }
 }
 

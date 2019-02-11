@@ -44,6 +44,9 @@
     },
     mounted() {
 
+      // Load default settings.
+      this.$store.dispatch('loadDefaultSettings')
+
       // Hide onboarding screen after 2 seconds.
       setTimeout(() => {
         this.$store.commit('toggleOnboarding')
@@ -53,6 +56,7 @@
       setInterval(() => {
         this.$store.dispatch('update')
       }, 1000)
+
 
     }
   }
