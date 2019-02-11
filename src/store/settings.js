@@ -54,7 +54,6 @@ export default {
           supplyThreshold: cookies.get('supplyThreshold'),
           showNotifications: cookies.get('showNotifications')
         }
-        console.log(settings)
         commit('setDefaultSettings', settings)
       }
       // Settings haven't been created. Create defaults.
