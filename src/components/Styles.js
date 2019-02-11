@@ -1,16 +1,25 @@
+export const statusColors = {
+  _GOOD: '#1DD1A1',
+  _OFFLINE: '#707070',
+  _WARNING: '#FF9F43',
+  _EMERGENCY: '#EE5253',
+}
 
+let borderSize = '5px'
+let borderType = 'solid'
+let textColor = 'white'
 
 export const printerStyles = {
 
   _OFFLINE: {
 
     titlebar: {
-      color: 'white',
-      background: '#707070'
+      color: textColor,
+      background: statusColors._OFFLINE
     },
 
     status_summary: {
-      border: '3px solid #707070',
+      border: `${borderSize} ${borderType} ${statusColors._OFFLINE}`
     }
 
   },
@@ -18,24 +27,24 @@ export const printerStyles = {
   _GOOD: {
 
     titlebar: {
-      color: 'white',
-      background: '#1DD1A1'
+      color: textColor,
+      background: statusColors._GOOD
     },
 
     status_summary: {
-      border: '3px solid #1DD1A1',
+      border:  `${borderSize} ${borderType} ${statusColors._GOOD}`
     }
   },
 
   _WARNING: {
 
     titlebar: {
-      color: 'white',
-      background: '#FF9F43'
+      color: textColor,
+      background: statusColors._WARNING
     },
 
     status_summary: {
-      border: '3px solid #FF9F43',
+      border: `${borderSize} ${borderType} ${statusColors._WARNING}`
     }
 
   },
@@ -43,14 +52,12 @@ export const printerStyles = {
   _EMERGENCY: {
 
     titlebar: {
-      color: 'white',
-      background: '#EE5253'
-    },
-
+      color: textColor,
+      background: statusColors._EMERGENCY
+    },  
     status_summary: {
-      border: '3px solid #EE5253',
+      border: `${borderSize} ${borderType} ${statusColors._EMERGENCY}`
     }
-
 
   }
   
