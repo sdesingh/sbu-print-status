@@ -1,4 +1,4 @@
-import { printer_URLs, refreshRate, timeout } from '../printerSettings'
+import { printer_data, refreshRate, timeout, baseUrl } from '../printerSettings'
 import cookies from 'vue-cookies'
 
 export default {
@@ -9,7 +9,8 @@ export default {
     supplyThreshold: 1000,
     timeout: timeout,
     showNotifications: true,
-    printerURLs: printer_URLs
+    printer_data: printer_data,
+    baseUrl: baseUrl
   },
   mutations: {
     addPrinter(state, printer_url) {

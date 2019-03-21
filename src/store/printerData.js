@@ -1,7 +1,6 @@
 import Vue from 'vue'
-import PrinterModel from '../model/Printer'
-import Scraper from '../util/scraper'
 import axios from 'axios'
+import { Printer } from '../model/Printer';
 
 export default {
 
@@ -13,7 +12,7 @@ export default {
       state.printers = new_data
     },
     updatePrinterData(state, printerData){
-      Vue.set(state.printers, printerData.index, printerData.data)
+      Vue.set(state.printers, printerData.index, printerData)
     }
   },
   actions: {
@@ -26,56 +25,34 @@ export default {
 
       const app_settings = rootState.settings
 
-      // Test Data Enabled
-      if(app_settings.useTestData){
-        app_settings.printerURLs.forEach((printer_url, index) => {
-
-          let printerData = PrinterModel.RandomPrinter(printer_url, index)
-          
-          printerData.data.statusCode = PrinterModel.computePrinterStatusCode(printerData.data, app_settings)
-          commit('updatePrinterData', printerData)
-
-        })
-        return
-      }
-
       const request_settings = {
         timeout: app_settings.timeout,
-        responseType: 'text'
+        responseType: 'json'
       }
 
       // Loop through all the printer urls.
-      app_settings.printerURLs.forEach((printer_url, index) => {
+      app_settings.printer_data.forEach((printer_info, index) => {
 
-        // Get default data object.
-        let printerData = PrinterModel.Printer(printer_url, index)
-        
-        // Make get request for the tray and supply status of the printer.
-        axios.all([Scraper.getStatus(printer_url.url, request_settings), Scraper.getSupplies(printer_url.url, request_settings)])
+        let apiURL = app_settings.baseUrl + index;
+        let supplyThreshold = app_settings.supplyThreshold;
 
-          // Parse the data if the request is successfull.
-          .then(axios.spread((status, supplies) => {
+        axios.get(apiURL, request_settings).then(
+          (response) => {
 
-            // Data retrieved successfully. Parse data.
-            Scraper.parseStatus(status.data, printerData.data)
-            Scraper.parseSupplies(supplies.data, printerData.data)
-            Scraper.trayStatus(printerData.data.trays)
+            let printer = Printer.ParsePrinterJSON(response.data, printer_info.name, printer_info.url, index, supplyThreshold);
+            commit('updatePrinterData', printer);
             
-            // Computes the status code of the printer.
-            printerData.data.statusCode = PrinterModel.computePrinterStatusCode(printerData.data, app_settings)
 
-            // Commit data.
-            commit('updatePrinterData', printerData);
+          },
+          (error) => {
 
-          // Error retrieving data.   
-          }))
-          .catch( error =>  {
-              console.log(error)
-              // Set the STATUS CODE to 3. Indicating the printer is offline.
-              printerData.data.statusCode = 3
-              commit('updatePrinterData', printerData);
-            } 
-          )
+            console.log("An error has occured while retrieving data for: " + printer_info.name);
+            // console.log(error);
+
+            let printer = new Printer(printer_info.name, printer_info.url, index, supplyThreshold);
+            commit('updatePrinterData', printer);
+          }
+        )
           
       });
       
@@ -88,13 +65,14 @@ export default {
     init({rootState, commit}){
       
       let new_data = []
-      const printerURLs = rootState.settings.printerURLs
+      const app_settings = rootState.settings
+      const printer_data = rootState.settings.printer_data
 
-      printerURLs.forEach((printer_url, index) => {
+      printer_data.forEach((printer_info, index) => {
 
-        let printerData = PrinterModel.Printer(printer_url, index)
-
-        new_data.push(printerData.data)
+        
+        let printer = new Printer(printer_info.name, printer_info.url, index, app_settings.supplyThreshold);
+        new_data.push(printer)
 
       })
 

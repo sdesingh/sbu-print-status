@@ -6,8 +6,8 @@
       <div id="onboarding">
      
 
-      <img class="loader" src="https://loading.io/spinners/bluecat/index.blue-longcat-spinner.svg" alt="Cat">
-       <div id="title">Loading...</div>
+      <img class="loader" src="https://loading.io/spinners/tail/index.gooey-ball-tail-spinner.svg" alt="Cat">
+      <div id="title">Loading...</div>
 
     </div>
 

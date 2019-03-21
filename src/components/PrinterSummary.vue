@@ -1,42 +1,48 @@
 <template>
-  <div id="summary" :style="printerStyle(status.statusCode).status_summary">
+  <div id="summary" :style="printerStyle(status.printerStatus).status_summary">
 
-    <div id="title-bar" :style="printerStyle(status.statusCode).titlebar"> 
+    <div id="title-bar" :style="printerStyle(status.printerStatus).titlebar"> 
       <i id="status-icon" :class="statusIcon()"></i>
-      {{ status.name}} 
+      {{ status.name }} 
     </div>
 
-    <div id="status-summary" > {{status.statusSummary}} </div>
+    <div v-if="status.printerStatus != 3">
 
-    <div id="status-detail" v-if="status.trays.length != 0 || status.statusCode != 3">
+      <div id="status-summary" > {{status.statusMessage}} </div>
 
-      <div id="paper-status">
-          <div class="tray" v-for="(tray, index) in status.trays" :key="index"> 
-            <div id="tray-name"> {{ tray.tray }} </div>
-            <div id="tray-size"> {{ tray.size }} </div>
-            <div id="tray-capacity" :style="trayStyle(tray.statusCode)"> {{ tray.capacity.toUpperCase() }} </div>
+      <div id="status-detail">
+
+        <div id="paper-status">
+            <div class="tray" v-for="(tray, index) in status.trays" :key="index"> 
+              <div id="tray-name"> {{ tray.name }} </div>
+              <div id="tray-size"> {{ tray.setting }} </div>
+              <div id="tray-capacity" :style="trayStyle(tray.statusCode)"> {{ tray.trayStatus().toUpperCase() }} </div>
+            </div>
+        </div>
+
+        <div id="supplies-status">
+
+          <div class="supply" id="toner" :style="printerStyle(status.tonerStatusCode()).titlebar"> 
+            Toner 
+            <div class="tooltip"> {{ status.tonerStatus }} </div>
           </div>
-      </div>
 
-      <div id="supplies-status">
+          <div class="supply" id="drum" :style="printerStyle(status.drumStatusCode()).titlebar" > 
+            Drum 
+            <div class="tooltip"> {{ status.drumStatus }} </div>
+          </div>
+          <div class="supply" id="maintenance" :style="printerStyle(status.maintKitStatusCode()).titlebar">
+            Kit 
+            <div class="tooltip"> {{ status.maintKitStatus }} </div>
+          </div>
 
-        <div class="supply" id="toner" :style="printerStyle(status.supplies.toner.statusCode).titlebar"> 
-          Toner 
-          <div class="tooltip"> {{ status.supplies.toner.status }} </div>
-        </div>
-
-        <div class="supply" id="drum" :style="printerStyle(status.supplies.drum.statusCode).titlebar" > 
-          Drum 
-          <div class="tooltip"> {{ status.supplies.drum.status }} </div>
-        </div>
-        <div class="supply" id="maintenance" :style="printerStyle(status.supplies.maintenance.statusCode).titlebar">
-           Kit 
-          <div class="tooltip"> {{ status.supplies.maintenance.status }} </div>
-        </div>
       </div>
  
 
+      </div>
+
     </div>
+
 
   </div>
 </template>
@@ -120,7 +126,8 @@
     grid-gap: 10px;
     grid-auto-rows: 30px;
     grid-template-columns: 1fr;
-    border-bottom: 0.5px solid rgba(0,0,0, 0.1)
+    border-bottom: 0.5px solid rgba(0,0,0, 0.1);
+    
   }
 
   #supplies-status {

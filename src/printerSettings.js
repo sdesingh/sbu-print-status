@@ -3,7 +3,7 @@
  * 
  *  {url: 'LINK TO THE PRINTER'S SITE', name: 'NAME OF LOCATION'}
  */
-export const printer_URLs = [
+export const printer_data = [
 
   {url: 'http://cr-irvxrx1.sinc.stonybrook.edu', name: 'Irving'},
   {url: 'http://cr-chzxrx1.sinc.stonybrook.edu', name: 'Chavez RCC'},
@@ -21,6 +21,8 @@ export const printer_URLs = [
   {url: 'http://cr-barxrx1.sinc.stonybrook.edu', name: 'Baruch RCC'},
 
 ]
+
+export const baseUrl = 'http://crweb2.campus.stonybrook.edu:443/api/printers/';
 
 // Defaults.
 export const refreshRate = 1

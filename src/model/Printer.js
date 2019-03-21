@@ -1,162 +1,132 @@
-// Generates a Printer with default status.
-export function Printer(url, index) {
-  return {
-    data: {
-      name: url.name,
-      statusCode: 3,
-      statusSummary: 'Loading...',
-      supplies: {
-        toner: {status: 'Loading...', statusCode: 3},
-        drum: {status: 'Loading...', statusCode: 3},
-        maintenance: {status: 'Loading...', statusCode: 3}
-      },
-      trays: [/* tray size capacity */],
-    },
-    index: index,
+export class Printer {
+
+  constructor(name, url, index, supplyThreshold){
+    this.name = name;
+    this.index = index;
+    this.url = url;
+    this.supplyThreshold = supplyThreshold;
+
+    this.tonerStatus = 'Unknown';
+    this.drumStatus = 'Unknown';
+    this.maintKitStatus = 'Unknown';
+    this.statusMessage = 'Unknown';
+
+    this.printerStatus = 3;
+    this.printerType = 0; // 0: Print from Anywhere, 1: RCC Lab
+
+    this.trays = [];
+
   }
+
+  tonerStatusCode(){
+    let status = 0;
+
+    const tonerStatus = this.tonerStatus;
+
+    if(tonerStatus == 'Replace') { status = 2 }
+    else{
+      let pages = parseInt(tonerStatus.substring(0, tonerStatus.indexOf('-')))
+  
+      if(pages < this.supplyThreshold) {status = 1 }
+    }
+
+    return status;
+  }
+
+  drumStatusCode(){
+
+    let status = 0;
+
+    const drumStatus = this.drumStatus;
+
+    if(drumStatus == 'Replace') { status = 2 }
+    else{
+      let pages = parseInt(drumStatus.substring(0, drumStatus.indexOf('-')))
+  
+      if(pages < this.supplyThreshold) {status = 1 }
+    }
+
+    return status;
+    
+  }
+
+  maintKitStatusCode(){
+
+    let status = 0;
+
+    const maintKitStatus = this.maintKitStatus;
+
+    if(maintKitStatus == 'Replace') { status = 2 }
+    else{
+      let pages = parseInt(maintKitStatus)
+  
+      if(pages < this.supplyThreshold) {status = 1 }
+    }
+
+    return status;
+
+  }
+
+  /**
+   * Parses the json that is passed in and returns a new printer with the data.
+   * @param {*} printerJSON JSON object with the printer data.
+   * @param {*} printerName Name of the printer.
+   * @param {*} printerIndex The index of the printer.
+   * @param {*} printerUrl The url of the printer's web server.
+   * @returns {Printer} A new printer object.
+   */
+  static ParsePrinterJSON(printerJSON, printerName, printerUrl, printerIndex, supplyThreshold) {
+
+    let printer = new Printer(printerName, printerUrl, printerIndex, supplyThreshold);
+
+    const traysJSON = printerJSON.Trays;
+
+    // Parse printer trays.
+    traysJSON.forEach(tray => {
+
+      // Create a new tray.
+      let newTray = new Tray(tray.TrayName, tray.TrayStatus, tray.TraySetting);
+
+      // Add Tray to the newly created printer object.
+      printer.trays.push(newTray);
+
+    });
+
+    // Set supply status.
+    printer.tonerStatus = printerJSON.TonerStatus;
+    printer.drumStatus = printerJSON.DrumStatus;
+    printer.maintKitStatus = printerJSON.MaintKitStatus;
+
+    // Set main printer status.
+    printer.printerStatus = printerJSON.CurrentStatus;
+
+    // Set printer status message.
+    printer.statusMessage = printerJSON.StatusMessage;
+
+    // Set printer type.
+    printer.printerType = printerJSON.Type;
+
+    return printer;
+  }
+
 }
 
-// Generats a Printer with random status.
-export function RandomPrinter(url, index) {
-  let printer = Printer(url, index)
+export class Tray {
 
-  // Change the number of trays generated.
-  var j = 4
-  if(index > 5) j = 2
+  constructor(name, statusCode, setting){
+    this.name = name;
+    this.statusCode = statusCode;
+    this.setting = setting;
+  }
 
-  // Generate random trays.
-  for(let i = 1; i <= j; i++){
+  trayStatus(){
 
-    const rng = (Math.random() * (100-1)) + 1
-
-    if(rng <= 5 * 5-i){
-      printer.data.trays.push({tray: `Tray ${i+1}`, size: 'Letter', capacity: 'Empty', statusCode: 2})
-    }else {
-      printer.data.trays.push({tray: `Tray ${i+1}`, size: 'Letter', capacity: 'Full', statusCode: 0})
+    switch(this.statusCode){
+      case 0: return 'Full';
+      case 1: return 'Low';
+      case 2: return 'Empty';
     }
 
   }
 
-  // Generate random supply status
-  const rng = (Math.random() * (100-1)) + 1
-  if(rng < 10 && rng > 5){
-    printer.data.supplies.toner.status = '800-1002 Pages Remaining'
-  }
-  else if(rng < 5){
-    printer.data.supplies.toner.status = 'Replace'
-    
-  }
-  else{
-    printer.data.supplies.toner.status = '21003-23005 Pages Remaining'
-  }
-
-  printer.data.supplies.drum.status = '11000-12043 Pages Remaining'
-  printer.data.supplies.maintenance.status = '100231 Pages Remaining'
-
-  return printer
-}
-
-// Takes a Printer object and then computes the printer's status code.
-/**
- *  STATUS CODES
- *  0 -> Good  | 1 -> Warning | 2 -> Emergency | 3 -> Offline
- */
-export function computePrinterStatusCode(printerData, settings){
-
-  const printerSupplies = printerData.supplies
-  const printerTrays = printerData.trays
-
-  let traysFull = 0 // Number of trays Full.
-  let traysLow = 0 // Number of trays Low.
-  let traysEmpty = 0 // Number of trays empty.
-  const totalTrays = printerTrays.length
-
-  // Compute the status of the trays.
-  printerTrays.forEach(tray => {
-
-    let statusCode = tray.statusCode
-
-    switch(statusCode){
-
-      case 0: traysFull++
-      break
-
-      case 1: traysLow++
-      break
-
-      case 2: traysEmpty++
-      break
-
-      default: traysEmpty++
-    }
-  });
-
-  let trayStatus = 0 // Status code for the trays.
-
-  if(traysFull + traysLow > 1){
-    trayStatus = 0 // STATUS CODE 0. More than one tray with paper.
-  }
-  else if(traysFull + traysLow == 1){
-    
-    // Special case for Smaller printers
-    if(totalTrays != 2){
-      trayStatus = 1 // STATUS CODE 1. One tray with paper left.
-    }else {
-      if(traysLow + traysFull == 1)
-      trayStatus = 0
-    }
-    
-  }
-  else {
-    trayStatus = 2 // STATUS CODE 2. // No trays with paper.
-  }
-
-  // Compute the status of the supplies.
-  let tonerStatus = 0
-  let drumStatus = 0
-  let maintKitStatus = 0
-  let jamStatus = 0
-
-  // Find toner status.
-  if(printerSupplies.toner.status == 'Replace') tonerStatus = 2
-  else{
-    let pages = parseInt(printerSupplies.toner.status.substring(0, printerSupplies.toner.status.indexOf('-')))
-
-    if(pages < settings.supplyThreshold) tonerStatus = 1
-  }
-
-  printerSupplies.toner.statusCode = tonerStatus
-
-  // Find drum status.
-  if(printerSupplies.drum.status == 'Replace') drumStatus = 2
-  else {
-    let pages = parseInt(printerSupplies.drum.status.substring(0, printerSupplies.drum.status.indexOf('-')))
-
-    if(pages < settings.supplyThreshold) drumStatus = 1
-  }
-  printerSupplies.drum.statusCode = drumStatus
-
-  // Find maintenance kit status.
-  if(printerSupplies.maintenance.status == 'Replace') maintKitStatus = 2
-  else {
-    let pages = parseInt(printerSupplies.maintenance.status)
-
-    if(pages < settings.supplyThreshold) maintKitStatus = 1
-  }
-
-  if(printerData.statusSummary.includes('Jam') || printerData.statusSummary.includes('JAM')){
-    jamStatus = 2
-  }
-
-  printerSupplies.maintenance.statusCode = maintKitStatus
-
-  return Math.max(tonerStatus, drumStatus, maintKitStatus, trayStatus, jamStatus)
-
-}
-
-
-export default {
-  Printer,
-  RandomPrinter,
-  computePrinterStatusCode,
 }
