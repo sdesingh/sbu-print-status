@@ -5,10 +5,10 @@ export default {
   // Load settings to be the default values.
   state: {
     refreshRate: refreshRate,
-    useTestData: true,
+    useTestData: false,
     supplyThreshold: 1000,
     timeout: timeout,
-    showNotifications: true,
+    showNotifications: false,
     printer_data: printer_data,
     baseUrl: baseUrl
   },

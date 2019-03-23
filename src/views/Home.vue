@@ -2,7 +2,8 @@
   <div id="home">
     
     <div id="printers">
-      <printer-summary class="printer" v-for="(item, index) in printerData" :key="index" :status="item"/>
+      <!-- <printer-summary class="printer" v-for="(item, index) in printerData" :key="index" :status="item"/> -->
+      <printer-card class="printer" v-for="(printer, index) in printerData" :key="index" :printer="printer"></printer-card>
     </div>
     
   </div>
@@ -16,10 +17,7 @@
     margin: 50px 20px;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     grid-gap: 10px;
-  }
-
-  .printer {
-    cursor: default;
+    grid-auto-rows: min-content;
   }
 
 </style>
@@ -29,12 +27,14 @@
 
 // @ is an alias to /src
 import PrinterSummary from '@/components/PrinterSummary.vue'
+import PrinterCard from '@/components/PrinterInfoCard.vue'
 
 
 export default {
   name: 'home',
   components: {
     PrinterSummary,
+    PrinterCard
   },
   methods: {
   },

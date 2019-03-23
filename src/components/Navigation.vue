@@ -16,7 +16,7 @@
         <i class="link-icon fas fa-cog"></i> Settings
       </div>
 
-      <div class="button" @click="$store.dispatch('getData')">
+      <div class="button" @click="refresh()">
         <i class="fas fa-sync-alt"></i>
       </div>
 
@@ -160,8 +160,9 @@ export default {
     Counter,
   },
   methods: {
-    get(){
-      
+    refresh(){
+      this.$store.dispatch('getData');
+      this.$store.dispatch('resetCounter');
     },
   },
 }

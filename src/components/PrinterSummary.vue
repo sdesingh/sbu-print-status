@@ -14,7 +14,7 @@
 
         <div id="paper-status">
             <div class="tray" v-for="(tray, index) in status.trays" :key="index"> 
-              <div id="tray-name"> {{ tray.name }} </div>
+              <div id="tray-name" class="font-weight-bold"> {{ tray.name }} </div>
               <div id="tray-size"> {{ tray.setting }} </div>
               <div id="tray-capacity" :style="trayStyle(tray.statusCode)"> {{ tray.trayStatus().toUpperCase() }} </div>
             </div>
@@ -68,7 +68,7 @@
     transition: opacity 0.3s;
 
     /* Font */
-    font-family: 'Open Sans', sans-serif;
+    /* font-family: 'Open Sans', sans-serif; */
     font-weight: 400;
     font-style: normal;
     font-size: 14px;
@@ -82,7 +82,7 @@
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: transparent transparent black transparent;
+    border-color: transparent transparent #555 transparent;
   }
 
   /* Show the tooltip text when you mouse over the tooltip container */
@@ -93,7 +93,6 @@
 
 
   #summary {
-    /* border: 1px solid grey; */
     transition: 0.1s linear;
   }
 
@@ -111,7 +110,7 @@
   }
 
   #status-detail {
-    font-family: 'Open Sans', sans-serif;
+    /* font-family: 'Open Sans', sans-serif; */
     /* border: 1px solid #e9e9e9; */
     background: white;
     padding: 5px 20px;
@@ -149,7 +148,7 @@
   }
 
   #tray-capacity {
-    font-family: 'Open Sans', sans-serif;
+    /* font-family: 'Open Sans', sans-serif; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -170,9 +169,10 @@
 
   .supply {
     position: relative;
+    display: inline-block;
     z-index: 1;
 
-    font-family: 'Open Sans', sans-serif;
+    /* font-family: 'Open Sans', sans-serif; */
     font-size: 15px;
     font-style: italic;
     font-weight: 700;

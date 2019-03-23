@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import { setInterval } from 'timers';
 
 export default {
   computed: {

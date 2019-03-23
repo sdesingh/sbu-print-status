@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export class Printer {
 
   constructor(name, url, index, supplyThreshold){
@@ -9,7 +11,7 @@ export class Printer {
     this.tonerStatus = 'Unknown';
     this.drumStatus = 'Unknown';
     this.maintKitStatus = 'Unknown';
-    this.statusMessage = 'Unknown';
+    this.statusMessage = 'Offline';
 
     this.printerStatus = 3;
     this.printerType = 0; // 0: Print from Anywhere, 1: RCC Lab
@@ -107,6 +109,79 @@ export class Printer {
     printer.printerType = printerJSON.Type;
 
     return printer;
+  }
+
+  /**
+   * Generate a printer with a random status.
+   * @param {*} printerName 
+   * @param {*} printerUrl 
+   * @param {*} printerIndex 
+   * @param {*} supplyThreshold 
+   */
+  static GenerateRandomPrinter(printerName, printerUrl, printerIndex, supplyThreshold){
+
+    // Create a printer.
+    let printer = new Printer(printerName, printerUrl, printerIndex, supplyThreshold);
+    printer.printerStatus = 0;
+
+    // Number of random trays to generate.
+    let traysGenerated = 4;
+    let emptyGenerated = 0;
+    let fullGenerated = 0;
+
+    // Start generating random trays.
+    for (let index = 0; index < traysGenerated; index++) {
+
+      // Random int generator. (Between 1-100)
+      const rng = _.random(1, 100);
+      
+      // Generates an empty tray depending on whether the rng value is less than...
+      if(rng <= 5 * (traysGenerated - index)){
+        printer.trays.push(new Tray(`Tray ${index + 1}`, 2, 'Letter'));
+        emptyGenerated++;
+      }
+      else {
+        printer.trays.push(new Tray(`Tray ${index +1}`, 0, 'Letter'));
+        fullGenerated++;
+      }
+
+    }
+
+    if(fullGenerated > 1){
+      printer.printerStatus = 0;
+    }
+    else if(fullGenerated === 1){
+      printer.printerStatus = 1;
+    }
+    else {
+      printer.printerStatus = 2;
+    }
+
+    // Generate random toner value.
+    let rng = _.random(1, 100);
+
+    // Toner should be under threshold.
+    if(rng < 10 && rng > 5){
+      let tonerCount = _.random(100, supplyThreshold - 1);
+      printer.tonerStatus = `${tonerCount - 50}-${tonerCount} Pages Remaining` 
+    }
+    // Toner should be replaced
+    else if(rng < 5){
+      printer.tonerStatus = "Replace";
+    }
+    // Toner has some random value.
+    else {
+      let tonerCount = _.random(supplyThreshold + 1, 12000);
+      printer.tonerStatus = `${tonerCount - 50}-${tonerCount} Pages Remaining`;
+    }
+
+    // Generate random drum kit value.
+    printer.drumStatus = "21000-22312 Pages Remaining";
+    printer.maintKitStatus = "100003-101042 Pages Remaining";
+    printer.printerStatus = (printer.tonerStatusCode() >= printer.printerStatus) ? printer.tonerStatusCode() : printer.printerStatus;
+    printer.statusMessage = 'Test Data...'
+    return printer;
+
   }
 
 }

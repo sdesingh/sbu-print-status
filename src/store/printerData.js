@@ -24,19 +24,34 @@ export default {
     getData({state, commit, dispatch, rootState}){
 
       const app_settings = rootState.settings
+      let supplyThreshold = app_settings.supplyThreshold;
 
       const request_settings = {
         timeout: app_settings.timeout,
         responseType: 'json'
       }
 
-      // Loop through all the printer urls.
-      app_settings.printer_data.forEach((printer_info, index) => {
+      // Generate test data.
+      if(app_settings.useTestData){
+
+        app_settings.printer_data.forEach((printer_info, index) => {
+
+          let printer = Printer.GenerateRandomPrinter(printer_info.name, printer_info.url, index, supplyThreshold);
+          
+          commit('updatePrinterData', printer);
+
+        })
+      }
+      // Retrieve data.
+      else {
+
+        // Loop through all the printer urls.
+        app_settings.printer_data.forEach((printer_info, index) => {
 
         let apiURL = app_settings.baseUrl + index;
-        let supplyThreshold = app_settings.supplyThreshold;
 
         axios.get(apiURL, request_settings).then(
+
           (response) => {
 
             let printer = Printer.ParsePrinterJSON(response.data, printer_info.name, printer_info.url, index, supplyThreshold);
@@ -44,6 +59,7 @@ export default {
             
 
           },
+
           (error) => {
 
             console.log("An error has occured while retrieving data for: " + printer_info.name);
@@ -55,6 +71,7 @@ export default {
         )
           
       });
+      } 
       
     
     },

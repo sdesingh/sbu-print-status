@@ -1,16 +1,23 @@
 <template>
   <div class="about">
-    <h1>Do The Paper Duty!</h1>
 
-    <img class="loader" src="https://loading.io/spinners/bluecat/index.blue-longcat-spinner.svg" alt="Cat">
+    <!-- <img class="loader" src="https://loading.io/spinners/bluecat/index.blue-longcat-spinner.svg" alt="Cat"> -->
+    <printer-card></printer-card>
+
+
+
   </div>
 </template>
 
 <style scoped>
 
   .about {
-    text-align: center;
     margin: auto;
+  }
+
+  .card-footer {
+    padding-top: 5px;
+    padding-bottom: 5px;
   }
 
   .loader {
@@ -19,3 +26,12 @@
   }
 </style>
 
+<script>
+import PrinterCard from '../components/PrinterInfoCard'
+
+export default {
+  components: {
+    PrinterCard
+  }
+}
+</script>

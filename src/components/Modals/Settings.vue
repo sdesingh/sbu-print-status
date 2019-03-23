@@ -57,7 +57,7 @@
 
     text-align: center;
     padding: 2px 10px;
-    width: 40px;
+    width: 70px;
   }
 
   .setting-name {

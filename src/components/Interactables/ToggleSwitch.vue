@@ -2,7 +2,7 @@
   <div>
 
     <label class="switch">
-      <input type="checkbox" v-model="checked" @input="$store.commit(toggle)">
+      <input type="checkbox" v-model="check" @input="$store.commit(toggle)">
       <span class="slider round"></span>
     </label>
 
@@ -80,7 +80,7 @@
 export default {
   data() {
     return {
-      // check: this.checked
+      check: this.checked
     }
   },
 

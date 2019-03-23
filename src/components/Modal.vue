@@ -9,12 +9,14 @@
 
         <!-- Modal content -->
         <div class="modal-content">
-          
-          <!-- Close Button -->
-          <span class="close" @click="$store.commit(toggle)"> &times; </span>
 
           <!-- Title -->
-          <div id="title"> Settings </div>
+          <div id="title"> Settings   
+            <!-- Close Button -->
+            <span class="close" @click="$store.commit(toggle)"> &times; </span>
+          </div>
+
+          
 
           <!-- Content for the modal. -->
           <slot/>
@@ -91,7 +93,7 @@
   .close {
     color: #aaa;
     margin-right: 20px;
-    margin-top: 20px;
+    margin-top: 5px;
     float: right;
     font-size: 28px;
     font-weight: bold;
