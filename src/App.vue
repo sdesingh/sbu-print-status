@@ -69,6 +69,8 @@
     src: url('https://fonts.gstatic.com/s/googlesans/v12/4UabrENHsxJlGDuGo1OIlLV154tzCwZsPF4o.woff2') format('woff2');
   }
 
+  @import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
+
   @font-face {
   font-family: 'Google Sans';
   font-style: normal;
