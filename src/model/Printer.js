@@ -16,6 +16,8 @@ export class Printer {
     this.printerStatus = 3;
     this.printerType = 0; // 0: Print from Anywhere, 1: RCC Lab
 
+    this.pagesPrinted = 3200;
+
     this.trays = [];
 
   }

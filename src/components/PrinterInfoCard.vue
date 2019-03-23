@@ -1,10 +1,10 @@
 <template>
-  <div class="card ml-3 text-white" :class="getPrinterStyle()">
+  <div class="card text-white" :class="getPrinterStyle()">
 
       <div class="card-body">
 
         <div class="d-flex align-items-right">
-          <h2 class="card-title font-weight-bolder "> {{ printer.name }} </h2>
+          <h2 class="card-title font-weight-bold"> {{ printer.name }} </h2>
           <div class="spinner-grow text-white ml-auto" role="status" v-if="printer.printerStatus <= 2"></div>
         </div>  
 
@@ -24,7 +24,6 @@
             </div>
             
           </li>
-
 
           <div class="container text-dark text-center">
 
@@ -148,9 +147,9 @@ export default {
     },
     printerSubMessage(){
       if(this.printer.printerStatus >= 3){
-        return 'Cannot reach the printer.'
+        return 'Cannot reach the printer.';
       }else{
-        return (this.printer.printerType === 0) ? 'Print From Anywhere':'RCC Lab'
+        return 'Pages Printed: ' + this.printer.pagesPrinted;
       }
     }
   }

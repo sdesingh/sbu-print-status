@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    
+
     <div id="printers">
       <!-- <printer-summary class="printer" v-for="(item, index) in printerData" :key="index" :status="item"/> -->
       <printer-card class="printer" v-for="(printer, index) in printerData" :key="index" :printer="printer"></printer-card>
@@ -15,9 +15,8 @@
   #printers {
     display: grid;
     margin: 50px 20px;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-gap: 10px;
-    grid-auto-rows: min-content;
   }
 
 </style>
