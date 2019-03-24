@@ -81,8 +81,6 @@
     transition: 0.15s linear;
   }
 
-
-
   /* Change the color of links on hover */
   .topnav .link:hover,
   .topnav .button:hover{

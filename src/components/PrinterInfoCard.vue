@@ -17,14 +17,20 @@
           <li class="list-group-item list-group-item-action text-monospace"
               v-for="(tray, index) in printer.trays" :key="index"
           >
+            <!-- Tray Information -->
             <div class="row">
               <div class="col font-weight-bold"> {{ tray.name }} </div>
+
               <div class="col text-center"> {{ tray.setting }} </div>
-              <div class="col text-right"> <span :class="getBadgeStyle(tray.statusCode)" class="badge"> {{ tray.trayStatus() }} </span> </div>
+
+              <div class="col text-right"> 
+                <span :class="getBadgeStyle(tray.statusCode)" class="badge"> {{ tray.trayStatus() }} </span> 
+              </div>
             </div>
             
           </li>
 
+          <!-- Supply Information -->
           <div class="container text-dark text-center">
 
             <div class="row justify-content-between">
