@@ -34,18 +34,13 @@
           <div class="container text-dark text-center">
 
             <div class="row justify-content-between">
-              <div class="btn btn-light col"> 
-                <i class="fas fa-tint"></i>   
-                <div class="tooltip"> {{printer.tonerStatus }} </div>            
+
+              <div class="btn col" :class="supplyStyle(supply)" v-for="(supply, index) in supplies" :key="index">
+                <i class="fas" :class="'fa-' + supply.icon"></i>
+                <div class="tooltip"> {{ supply.data }} </div>
               </div>
-              <div class="btn btn-light col"> 
-                <i class="fas fa-paint-roller"></i> 
-                <div class="tooltip"> {{printer.drumStatus }} </div>     
-              </div>
-              <div class="btn btn-light col"> 
-                <i class="fas fa-tools"></i> 
-                <div class="tooltip"> {{printer.maintKitStatus }} </div>     
-              </div>
+
+
             </div>
 
           </div>
@@ -132,13 +127,23 @@ export default {
   data(){
     return {
       // printer: {},
-      statusStyles: ['success', 'warning', 'danger', 'dark']
+      statusStyles: ['success', 'warning', 'danger', 'dark'],
     }
   },
   props: ['printer'],
   mounted(){
 
   },
+  computed: {
+    supplies(){
+      return [
+        {icon: 'tint', data: this.printer.tonerStatus, statusCode: this.printer.tonerStatusCode()}, 
+        {icon: 'paint-roller', data: this.printer.drumStatus, statusCode: this.printer.drumStatusCode()}, 
+        {icon: 'tools', data: this.printer.maintKitStatus, statusCode: this.printer.maintKitStatusCode()}
+      ]
+    }
+  },
+
   methods: {
     getBadgeStyle(statusCode){
       let badge = 'badge-' + this.statusStyles[statusCode];
@@ -157,6 +162,13 @@ export default {
       }else{
         return 'Pages Printed: ' + this.printer.pagesPrinted;
       }
+    },
+    supplyStyle(supplyItem){
+     let statusCode = supplyItem.statusCode;
+     const prefix = 'btn-';
+
+     if(statusCode === 0) return prefix + 'light';
+     else return prefix + this.statusStyles[statusCode];
     }
   }
 }
