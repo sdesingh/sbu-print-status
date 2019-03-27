@@ -24,7 +24,6 @@ export default {
     getData({state, commit, dispatch, rootState}){
 
       const app_settings = rootState.settings
-      let supplyThreshold = app_settings.supplyThreshold;
 
       const request_settings = {
         timeout: app_settings.timeout,
@@ -36,7 +35,7 @@ export default {
 
         app_settings.printer_data.forEach((printer_info, index) => {
 
-          let printer = Printer.GenerateRandomPrinter(printer_info.name, printer_info.url, index, supplyThreshold);
+          let printer = Printer.GenerateRandomPrinter(printer_info.name, printer_info.url, index);
           
           commit('updatePrinterData', printer);
 
@@ -54,7 +53,7 @@ export default {
 
           (response) => {
 
-            let printer = Printer.ParsePrinterJSON(response.data, printer_info.name, printer_info.url, index, supplyThreshold);
+            let printer = Printer.ParsePrinterJSON(response.data, printer_info.name, printer_info.url, index);
             commit('updatePrinterData', printer);
             
 
@@ -65,7 +64,7 @@ export default {
             console.log("An error has occured while retrieving data for: " + printer_info.name);
             // console.log(error);
 
-            let printer = new Printer(printer_info.name, printer_info.url, index, supplyThreshold);
+            let printer = new Printer(printer_info.name, printer_info.url, index);
             commit('updatePrinterData', printer);
           }
         )
@@ -88,7 +87,7 @@ export default {
       printer_data.forEach((printer_info, index) => {
 
         
-        let printer = new Printer(printer_info.name, printer_info.url, index, app_settings.supplyThreshold);
+        let printer = new Printer(printer_info.name, printer_info.url, index);
         new_data.push(printer)
 
       })

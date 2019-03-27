@@ -13,7 +13,7 @@
           <!-- Title -->
           <div id="title"> Settings   
             <!-- Close Button -->
-            <span class="close" @click="$store.commit(toggle)"> &times; </span>
+            <span class="close" @click="$store.commit(toggle)"> <i class="fas fa-times text-white"></i> </span>
           </div>
 
           
@@ -85,18 +85,16 @@
     left: 0;
     right: 0;
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 8% auto; /* 15% from the top and centered */
     width: 40%; /* Could be more or less, depending on screen size */
   }
 
   /* The Close Button */
   .close {
-    color: #aaa;
     margin-right: 20px;
     margin-top: 5px;
     float: right;
     font-size: 28px;
-    font-weight: bold;
   }
 
   .close:hover,

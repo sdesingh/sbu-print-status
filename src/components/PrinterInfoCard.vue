@@ -56,7 +56,6 @@
   </div>
 </template>
 
-
 <style scoped>
 
   .fas {
@@ -120,8 +119,8 @@
 
 </style>
 
-
 <script>
+
 import { Printer } from '../model/Printer.js'
 export default {
   data(){
@@ -137,24 +136,49 @@ export default {
   computed: {
     supplies(){
       return [
-        {icon: 'tint', data: this.printer.tonerStatus, statusCode: this.printer.tonerStatusCode()}, 
-        {icon: 'paint-roller', data: this.printer.drumStatus, statusCode: this.printer.drumStatusCode()}, 
-        {icon: 'tools', data: this.printer.maintKitStatus, statusCode: this.printer.maintKitStatusCode()}
+        {
+          icon: 'tint', 
+          data: this.printer.tonerStatus, 
+          statusCode: this.printer.tonerStatusCode(this.supplyThresholds[0].value)
+        }, 
+        {
+          icon: 'paint-roller', 
+          data: this.printer.drumStatus, 
+          statusCode: this.printer.drumStatusCode(this.supplyThresholds[1].value)
+        }, 
+        {
+          icon: 'tools', 
+          data: this.printer.maintKitStatus, 
+          statusCode: this.printer.maintKitStatusCode(this.supplyThresholds[2].value)
+        }
       ]
+    },
+    supplyThresholds(){
+      return this.$store.state.settings.supplyThresholds;
+    },
+    printerStatusCode(){
+
+      const printer = this.printer;
+      const thresholds = this.supplyThresholds;
+
+      if(printer.isOffline()) return 3;
+
+      let tonerStatus = printer.tonerStatusCode(thresholds[0].value);
+      let drumStatus = printer.drumStatusCode(thresholds[1].value);
+      let maintKitStatus = printer.maintKitStatusCode(thresholds[2].value);
+      let isJammed = printer.printerJamStatusCode();
+
+      return Math.max(tonerStatus, drumStatus, maintKitStatus, isJammed);
     }
   },
-
   methods: {
     getBadgeStyle(statusCode){
       let badge = 'badge-' + this.statusStyles[statusCode];
       return badge; 
     },
     getPrinterStyle(){
-      let style = "bg-" + this.statusStyles[this.printer.printerStatus];
+      let style = "bg-" + this.statusStyles[this.printerStatusCode];
       return style;
-    },
-    test(){
-
     },
     printerSubMessage(){
       if(this.printer.printerStatus >= 3){

@@ -12,7 +12,7 @@ export const printer_data = [
   {url: 'http://cr-glsxrx1.sinc.stonybrook.edu', name: 'GLS Center'},
   {url: 'http://cr-wscxrx1.sinc.stonybrook.edu', name: 'West Commons'},
   {url: 'http://cr-chaxrx1.sinc.stonybrook.edu', name: 'Chapin RCC'},
-  {url: 'http://cr-onexrx1.sinc.stonybrook.edu', name: 'O\'neil RCC'},
+  {url: 'http://cr-onexrx1.sinc.stonybrook.edu', name: 'O\'neill RCC'},
   {url: 'http://cr-douxrx1.sinc.stonybrook.edu', name: 'Douglass RCC'},
   {url: 'http://cr-nobxrx1.sinc.stonybrook.edu', name: 'Nobel RCC'},
   {url: 'http://cr-wesxrx1.sinc.stonybrook.edu', name: 'West RCC'},
@@ -22,7 +22,10 @@ export const printer_data = [
 
 ]
 
-export const baseUrl = 'http://crweb2.campus.stonybrook.edu:443/api/printers/';
+export const baseUrl = 
+
+(process.env.NODE_ENV == "production") ? // Use Dev or Production API
+ 'http://crweb2.campus.stonybrook.edu:443/api/printers/': 'http://localhost:443/api/printers/';
 
 // Defaults.
 export const refreshRate = 1

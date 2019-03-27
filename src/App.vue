@@ -11,7 +11,10 @@
     </modal>  
 
     <navigation/>
-    <router-view id="router-view"/>
+
+    <transition name="fade">
+      <router-view id="router-view"/>
+    </transition>
 
   </div>
 </template>
@@ -21,7 +24,7 @@
   // import Navigation from '@/components/Navigation.vue'
   import Navigation from '@/components/Layout/Nav.vue'
   import Modal from '@/components/Modal.vue'
-  import Settings from '@/components/Modals/Settings.vue'
+  import Settings from '@/components/Modals/BSettings.vue'
   import Onboard from '@/components/Onboarding.vue'
 
   export default {
@@ -91,10 +94,22 @@
     margin: 0;
     padding: 0;
     background: #F7F7F7;
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer */
+    -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+    -webkit-user-select: none; /* Chrome, Safari, and Opera */
+    -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
   }
 
   #router-view{
     margin-top: 80px;
   }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  } 
 
 </style>

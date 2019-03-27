@@ -4,7 +4,7 @@
   <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-dark">
 
     <a class="navbar-brand" href="#">
-      <img src="https://www.stonybrook.edu/far-beyond/img/branding/logo/sbu/secondary/white/300/stony-brook-university-logo-horizontal-white-300.png" height="30" alt="" srcset="">
+      <img src="../../assets/logo.png" height="30" alt="" srcset="">
       <!-- <span>Print Stats</span> -->
     </a>
 

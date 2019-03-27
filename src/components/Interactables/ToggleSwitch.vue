@@ -2,15 +2,16 @@
   <div>
 
     <label class="switch">
-      <input type="checkbox" v-model="check" @input="$store.commit(toggle)">
+      <input type="checkbox" v-model="check" @input="$store.commit('toggleSetting', toggle)">
       <span class="slider round"></span>
     </label>
 
   </div>
 </template>
 
-<style scoped>
-
+<style lang="scss" scoped>
+  $green: #27ae60;
+  
     /* The switch - the box around the slider */
   .switch {
     position: relative;
@@ -52,11 +53,11 @@
   }
 
   input:checked + .slider {
-    background-color: #1DD1A1;
+    background-color: $green;
   }
 
   input:focus + .slider {
-    box-shadow: 0 0 1px #1DD1A1;
+    box-shadow: 0 0 1px $green;
   }
 
   input:checked + .slider:before {
@@ -73,8 +74,9 @@
   .slider.round:before {
     border-radius: 50%;
   }
-  
 </style>
+
+
 
 <script>
 export default {

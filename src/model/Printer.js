@@ -2,11 +2,10 @@ import _ from 'lodash';
 
 export class Printer {
 
-  constructor(name, url, index, supplyThreshold){
+  constructor(name, url, index){
     this.name = name;
     this.index = index;
     this.url = url;
-    this.supplyThreshold = supplyThreshold;
 
     this.tonerStatus = 'Unknown';
     this.drumStatus = 'Unknown';
@@ -16,13 +15,17 @@ export class Printer {
     this.printerStatus = 3;
     this.printerType = 0; // 0: Print from Anywhere, 1: RCC Lab
 
-    this.pagesPrinted = 3200;
+    this.pagesPrinted = 0;
 
     this.trays = [];
 
   }
 
-  tonerStatusCode(){
+  isOffline(){
+    return this.printerStatus === 3;
+  }
+
+  tonerStatusCode(threshold){
     let status = 0;
 
     const tonerStatus = this.tonerStatus;
@@ -31,13 +34,13 @@ export class Printer {
     else{
       let pages = parseInt(tonerStatus.substring(0, tonerStatus.indexOf('-')))
   
-      if(pages < this.supplyThreshold) {status = 1 }
+      if(pages < threshold) {status = 1 }
     }
 
     return status;
   }
 
-  drumStatusCode(){
+  drumStatusCode(threshold){
 
     let status = 0;
 
@@ -47,14 +50,64 @@ export class Printer {
     else{
       let pages = parseInt(drumStatus.substring(0, drumStatus.indexOf('-')))
   
-      if(pages < this.supplyThreshold) {status = 1 }
+      if(pages < threshold) {status = 1 }
     }
 
     return status;
     
   }
 
-  maintKitStatusCode(){
+  printerJamStatusCode(){
+    
+    if(this.statusMessage.includes("Jam")){
+      return 2;
+    }
+    else {
+      return 0;
+    }
+
+  }
+
+  trayStatusCode(){
+    
+    let traysEmpty = 0;
+    let traysLow = 0;
+    let traysFull = 0;
+
+    this.trays.forEach(tray => {
+
+      switch(tray.statusCode){
+
+        case 0: traysFull++;
+        break;
+
+        case 1: traysLow++;
+        break;
+
+        case 2: traysEmpty++;
+        break;
+
+        default: traysEmpty++;
+      }
+
+    });
+
+    // At least two trays that are full or less.
+    if(traysFull + traysLow > 1){
+      return 0;
+    }
+    // Only one tray remaining.
+    else if(traysFull + traysLow === 1){
+      return 1;
+    }
+    // No more paper remaining.
+    else {
+      return 2;
+    }
+
+  }
+
+  maintKitStatusCode(threshold){
 
     let status = 0;
 
@@ -64,7 +117,7 @@ export class Printer {
     else{
       let pages = parseInt(maintKitStatus)
   
-      if(pages < this.supplyThreshold) {status = 1 }
+      if(pages < threshold) {status = 1 }
     }
 
     return status;
@@ -109,6 +162,9 @@ export class Printer {
 
     // Set printer type.
     printer.printerType = printerJSON.Type;
+
+    // Set Pages Printer
+    printer.pagesPrinted = printerJSON.PagesPrinted
 
     return printer;
   }
@@ -174,7 +230,7 @@ export class Printer {
     // Toner has some random value.
     else {
       let tonerCount = _.random(supplyThreshold + 1, 12000);
-      printer.tonerStatus = `${tonerCount - 50}-${tonerCount} Pages Remaining`;
+      printer.tonerStatus = `${tonerCount}-${tonerCount + 250} Pages Remaining`;
     }
 
     // Generate random drum kit value.
