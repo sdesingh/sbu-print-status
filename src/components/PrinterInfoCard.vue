@@ -5,7 +5,7 @@
 
         <div class="d-flex align-items-right">
           <h2 class="card-title font-weight-bold"> {{ printer.name }} </h2>
-          <div class="spinner-grow text-white ml-auto" role="status" v-if="printer.printerStatus <= 2"></div>
+          <!-- <div class="spinner-grow text-white ml-auto" role="status" v-if="printer.printerStatus <= 2"></div> -->
         </div>  
 
         <h6 class="card-subtitle text-white">{{ printer.statusMessage }} </h6>
@@ -30,6 +30,35 @@
             
           </li>
 
+          <div v-if="printer.trays.length < 4">
+
+            <li class="list-group-item list-group-item-action">
+            <!-- Tray Information -->
+              <div class="row">
+                <div class="col font-weight-bold text-center"> - </div>
+
+                <div class="col text-center"> - </div>
+
+                <div class="col text-center"> - </div> 
+
+              </div>
+            </li>
+
+            <li class="list-group-item list-group-item-action">
+            <!-- Tray Information -->
+              <div class="row">
+                <div class="col font-weight-bold text-center"> - </div>
+
+                <div class="col text-center"> - </div>
+
+                <div class="col text-center"> - </div>
+
+              </div>
+            </li>
+
+          </div>
+          
+
           <!-- Supply Information -->
           <div class="container text-dark text-center">
 
@@ -48,9 +77,10 @@
         </ul>
     
         
-
         <div class="card-footer">
-          <small class="text-white">{{ printerSubMessage() }} </small>
+          <i class="fas mr-3 my-auto" :class="statusIcons[printerStatusCode]" id="status-icon"></i>
+          <small class="text-white my-auto">{{ printerSubMessage() }} </small>
+          
         </div>
 
   </div>
@@ -64,6 +94,7 @@
 
   .card {
     /* border: 0; */
+    transition: 0.2s linear
   }
 
   .badge {
@@ -127,6 +158,7 @@ export default {
     return {
       // printer: {},
       statusStyles: ['success', 'warning', 'danger', 'dark'],
+      statusIcons: ['fa-check-circle', 'fa-exclamation-triangle', 'fa-times', 'fa-power-off' ]
     }
   },
   props: ['printer'],
@@ -142,7 +174,7 @@ export default {
           statusCode: this.printer.tonerStatusCode(this.supplyThresholds[0].value)
         }, 
         {
-          icon: 'paint-roller', 
+          icon: 'drum', 
           data: this.printer.drumStatus, 
           statusCode: this.printer.drumStatusCode(this.supplyThresholds[1].value)
         }, 
@@ -165,10 +197,11 @@ export default {
 
       let tonerStatus = printer.tonerStatusCode(thresholds[0].value);
       let drumStatus = printer.drumStatusCode(thresholds[1].value);
+      let trayStatusCode = printer.trayStatusCode();
       let maintKitStatus = printer.maintKitStatusCode(thresholds[2].value);
       let isJammed = printer.printerJamStatusCode();
 
-      return Math.max(tonerStatus, drumStatus, maintKitStatus, isJammed);
+      return Math.max(tonerStatus, drumStatus, maintKitStatus, isJammed, trayStatusCode);
     }
   },
   methods: {

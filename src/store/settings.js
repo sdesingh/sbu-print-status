@@ -1,4 +1,4 @@
-import { printer_data, refreshRate, timeout, baseUrl } from '../printerSettings'
+import { printer_data, supply_thresholds, refreshRate, timeout, baseUrl } from '../printerSettings'
 import cookies from 'vue-cookies'
 
 export default {
@@ -62,8 +62,12 @@ export default {
       else {
         cookies.set('refreshRate', refreshRate, -1)
         cookies.set('useTestData', false, -1)
-        cookies.set('showNotifications', false, -1)
+        cookies.set('supplyThresholds', JSON.stringify(supply_thresholds))
       }
+    },
+    loadDefaults({}){
+
+      
     },
     saveSettings({state}){
       cookies.set('refreshRate', state.refreshRate, -1);

@@ -23,7 +23,7 @@
           </div>
 
           <!-- Input for Editing the Threshold -->
-          <input type="text" class="form-control" placeholder="Select a Threshold to Edit" v-model="currentSupply.value" @input="changedSettings=true">
+          <input type="number" class="form-control" placeholder="Select a Threshold to Edit" v-model="currentSupply.value" @input="changedSettings=true">
         </div>
 
         <!-- Refresh Rate -->

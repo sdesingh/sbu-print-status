@@ -132,11 +132,11 @@ export class Printer {
    * @param {*} printerUrl The url of the printer's web server.
    * @returns {Printer} A new printer object.
    */
-  static ParsePrinterJSON(printerJSON, printerName, printerUrl, printerIndex, supplyThreshold) {
+  static ParsePrinterJSON(printerJSON, printerName, printerUrl, printerIndex) {
 
-    let printer = new Printer(printerName, printerUrl, printerIndex, supplyThreshold);
+    let printer = new Printer(printerName, printerUrl, printerIndex);
 
-    const traysJSON = printerJSON.Trays;
+    let traysJSON = printerJSON.Trays;
 
     // Parse printer trays.
     traysJSON.forEach(tray => {
@@ -165,6 +165,7 @@ export class Printer {
 
     // Set Pages Printer
     printer.pagesPrinted = printerJSON.PagesPrinted
+    printer.index = printerIndex;
 
     return printer;
   }
@@ -174,12 +175,12 @@ export class Printer {
    * @param {*} printerName 
    * @param {*} printerUrl 
    * @param {*} printerIndex 
-   * @param {*} supplyThreshold 
+
    */
-  static GenerateRandomPrinter(printerName, printerUrl, printerIndex, supplyThreshold){
+  static GenerateRandomPrinter(printerName, printerUrl, printerIndex){
 
     // Create a printer.
-    let printer = new Printer(printerName, printerUrl, printerIndex, supplyThreshold);
+    let printer = new Printer(printerName, printerUrl, printerIndex);
     printer.printerStatus = 0;
 
     // Number of random trays to generate.
@@ -220,7 +221,7 @@ export class Printer {
 
     // Toner should be under threshold.
     if(rng < 10 && rng > 5){
-      let tonerCount = _.random(100, supplyThreshold - 1);
+      let tonerCount = _.random(0, 3000 - 1);
       printer.tonerStatus = `${tonerCount - 50}-${tonerCount} Pages Remaining` 
     }
     // Toner should be replaced
@@ -229,7 +230,7 @@ export class Printer {
     }
     // Toner has some random value.
     else {
-      let tonerCount = _.random(supplyThreshold + 1, 12000);
+      let tonerCount = _.random(3000 + 1, 12000);
       printer.tonerStatus = `${tonerCount}-${tonerCount + 250} Pages Remaining`;
     }
 
@@ -238,6 +239,7 @@ export class Printer {
     printer.maintKitStatus = "100003-101042 Pages Remaining";
     printer.printerStatus = (printer.tonerStatusCode() >= printer.printerStatus) ? printer.tonerStatusCode() : printer.printerStatus;
     printer.statusMessage = 'Test Data...'
+    printer.pagesPrinted = _.random(1000000, 2500000);
     return printer;
 
   }

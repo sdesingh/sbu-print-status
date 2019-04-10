@@ -5,7 +5,7 @@
 
       <div id="onboarding">
 
-      <img class="loader font-weight-bold" src="https://loading.io/spinners/tail/index.gooey-ball-tail-spinner.svg" alt="Cat">
+      <img class="loader font-weight-bold" src="https://loading.io/spinners/message/index.messenger-typing-preloader.svg" alt="Cat">
       <div id="title">Loading...</div>
 
     </div>
