@@ -30,8 +30,8 @@ export const supply_thresholds = [
 
 export const baseUrl = 
 
-(process.env.NODE_ENV == "production") ? // Use Dev or Production API
-  // true ?
+// (process.env.NODE_ENV == "production") ? // Use Dev or Production API
+  true ?
  'http://crweb2.campus.stonybrook.edu:443/api/printers/': 'http://localhost:443/api/printers/';
 
 // Defaults.

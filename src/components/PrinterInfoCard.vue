@@ -67,6 +67,7 @@
 
               <div class="btn col" :class="supplyStyle(supply)" v-for="(supply, index) in supplies" :key="index">
                 <i class="fas" :class="'fa-' + supply.icon"></i>
+                <span class="ml-2 text-secondary text-monospace" style="font-size: 14px"> {{ supply.data_mini }}</span>
                 <div class="tooltip"> {{ supply.data }} </div>
               </div>
 
@@ -172,16 +173,19 @@ export default {
         {
           icon: 'tint', 
           data: this.printer.tonerStatus, 
+          data_mini: this.printer.tonerStatus.substring(0, this.printer.tonerStatus.indexOf("-")),
           statusCode: this.printer.tonerStatusCode(this.supplyThresholds[0].value)
         }, 
         {
           icon: 'drum', 
           data: this.printer.drumStatus, 
+          data_mini: this.printer.drumStatus.substring(0, this.printer.drumStatus.indexOf("-")),
           statusCode: this.printer.drumStatusCode(this.supplyThresholds[1].value)
         }, 
         {
           icon: 'tools', 
           data: this.printer.maintKitStatus, 
+          data_mini: this.printer.maintKitStatus.substring(0, this.printer.maintKitStatus.indexOf(" ")),
           statusCode: this.printer.maintKitStatusCode(this.supplyThresholds[2].value)
         }
       ]
