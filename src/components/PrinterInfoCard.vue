@@ -14,7 +14,8 @@
 
         <ul class="list-group list-group-flush bg-light text-dark" v-if="printer.printerStatus <= 2">
 
-          <li class="list-group-item list-group-item-action text-monospace"
+          <li class="list-group-item text-monospace"
+              :class="trayStyle(tray.setting)"
               v-for="(tray, index) in printer.trays" :key="index"
           >
             <!-- Tray Information -->
@@ -226,6 +227,9 @@ export default {
 
      if(statusCode === 0) return prefix + 'light';
      else return prefix + this.statusStyles[statusCode];
+    },
+    trayStyle(traySetting){
+      return traySetting === "Letter" ? "list-group-item-action" : "list-group-item-danger"
     }
   }
 }
