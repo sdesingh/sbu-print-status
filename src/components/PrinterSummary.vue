@@ -62,6 +62,7 @@
     position: absolute;
     z-index: 1;
     top: 110%;
+    right: -10%;
 
     /* Fade in tooltip */
     opacity: 0;

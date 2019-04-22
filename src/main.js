@@ -7,8 +7,7 @@ import router from './router'
 // Plugins and Libraries
 import './plugins/axios'
 import 'bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap/scss/bootstrap.scss'
+import './views/styles.scss'
 
 
 Vue.config.productionTip = false

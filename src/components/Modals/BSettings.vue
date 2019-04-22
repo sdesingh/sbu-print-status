@@ -105,6 +105,7 @@ export default {
   methods: {
     setSelectedSupply(supplyIndex){
       this.selectedSupply = supplyIndex;
+      console.log('select')
       this.currentSupplyThreshold = this.getThreshold(supplyIndex)
     },
     getThreshold(supplyIndex){

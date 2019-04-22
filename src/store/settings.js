@@ -42,7 +42,7 @@ export default {
 
     loadDefaultSettings({dispatch, commit}){
       // Settings exist, load user preferences.
-      if(cookies.get('refreshRate')){
+      if(cookies.get('supplyThresholds')){
 
         let settings = {
           refreshRate: parseInt(cookies.get('refreshRate')),
