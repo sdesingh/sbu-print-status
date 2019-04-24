@@ -67,7 +67,7 @@
 
               <div class="btn col" :class="supplyStyle(supply)" v-for="(supply, index) in supplies" :key="index">
                 <i class="fas" :class="'fa-' + supply.icon"></i>
-                <span class="ml-2 text-secondary text-monospace" style="font-size: 14px"> {{ supply.data_mini }}</span>
+                <span class="ml-2 text-monospace" style="font-size: 14px"> {{ supply.data_mini }}</span>
                 <div class="tooltip"> {{ supply.data }} </div>
               </div>
 
@@ -105,49 +105,6 @@
 
   .btn {
     border-radius: 0;
-    position: relative;
-    z-index: 1;
-  }
-
-  .tooltip {
-    visibility: hidden;
-    width: 100px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    padding: 5px;
-    border-radius: 6px;
-
-    /* Position the tooltip text */
-    position: absolute;
-    z-index: 1;
-    top: 110%;
-
-    /* Fade in tooltip */
-    opacity: 0;
-    transition: opacity 0.3s;
-
-    /* Font */
-    /* font-family: 'Open Sans', sans-serif; */
-    font-weight: 400;
-    font-style: normal;
-    font-size: 14px;
-  }
-
-  .tooltip::after {
-    content: " ";
-    position: absolute;
-    bottom: 100%;  /* At the top of the tooltip */
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent black transparent;
-  }
-
-  .btn:hover .tooltip{
-    visibility: visible;
-    opacity: 1;
   }
 
 </style>
@@ -173,19 +130,19 @@ export default {
         {
           icon: 'tint', 
           data: this.printer.tonerStatus, 
-          data_mini: this.printer.tonerStatus.substring(0, this.printer.tonerStatus.indexOf("-")),
+          data_mini: this.commaNumber(this.printer.tonerStatus.substring(0, this.printer.tonerStatus.indexOf("-"))),
           statusCode: this.printer.tonerStatusCode(this.supplyThresholds[0].value)
         }, 
         {
           icon: 'drum', 
           data: this.printer.drumStatus, 
-          data_mini: this.printer.drumStatus.substring(0, this.printer.drumStatus.indexOf("-")),
+          data_mini: this.commaNumber(this.printer.drumStatus.substring(0, this.printer.drumStatus.indexOf("-"))),
           statusCode: this.printer.drumStatusCode(this.supplyThresholds[1].value)
         }, 
         {
           icon: 'tools', 
           data: this.printer.maintKitStatus, 
-          data_mini: this.printer.maintKitStatus.substring(0, this.printer.maintKitStatus.indexOf(" ")),
+          data_mini: this.commaNumber(this.printer.maintKitStatus.substring(0, this.printer.maintKitStatus.indexOf(" "))),
           statusCode: this.printer.maintKitStatusCode(this.supplyThresholds[2].value)
         }
       ]
@@ -222,7 +179,7 @@ export default {
       if(this.printer.printerStatus >= 3){
         return 'Cannot reach the printer.';
       }else{
-        return 'Pages Printed: ' + this.printer.pagesPrinted;
+        return 'Pages Printed: ' + this.printer.pagesPrinted.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
     },
     supplyStyle(supplyItem){
@@ -234,6 +191,9 @@ export default {
     },
     trayStyle(traySetting){
       return traySetting === "Letter" ? "list-group-item-action" : "list-group-item-danger"
+    },
+    commaNumber(number){
+      return number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
   }
 }

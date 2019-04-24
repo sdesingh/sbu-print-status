@@ -15,7 +15,7 @@
   #printers {
     display: grid;
     margin: 20px;
-    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(355px, 1fr));
     grid-template-rows: minmax(min-content, max-content);
     grid-gap: 10px;
   }

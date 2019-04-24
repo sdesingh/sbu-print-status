@@ -165,6 +165,7 @@ export class Printer {
 
     // Set Pages Printer
     printer.pagesPrinted = printerJSON.PagesPrinted
+
     printer.index = printerIndex;
 
     return printer;
@@ -236,7 +237,7 @@ export class Printer {
 
     // Generate random drum kit value.
     printer.drumStatus = "21000-22312 Pages Remaining";
-    printer.maintKitStatus = "100003-101042 Pages Remaining";
+    printer.maintKitStatus = "100003 Pages Remaining";
     printer.printerStatus = (printer.tonerStatusCode() >= printer.printerStatus) ? printer.tonerStatusCode() : printer.printerStatus;
     printer.statusMessage = 'Test Data...'
     printer.pagesPrinted = _.random(1000000, 2500000);
