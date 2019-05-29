@@ -35,7 +35,7 @@ export default {
 
         app_settings.printer_data.forEach((printer_info, index) => {
 
-          let printer = Printer.GenerateRandomPrinter(printer_info.name, printer_info.url, index);
+          let printer = Printer.GenerateRandomPrinter(printer_info.name, index);
           
           commit('updatePrinterData', printer);
 
@@ -44,31 +44,29 @@ export default {
       // Retrieve data.
       else {
 
-        // Loop through all the printer urls.
-        app_settings.printer_data.forEach((printer_info, index) => {
+        axios.get(app_settings.baseUrl, request_settings)
+          .then(
 
-        let printerURL = app_settings.baseUrl + printer_info.id;
+            (response) => {
 
-        axios.get(printerURL, request_settings).then(
+              response.data.forEach(printerData => {
+                
+                let printer = Printer.ParsePrinterJSON(printerData);
+                commit('updatePrinterData', printer);
 
-          (response) => {
+              });
 
-            let printer = Printer.ParsePrinterJSON(response.data, printer_info.name, printer_info.url, index);
-            commit('updatePrinterData', printer);
+            },
 
-          },
+            (error) => {
+              
+              console.log("An error has occured while connecting to the API.");
+              console.log(error);
 
-          (error) => {
+            }
 
-            console.log("An error has occured while retrieving data for: " + printer_info.name);
-            // console.log(error);
-
-            let printer = new Printer(printer_info.name, printer_info.url, index);
-            commit('updatePrinterData', printer);
-          }
-        )
+          )
           
-      });
       } 
       
     
@@ -83,13 +81,13 @@ export default {
       const app_settings = rootState.settings
       const printer_data = rootState.settings.printer_data
 
-      printer_data.forEach((printer_info, index) => {
+      // printer_data.forEach((printer_info, index) => {
 
         
-        let printer = new Printer(printer_info.name, printer_info.url, index);
-        new_data.push(printer)
+      //   let printer = new Printer(printer_info.name, index);
+      //   new_data.push(printer)
 
-      })
+      // })
 
       commit('initializePrinterData', new_data);
 

@@ -9,7 +9,7 @@
         <!-- Supply Thresholds -->
         <div class="input-group">
           <div class="input-group-prepend">
-            <button class="btn btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown"> {{ currentSupply.name }}</button>
+            <button class="btn btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown"> {{ currentSupply.name }} (%)</button>
             <div class="dropdown-menu">
 
               <!-- vFor all the supplies loaded. -->
@@ -30,7 +30,7 @@
         <div class="input-group mt-3 mb-3">
 
           <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Refresh Rate</span>
+            <span class="input-group-text" id="basic-addon1">Refresh Rate (Minutes)</span>
           </div>
 
           <input class="form-control" placeholder="Data Refresh Rate (Minutes)" 

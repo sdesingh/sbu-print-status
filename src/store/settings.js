@@ -7,9 +7,9 @@ export default {
     refreshRate: refreshRate,
     useTestData: false,
     supplyThresholds: [
-      {name: 'Toner', value: 1500},
-      {name: 'Drum Kit', value: 2000},
-      {name: 'Maintenance Kit', value: 5000}
+      {name: 'Toner', value: 5},
+      {name: 'Drum Kit', value: 5},
+      {name: 'Maintenance Kit', value: 5}
     ],
     timeout: timeout,
     showNotifications: false,

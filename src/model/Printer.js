@@ -2,10 +2,9 @@ import _ from 'lodash';
 
 export class Printer {
 
-  constructor(name, url, index){
+  constructor(name, index){
     this.name = name;
     this.index = index;
-    this.url = url;
 
     this.tonerStatus = 'Unknown';
     this.drumStatus = 'Unknown';
@@ -22,38 +21,20 @@ export class Printer {
   }
 
   isOffline(){
-    return this.printerStatus === 3;
+    return this.statusMessage === "Offline";
   }
 
   tonerStatusCode(threshold){
-    let status = 0;
 
-    const tonerStatus = this.tonerStatus;
+    if(this.tonerStatus == 0) return 2;
+    else return this.tonerStatus < threshold ? 1 : 0;
 
-    if(tonerStatus == 'Replace') { status = 2 }
-    else{
-      let pages = parseInt(tonerStatus.substring(0, tonerStatus.indexOf('-')))
-  
-      if(pages < threshold) {status = 1 }
-    }
-
-    return status;
   }
 
   drumStatusCode(threshold){
 
-    let status = 0;
-
-    const drumStatus = this.drumStatus;
-
-    if(drumStatus == 'Replace') { status = 2 }
-    else{
-      let pages = parseInt(drumStatus.substring(0, drumStatus.indexOf('-')))
-  
-      if(pages < threshold) {status = 1 }
-    }
-
-    return status;
+    if(this.drumStatus == 0) return 2;
+    else return this.drumStatus < threshold ? 1 : 0;
     
   }
 
@@ -109,18 +90,8 @@ export class Printer {
 
   maintKitStatusCode(threshold){
 
-    let status = 0;
-
-    const maintKitStatus = this.maintKitStatus;
-
-    if(maintKitStatus == 'Replace') { status = 2 }
-    else{
-      let pages = parseInt(maintKitStatus)
-  
-      if(pages < threshold) {status = 1 }
-    }
-
-    return status;
+    if(this.maintKitStatus == 0) return 2;
+    else return this.maintKitStatus < threshold ? 1 : 0;
 
   }
 
@@ -132,17 +103,15 @@ export class Printer {
    * @param {*} printerUrl The url of the printer's web server.
    * @returns {Printer} A new printer object.
    */
-  static ParsePrinterJSON(printerJSON, printerName, printerUrl, printerIndex) {
+  static ParsePrinterJSON(data) {
 
-    let printer = new Printer(printerName, printerUrl, printerIndex);
-
-    let traysJSON = printerJSON.Trays;
+    let printer = new Printer(data.printerName, data.id);
 
     // Parse printer trays.
-    traysJSON.forEach(tray => {
+    data.trays.forEach(tray => {
 
       // Create a new tray.
-      let newTray = new Tray(tray.TrayName, tray.TrayStatus, tray.TraySetting);
+      let newTray = new Tray(tray.trayName, tray.trayStatus, tray.traySetting);
 
       // Add Tray to the newly created printer object.
       printer.trays.push(newTray);
@@ -150,23 +119,22 @@ export class Printer {
     });
 
     // Set supply status.
-    printer.tonerStatus = printerJSON.TonerStatus;
-    printer.drumStatus = printerJSON.DrumStatus;
-    printer.maintKitStatus = printerJSON.MaintKitStatus;
+    printer.tonerStatus = data.tonerStatus;
+    printer.drumStatus = data.drumKitStatus;
+    printer.maintKitStatus = data.maintKitStatus;
 
     // Set main printer status.
-    printer.printerStatus = printerJSON.CurrentStatus;
+    printer.printerStatus = 0;
 
     // Set printer status message.
-    printer.statusMessage = printerJSON.StatusMessage;
+    printer.statusMessage = data.printerStatus;
+    if(printer.statusMessage === 'Offline') printer.printerStatus = 3;
 
     // Set printer type.
-    printer.printerType = printerJSON.Type;
+    printer.printerType = 0;
 
     // Set Pages Printer
-    printer.pagesPrinted = printerJSON.PagesPrinted
-
-    printer.index = printerIndex;
+    printer.pagesPrinted = data.pageCount
 
     return printer;
   }

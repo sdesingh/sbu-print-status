@@ -8,82 +8,78 @@
           <!-- <div class="spinner-grow text-white ml-auto" role="status" v-if="printer.printerStatus <= 2"></div> -->
         </div>  
 
-        <h6 class="card-subtitle text-white">{{ printer.statusMessage }} </h6>
+        <p class="card-subtitle text-white">{{ printer.statusMessage }} </p>
     
       </div>
 
-        <ul class="list-group list-group-flush bg-light text-dark" v-if="printer.printerStatus <= 2">
+      <ul class="list-group list-group-flush bg-light text-dark" v-if="!(printer.printerStatus === 3)">
 
-          <li class="list-group-item text-monospace"
-              :class="trayStyle(tray.setting)"
-              v-for="(tray, index) in printer.trays" :key="index"
-          >
-            <!-- Tray Information -->
-            <div class="row">
-              <div class="col font-weight-bold"> {{ tray.name }} </div>
+        <li class="list-group-item text-monospace"
+            :class="trayStyle(tray.setting)"
+            v-for="(tray, index) in printer.trays" :key="index">
+          <!-- Tray Information -->
+          <div class="row">
+            <div class="col font-weight-bold"> {{ tray.name }} </div>
 
-              <div class="col text-center"> {{ tray.setting }} </div>
+            <div class="col text-center"> {{ tray.setting }} </div>
 
-              <div class="col text-right"> 
-                <span :class="getBadgeStyle(tray.statusCode)" class="badge"> {{ tray.trayStatus() }} </span> 
-              </div>
+            <div class="col text-right"> 
+              <span :class="getBadgeStyle(tray.statusCode)" class="badge"> {{ tray.trayStatus() }} </span> 
             </div>
-            
+          </div>
+          
+        </li>
+
+        <div v-if="printer.trays.length < 4">
+
+          <li class="list-group-item list-group-item-action">
+          <!-- Tray Information -->
+            <div class="row">
+              <div class="col font-weight-bold text-center"> - </div>
+
+              <div class="col text-center"> - </div>
+
+              <div class="col text-center"> - </div> 
+
+            </div>
           </li>
 
-          <div v-if="printer.trays.length < 4">
+          <li class="list-group-item list-group-item-action">
+          <!-- Tray Information -->
+            <div class="row">
+              <div class="col font-weight-bold text-center"> - </div>
 
-            <li class="list-group-item list-group-item-action">
-            <!-- Tray Information -->
-              <div class="row">
-                <div class="col font-weight-bold text-center"> - </div>
+              <div class="col text-center"> - </div>
 
-                <div class="col text-center"> - </div>
-
-                <div class="col text-center"> - </div> 
-
-              </div>
-            </li>
-
-            <li class="list-group-item list-group-item-action">
-            <!-- Tray Information -->
-              <div class="row">
-                <div class="col font-weight-bold text-center"> - </div>
-
-                <div class="col text-center"> - </div>
-
-                <div class="col text-center"> - </div>
-
-              </div>
-            </li>
-
-          </div>
-          
-
-          <!-- Supply Information -->
-          <div class="container text-dark text-center">
-
-            <div class="row justify-content-between">
-
-              <div class="btn col" :class="supplyStyle(supply)" v-for="(supply, index) in supplies" :key="index">
-                <i class="fas" :class="'fa-' + supply.icon"></i>
-                <span class="ml-2 text-monospace" style="font-size: 14px"> {{ supply.data_mini }}</span>
-                <div class="tooltip"> {{ supply.data }} </div>
-              </div>
-
+              <div class="col text-center"> - </div>
 
             </div>
+          </li>
+
+        </div>
+        
+        <!-- Supply Information -->
+        <div class="container text-dark text-center">
+
+          <div class="row justify-content-between">
+
+            <div class="btn col" :class="supplyStyle(supply)" v-for="(supply, index) in supplies" :key="index">
+              <i class="fas" :class="'fa-' + supply.icon"></i>
+              <span class="ml-2 text-monospace" style="font-size: 14px"> {{ supply.data_mini }}%</span>
+              <div class="tooltip"> {{ supply.data }} </div>
+            </div>
+
 
           </div>
-        
-        </ul>
-    
-        
-        <div class="card-footer">
-          <i class="fas mr-3 my-auto" :class="statusIcons[printerStatusCode]" id="status-icon"></i>
-          <small class="text-white my-auto">{{ printerSubMessage() }} </small>
-          
+
         </div>
+      
+      </ul>
+        
+      <div class="card-footer">
+        <i class="fas mr-3 my-auto" :class="statusIcons[printerStatusCode]" id="status-icon"></i>
+        <small class="text-white my-auto">{{ printerSubMessage() }} </small>
+      </div>
 
   </div>
 </template>
@@ -130,19 +126,19 @@ export default {
         {
           icon: 'tint', 
           data: this.printer.tonerStatus, 
-          data_mini: this.commaNumber(this.printer.tonerStatus.substring(0, this.printer.tonerStatus.indexOf("-"))),
+          data_mini: this.printer.tonerStatus,
           statusCode: this.printer.tonerStatusCode(this.supplyThresholds[0].value)
         }, 
         {
           icon: 'drum', 
           data: this.printer.drumStatus, 
-          data_mini: this.commaNumber(this.printer.drumStatus.substring(0, this.printer.drumStatus.indexOf("-"))),
+          data_mini: this.printer.drumStatus,
           statusCode: this.printer.drumStatusCode(this.supplyThresholds[1].value)
         }, 
         {
           icon: 'tools', 
           data: this.printer.maintKitStatus, 
-          data_mini: this.commaNumber(this.printer.maintKitStatus.substring(0, this.printer.maintKitStatus.indexOf(" "))),
+          data_mini: this.printer.maintKitStatus, 
           statusCode: this.printer.maintKitStatusCode(this.supplyThresholds[2].value)
         }
       ]
@@ -190,7 +186,7 @@ export default {
      else return prefix + this.statusStyles[statusCode];
     },
     trayStyle(traySetting){
-      return traySetting === "Letter" ? "list-group-item-action" : "list-group-item-danger"
+      return !traySetting.includes("a4") ? "list-group-item-action" : "list-group-item-danger"
     },
     commaNumber(number){
       return number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
