@@ -45,6 +45,7 @@
           </li>
 
           <li class="list-group-item list-group-item-action">
+            
           <!-- Tray Information -->
             <div class="row">
               <div class="col font-weight-bold text-center"> - </div>
@@ -78,7 +79,9 @@
         
       <div class="card-footer">
         <i class="fas mr-3 my-auto" :class="statusIcons[printerStatusCode]" id="status-icon"></i>
-        <small class="text-white my-auto">{{ printerSubMessage() }} </small>
+        <span class="text-white my-auto">{{ printerSubMessage() }} </span>
+        <router-link :to="'/printer/' + printer.index" class="fas fa-info-circle text-white float-right my-auto"></router-link>
+        <a :href="printer.webSeverURL" target="_blank" class="fas fa-link text-white float-right my-auto mr-3"></a>
       </div>
 
   </div>
@@ -87,7 +90,7 @@
 <style scoped>
 
   .fas {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .card {
@@ -111,7 +114,6 @@ import { Printer } from '../model/Printer.js'
 export default {
   data(){
     return {
-      // printer: {},
       statusStyles: ['success', 'warning', 'danger', 'dark'],
       statusIcons: ['fa-check-circle', 'fa-exclamation-triangle', 'fa-times', 'fa-power-off' ]
     }

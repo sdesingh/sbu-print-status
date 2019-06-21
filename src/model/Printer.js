@@ -13,6 +13,7 @@ export class Printer {
 
     this.printerStatus = 3;
     this.printerType = 0; // 0: Print from Anywhere, 1: RCC Lab
+    this.webSeverURL = "nada";
 
     this.pagesPrinted = 0;
 
@@ -133,6 +134,9 @@ export class Printer {
     // Set printer type.
     printer.printerType = 0;
 
+    // Set printer index.
+    printer.index = data.printerId
+
     // Set Pages Printer
     printer.pagesPrinted = data.pageCount
 
@@ -185,30 +189,12 @@ export class Printer {
       printer.printerStatus = 2;
     }
 
-    // Generate random toner value.
-    let rng = _.random(1, 100);
-
-    // Toner should be under threshold.
-    if(rng < 10 && rng > 5){
-      let tonerCount = _.random(0, 3000 - 1);
-      printer.tonerStatus = `${tonerCount - 50}-${tonerCount} Pages Remaining` 
-    }
-    // Toner should be replaced
-    else if(rng < 5){
-      printer.tonerStatus = "Replace";
-    }
-    // Toner has some random value.
-    else {
-      let tonerCount = _.random(3000 + 1, 12000);
-      printer.tonerStatus = `${tonerCount}-${tonerCount + 250} Pages Remaining`;
-    }
-
-    // Generate random drum kit value.
-    printer.drumStatus = "21000-22312 Pages Remaining";
-    printer.maintKitStatus = "100003 Pages Remaining";
-    printer.printerStatus = (printer.tonerStatusCode() >= printer.printerStatus) ? printer.tonerStatusCode() : printer.printerStatus;
+    printer.tonerStatus = _.random(1, 100);
+    printer.drumStatus = _.random(1, 100);
+    printer.maintKitStatus = _.random(1, 100);
     printer.statusMessage = 'Test Data...'
     printer.pagesPrinted = _.random(1000000, 2500000);
+    
     return printer;
 
   }

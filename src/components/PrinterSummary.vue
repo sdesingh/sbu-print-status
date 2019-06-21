@@ -2,8 +2,11 @@
   <div id="summary" :style="printerStyle(status.printerStatus).status_summary">
 
     <div id="title-bar" :style="printerStyle(status.printerStatus).titlebar"> 
+            <i class="fas fa-info-circle"></i>
       <i id="status-icon" :class="statusIcon()"></i>
       {{ status.name }} 
+      <!-- <router-link :to="'/printer/' + status.index" class="fas fa-info-circle"></router-link> -->
+
     </div>
 
     <div v-if="status.printerStatus != 3">

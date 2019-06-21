@@ -20,7 +20,17 @@ export const printer_data = [
   {url: 'http://cr-barxrx1.sinc.stonybrook.edu', name: 'Baruch RCC', id: 13},
   {url: 'http://cr-douxrx1.sinc.stonybrook.edu', name: 'Douglass RCC', id: 8},
 
+  // Random Printers Can Comment Out
+  // {url: 'http://cr-douxrx1.sinc.stonybrook.edu', name: 'Phoenix', id: 14},
+  // {url: 'http://cr-douxrx1.sinc.stonybrook.edu', name: 'Pawnee', id: 15},
+  // {url: 'http://cr-douxrx1.sinc.stonybrook.edu', name: 'Atlantis', id: 16},
+
 ]
+
+export const ROUTES = {
+  browser: '/browser/',
+  
+}
 
 export const supply_thresholds = [
   {name: 'Toner', value: 1500},
@@ -32,7 +42,7 @@ export const baseUrl =
 
 (process.env.NODE_ENV == "production") ? // Use Dev or Production API
   // true ?
- 'http://crweb2.campus.stonybrook.edu:443/api/printers/': 'http://localhost:443/api/printers';
+ 'http://crweb2.campus.stonybrook.edu:443/api/printers/' : 'http://localhost:443/api/printers';
 
 // Defaults.
 export const refreshRate = 1

@@ -52,7 +52,7 @@
       // Hide onboarding screen after 2 seconds.
       setTimeout(() => {
         this.$store.commit('toggleOnboarding')
-      }, 1500);
+      }, 800);
 
 
       setInterval(() => {
@@ -87,10 +87,13 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
+    height: 100vh;
   } 
 
 
   body {
+    overflow: auto;
+    height: 100vh;
     margin: 0;
     padding: 0;
     background: #F7F7F7;
@@ -102,7 +105,7 @@
   }
 
   #router-view{
-    margin-top: 80px;
+    margin-top: 70px;
   }
 
   .fade-enter-active, .fade-leave-active {

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import About from './views/About.vue'
 import Logs from './views/Logs.vue'
+import PrinterDetail from './views/PrinterDetail.vue'
 
 Vue.use(Router)
 
@@ -12,7 +13,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Home',
       component: Home
     },
     {
@@ -22,8 +23,13 @@ export default new Router({
     },
     {
       path: '/about',
-      name: 'about',
+      name: 'About',
       component: About
+    },
+    {
+      path: '/printer/:id',
+      name: 'Printer Detail',
+      component: PrinterDetail
     }
   ]
 })
