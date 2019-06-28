@@ -8,6 +8,11 @@ import router from './router'
 import './plugins/axios'
 import 'bootstrap'
 import './views/styles.scss'
+import Toasted from 'vue-toasted';
+
+Vue.use(Toasted, {
+  iconPack: 'fontawesome'
+})
 
 
 Vue.config.productionTip = false

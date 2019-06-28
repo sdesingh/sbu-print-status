@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import moment from 'moment'
 
 export class Printer {
 
@@ -18,6 +19,8 @@ export class Printer {
     this.pagesPrinted = 0;
 
     this.trays = [];
+
+    this.updatedAt = Date.now;
 
   }
 
@@ -140,6 +143,9 @@ export class Printer {
     // Set Pages Printer
     printer.pagesPrinted = data.pageCount
 
+    let date = new Date(data.updatedAt);
+    printer.updatedAt = date.toLocaleString('default');
+
     return printer;
   }
 
@@ -215,6 +221,7 @@ export class Tray {
       case 0: return 'Full';
       case 1: return 'Low';
       case 2: return 'Empty';
+      default: return 'Missing';
     }
 
   }

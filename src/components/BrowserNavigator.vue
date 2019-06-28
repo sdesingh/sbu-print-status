@@ -22,7 +22,7 @@
 
             <!-- Badge Showing Status Information -->
             <span 
-            v-if="!printer.isOffline()"
+            v-if="printer.printerStatus != 3"
             :class="'badge-' + statusStyles[printerStatusCodes[index]]" 
             class="badge float-right text-monospace my-auto"> 
               {{ statusNames[printerStatusCodes[index]] }}

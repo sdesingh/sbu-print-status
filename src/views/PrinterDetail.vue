@@ -9,7 +9,7 @@
 
       <!-- Right Side. -->
       <!-- Shows detailed information about this printer location. -->
-      <printer-summary-expanded/>
+      <printer-summary-expanded id="printer-detail"/>
 
     </div>
 
@@ -18,24 +18,17 @@
 
 <style scoped>
 
-
-  #main {
-    position: relative;
-    padding: 0px;
-    margin: 0px;
-  }
-
-
   #navigator {
     width: 100%;
     overflow: scroll;
   }
 
+
   #nav {
+    padding-top: 20px;
     display: grid;
     grid-template-columns: 20% 80%;
     grid-template-rows: 1fr;
-    height: 100vh;
   }
 </style>
 

@@ -1,7 +1,7 @@
 <template>
 
 <!-- Image and text -->
-  <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-dark">
+  <nav class="navbar navbar-dark navbar-expand-lg bg-dark">
 
     <a class="navbar-brand" href="#">
       <!-- <img src="../../assets/logo.png" height="30" alt="" srcset=""> -->

@@ -104,9 +104,6 @@
     -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
   }
 
-  #router-view{
-    margin-top: 70px;
-  }
 
   .fade-enter-active, .fade-leave-active {
     transition: opacity .5s;

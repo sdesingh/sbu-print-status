@@ -1,5 +1,5 @@
 <template>
-  <div id="home">
+  <div id="home" class="">
 
     <div id="printers">
       <!-- <printer-summary class="printer" v-for="(item, index) in printerData" :key="index" :status="item"/> -->
