@@ -1,16 +1,15 @@
-import _ from 'lodash';
-import moment from 'moment'
+import _ from "lodash";
+import moment from "moment";
 
 export class Printer {
-
-  constructor(name, index){
+  constructor(name, index) {
     this.name = name;
     this.index = index;
 
-    this.tonerStatus = 'Unknown';
-    this.drumStatus = 'Unknown';
-    this.maintKitStatus = 'Unknown';
-    this.statusMessage = 'Offline';
+    this.tonerStatus = "Unknown";
+    this.drumStatus = "Unknown";
+    this.maintKitStatus = "Unknown";
+    this.statusMessage = "Offline";
 
     this.printerStatus = 3;
     this.printerType = 0; // 0: Print from Anywhere, 1: RCC Lab
@@ -20,83 +19,72 @@ export class Printer {
 
     this.trays = [];
 
-    this.updatedAt = Date.now;
-
+    this.updatedAt = Date.now();
   }
 
-  isOffline(){
+  isOffline() {
     return this.statusMessage === "Offline";
   }
 
-  tonerStatusCode(threshold){
-
-    if(this.tonerStatus == 0) return 2;
+  tonerStatusCode(threshold) {
+    if (this.tonerStatus == 0) return 2;
     else return this.tonerStatus < threshold ? 1 : 0;
-
   }
 
-  drumStatusCode(threshold){
-
-    if(this.drumStatus == 0) return 2;
+  drumStatusCode(threshold) {
+    if (this.drumStatus == 0) return 2;
     else return this.drumStatus < threshold ? 1 : 0;
-    
   }
 
-  printerJamStatusCode(){
-    
-    if(this.statusMessage.includes("Jam")){
+  printerJamStatusCode() {
+    if (this.statusMessage.includes("Jam")) {
       return 2;
-    }
-    else {
+    } else {
       return 0;
     }
-
   }
 
-  trayStatusCode(){
-    
+  trayStatusCode() {
     let traysEmpty = 0;
     let traysLow = 0;
     let traysFull = 0;
 
     this.trays.forEach(tray => {
+      switch (tray.statusCode) {
+        case 0:
+          traysFull++;
+          break;
 
-      switch(tray.statusCode){
+        case 1:
+          traysLow++;
+          break;
 
-        case 0: traysFull++;
-        break;
+        case 2:
+          traysEmpty++;
+          break;
 
-        case 1: traysLow++;
-        break;
-
-        case 2: traysEmpty++;
-        break;
-
-        default: traysEmpty++;
+        default:
+          traysEmpty++;
       }
-
     });
 
     // At least two trays that are full or less.
-    if(traysFull + traysLow > 1){
+    if (traysFull + traysLow > 1) {
       return 0;
     }
     // Only one tray remaining.
-    else if(traysFull + traysLow === 1){
+    else if (traysFull + traysLow === 1) {
       return 1;
     }
     // No more paper remaining.
     else {
       return 2;
     }
-
   }
 
-  maintKitStatusCode(threshold){
-
-    if(this.maintKitStatus == 0) return 2;
+  maintKitStatusCode(threshold) {
+    if (this.maintKitStatus == 0) return 2;
     else return this.maintKitStatus < threshold ? 1 : 0;
-
   }
 
   /**
@@ -108,18 +96,15 @@ export class Printer {
    * @returns {Printer} A new printer object.
    */
   static ParsePrinterJSON(data) {
-
     let printer = new Printer(data.printerName, data.id);
 
     // Parse printer trays.
     data.trays.forEach(tray => {
-
       // Create a new tray.
       let newTray = new Tray(tray.trayName, tray.trayStatus, tray.traySetting);
 
       // Add Tray to the newly created printer object.
       printer.trays.push(newTray);
-
     });
 
     // Set supply status.
@@ -132,19 +117,19 @@ export class Printer {
 
     // Set printer status message.
     printer.statusMessage = data.printerStatus;
-    if(printer.statusMessage === 'Offline') printer.printerStatus = 3;
+    if (printer.statusMessage === "Offline") printer.printerStatus = 3;
 
     // Set printer type.
     printer.printerType = 0;
 
     // Set printer index.
-    printer.index = data.printerId
+    printer.index = data.printerId;
 
     // Set Pages Printer
-    printer.pagesPrinted = data.pageCount
+    printer.pagesPrinted = data.pageCount;
 
     let date = new Date(data.updatedAt);
-    printer.updatedAt = date.toLocaleString('default');
+    printer.updatedAt = date.toLocaleString("default");
 
     return printer;
   }
@@ -156,8 +141,7 @@ export class Printer {
    * @param {*} printerIndex 
 
    */
-  static GenerateRandomPrinter(printerName, printerUrl, printerIndex){
-
+  static GenerateRandomPrinter(printerName, printerUrl, printerIndex) {
     // Create a printer.
     let printer = new Printer(printerName, printerUrl, printerIndex);
     printer.printerStatus = 0;
@@ -169,61 +153,56 @@ export class Printer {
 
     // Start generating random trays.
     for (let index = 0; index < traysGenerated; index++) {
-
       // Random int generator. (Between 1-100)
       const rng = _.random(1, 100);
-      
+
       // Generates an empty tray depending on whether the rng value is less than...
-      if(rng <= 5 * (traysGenerated - index)){
-        printer.trays.push(new Tray(`Tray ${index + 1}`, 2, 'Letter'));
+      if (rng <= 5 * (traysGenerated - index)) {
+        printer.trays.push(new Tray(`Tray ${index + 1}`, 2, "Letter"));
         emptyGenerated++;
-      }
-      else {
-        printer.trays.push(new Tray(`Tray ${index +1}`, 0, 'Letter'));
+      } else {
+        printer.trays.push(new Tray(`Tray ${index + 1}`, 0, "Letter"));
         fullGenerated++;
       }
-
     }
 
-    if(fullGenerated > 1){
+    if (fullGenerated > 1) {
       printer.printerStatus = 0;
-    }
-    else if(fullGenerated === 1){
+    } else if (fullGenerated === 1) {
       printer.printerStatus = 1;
-    }
-    else {
+    } else {
       printer.printerStatus = 2;
     }
 
     printer.tonerStatus = _.random(1, 100);
     printer.drumStatus = _.random(1, 100);
     printer.maintKitStatus = _.random(1, 100);
-    printer.statusMessage = 'Test Data...'
+    printer.statusMessage = "Test Data...";
     printer.pagesPrinted = _.random(1000000, 2500000);
-    
+
+    printer.updatedAt = moment().format("MMMM Do YYYY, h:mm:ss a");
+
     return printer;
-
   }
-
 }
 
 export class Tray {
-
-  constructor(name, statusCode, setting){
+  constructor(name, statusCode, setting) {
     this.name = name;
     this.statusCode = statusCode;
     this.setting = setting;
   }
 
-  trayStatus(){
-
-    switch(this.statusCode){
-      case 0: return 'Full';
-      case 1: return 'Low';
-      case 2: return 'Empty';
-      default: return 'Missing';
+  trayStatus() {
+    switch (this.statusCode) {
+      case 0:
+        return "Full";
+      case 1:
+        return "Low";
+      case 2:
+        return "Empty";
+      default:
+        return "Missing";
     }
-
   }
-
 }
