@@ -97,7 +97,7 @@ export default {
       let count = this.itemCountSelector.options[
         this.itemCountSelector.selectedOptionIndex
       ];
-      let queryURL = `log/${printerID}/?time=${dateTime}&step=${step}&count=${count}`;
+      let queryURL = `logs/${printerID}/?time=${dateTime}&step=${step}&count=${count}`;
       let requestURL = baseUrl + queryURL;
 
       axios.get(requestURL, httpRequestSettings).then(

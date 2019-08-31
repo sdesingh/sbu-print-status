@@ -15,7 +15,7 @@
         <ul class="list-group list-group-flush">
           
           <router-link class="list-group-item list-group-item-action link"
-          v-for="(printer, index) in printers" :key="index" :to="'/printer/' + index"> 
+          v-for="(printer, index) in printers" :key="index" :to="'/logs/' + index"> 
 
             <!-- Location Name -->
             {{ printer.name }} 
@@ -69,7 +69,7 @@ export default {
         let drumStatus = printer.drumStatusCode(thresholds[1].value);
         let trayStatusCode = printer.trayStatusCode();
         let maintKitStatus = printer.maintKitStatusCode(thresholds[2].value);
-        let isJammed = printer.printerJamStatusCode();
+        let isJammed = printer.printerErrorMessageCode();
 
         codes.push(Math.max(tonerStatus, drumStatus, maintKitStatus, isJammed, trayStatusCode));
 

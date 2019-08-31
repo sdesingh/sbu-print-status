@@ -50,9 +50,7 @@ export default {
             (response) => {
 
               response.data.forEach((printerData, index) => {
-                
                 let printer = Printer.ParsePrinterJSON(printerData);
-                printer.webSeverURL = app_settings.printer_data[index].url
                 commit('updatePrinterData', printer);
 
               });

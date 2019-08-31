@@ -55,10 +55,8 @@ export default {
       navLinks: 
       [
         {routeName: 'Home', route: '/'},
-        {routeName: 'Browser', route: '/printer/0'},
-        {routeName: 'Logs', route: '/logs'},
+        {routeName: 'Logs', route: '/logs/0'},       
         {routeName: 'About', route: '/about'},
-        
       ],
     }
   },

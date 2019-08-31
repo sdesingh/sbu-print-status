@@ -16,20 +16,20 @@ export default new Router({
       name: 'Home',
       component: Home
     },
+    // {
+    //   path: '/logs',
+    //   name: 'Logs',
+    //   component: Logs
+    // },
     {
-      path: '/logs',
-      name: 'Logs',
-      component: Logs
+      path: '/logs/:id',
+      name: 'Printer Detail',
+      component: PrinterDetail
     },
     {
       path: '/about',
       name: 'About',
       component: About
     },
-    {
-      path: '/printer/:id',
-      name: 'Printer Detail',
-      component: PrinterDetail
-    }
   ]
 })

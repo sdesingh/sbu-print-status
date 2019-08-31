@@ -159,7 +159,7 @@ export default {
       let drumStatus = printer.drumStatusCode(thresholds[1].value);
       let trayStatusCode = printer.trayStatusCode();
       let maintKitStatus = printer.maintKitStatusCode(thresholds[2].value);
-      let isJammed = printer.printerJamStatusCode();
+      let isJammed = printer.printerErrorMessageCode();
 
       return Math.max(tonerStatus, drumStatus, maintKitStatus, isJammed, trayStatusCode);
     }

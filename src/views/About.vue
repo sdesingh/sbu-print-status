@@ -1,8 +1,9 @@
 <template>
   <div class="about">
 
-    <!-- <img class="loader" src="https://loading.io/spinners/bluecat/index.blue-longcat-spinner.svg" alt="Cat"> -->
-    <printer-card></printer-card>
+    <div class="container align-middle">
+      Printer Stats is built and maintained by Sam Singh.
+    </div>
 
 
 
@@ -11,18 +12,16 @@
 
 <style scoped>
 
+  .container {
+    padding-top: 300px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+  }
+
   .about {
-    margin: auto;
-  }
-
-  .card-footer {
-    padding-top: 5px;
-    padding-bottom: 5px;
-  }
-
-  .loader {
-    height: 300px;
-    width: 300px;
+    width: 100%;
+    height: 100%;
   }
 </style>
 

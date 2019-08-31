@@ -44,6 +44,21 @@ export class Printer {
     }
   }
 
+  printerErrorMessageCode() {
+    let errorKeywords = ['Jam', 'Fuser']
+    let results = []
+
+    errorKeywords.forEach(key => {
+      if (this.statusMessage.includes(key)){
+        results.push(2);
+      } else {
+        results.push(0);
+      }
+    });
+
+    return _.max(results);
+  }
+
   trayStatusCode() {
     let traysEmpty = 0;
     let traysLow = 0;
@@ -96,37 +111,40 @@ export class Printer {
    * @returns {Printer} A new printer object.
    */
   static ParsePrinterJSON(data) {
-    let printer = new Printer(data.printerName, data.id);
+    let printer = new Printer(data.locationName, data.id);
 
     // Parse printer trays.
     data.trays.forEach(tray => {
       // Create a new tray.
-      let newTray = new Tray(tray.trayName, tray.trayStatus, tray.traySetting);
+      let newTray = new Tray(tray.name, tray.paperStatusCode, tray.setting);
 
       // Add Tray to the newly created printer object.
       printer.trays.push(newTray);
     });
 
     // Set supply status.
-    printer.tonerStatus = data.tonerStatus;
-    printer.drumStatus = data.drumKitStatus;
-    printer.maintKitStatus = data.maintKitStatus;
+    printer.tonerStatus = data.supplies.TONER.percentageRemaining;
+    printer.drumStatus = data.supplies.DRUM_KIT.percentageRemaining;
+    printer.maintKitStatus = data.supplies.MAINTENANCE_KIT.percentageRemaining;
 
     // Set main printer status.
     printer.printerStatus = 0;
 
     // Set printer status message.
-    printer.statusMessage = data.printerStatus;
+    printer.statusMessage = data.statusMessage;
     if (printer.statusMessage === "Offline") printer.printerStatus = 3;
 
     // Set printer type.
     printer.printerType = 0;
 
     // Set printer index.
-    printer.index = data.printerId;
+    printer.index = data.id;
 
     // Set Pages Printer
     printer.pagesPrinted = data.pageCount;
+
+    // Set Printer Web Page URL.
+    printer.webSeverURL = data.webServerURL
 
     let date = new Date(data.updatedAt);
     printer.updatedAt = date.toLocaleString("default");
