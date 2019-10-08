@@ -20,9 +20,9 @@
       :key="route.name"
       :to="route.to"
     >
-      <v-list-item-icon>
+      <v-list-item-action>
         <v-icon>{{ route.icon }}</v-icon>
-      </v-list-item-icon>
+      </v-list-item-action>
 
       <v-list-item-content>
         <v-list-item-title>{{ route.name }}</v-list-item-title>
@@ -70,10 +70,10 @@ export default Vue.extend({
   },
   computed: {
     show: {
-      get: function() {
+      get: function(): boolean {
         return this.$store.state.ui.showNavDrawer
       },
-      set: function(newState) {
+      set: function(newState): void {
         this.$store.commit('ui/setNavDrawer', newState);
       }
     }

@@ -4,7 +4,6 @@
     clipped-left
     color="primary"
     dark
-    hide-on-scroll
     dense
   >
     <v-app-bar-nav-icon @click.stop="toggleNavDrawer"></v-app-bar-nav-icon>
@@ -15,7 +14,7 @@
 import Vue from 'vue'
 export default Vue.extend({
   methods: {
-    toggleNavDrawer() {
+    toggleNavDrawer(): void {
       this.$store.commit('ui/toggleNavDrawer');
     }
   }

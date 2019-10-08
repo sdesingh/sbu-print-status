@@ -1,5 +1,5 @@
-import { Trigger, Severity } from './Trigger';
-import Printer from '../Printer';
+import { Trigger } from './Trigger';
+import { Severity } from '@/model/Severity';
 
 export default class PrinterJam extends Trigger {
   public checkSeverity(): Severity {

@@ -1,9 +1,7 @@
 <template>
-  <div id="printer-grid">
-    
-    <div class="printer-card" v-for="(item, index) in 15" :key="index">
-      <div style="text-align: center;">p</div>
-    </div>
+  <div id="printer-grid" class="my-3">
+
+    <printer-card class="printer-card" :data="printer" v-for="(printer, i) in data" :key="i"/>
 
   </div>
 </template>
@@ -11,8 +9,23 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import Printer from '@/model/Printer/Printer';
+import PrinterCard from './PrinterCard.vue';
+
 export default Vue.extend({
-  props: ['data']
+  props: {
+    data: {
+      type: Array,
+      required: true,
+    },
+    isLoading: {
+      type: Boolean,
+      required: true,
+    }
+  },
+  components: {
+    PrinterCard,
+  }
 })
 </script>
 
@@ -21,14 +34,12 @@ export default Vue.extend({
 
   #printer-grid {
     display: grid;
-    margin: 50px 20px;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     grid-gap: 10px;
   }
 
   .printer-card {
-    background: coral;
-    height: 350px;
+    /* background: coral; */
   }
 
 </style>

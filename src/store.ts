@@ -1,20 +1,21 @@
 import Vue from 'vue';
-import Vuex from 'vuex';
+import Vuex, { StoreOptions } from 'vuex';
 import { UI } from './store/UI';
+import { RootState } from './store/types';
+import { PrinterData } from './store/PrinterData/_index';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+
+const store: StoreOptions<RootState> = {
   state: {
-    
-  },
-  mutations: {
-
-  },
-  actions: {
-
+    version: '0.0.1',
+    devMode: false,
   },
   modules: {
-    ui: UI
-  }
-});
+    ui: UI,
+    data: PrinterData,
+  },
+};
+
+export default new Vuex.Store<RootState>(store);

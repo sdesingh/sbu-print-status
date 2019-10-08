@@ -1,6 +1,8 @@
 import { Supply } from './Supply';
 import { Tray } from './Tray';
-import { Severity, Trigger } from './Triggers/Trigger';
+import { Trigger } from './Triggers/Trigger';
+import { Severity } from '@/model/Severity';
+import PrinterJam from './Triggers/PrinterJam';
 
 export default class Printer {
 
@@ -10,7 +12,7 @@ export default class Printer {
     const _web = 'webServerURL';
     const _message = 'statusMessage';
     const _pageCount = 'pageCount';
-    const _trays = 'pageCount';
+    const _trays = 'trays';
     const _supplies = 'supplies';
     const _date = 'updatedAt';
 
@@ -25,9 +27,11 @@ export default class Printer {
     const trays = json[_trays];
     const supplies = json[_supplies];
 
-    supplies.forEach( (supply: any) => printer.supplies.push(Supply.FromJSON(supply)) );
+    Object.values(supplies).forEach( (supply: any) => printer.supplies.push(Supply.FromJSON(supply)) );
 
     trays.forEach( (tray: any) => printer.trays.push(Tray.ParseFromJSON(tray)) );
+
+    printer.triggers.push(new PrinterJam(printer));
 
     return printer;
 
@@ -61,10 +65,21 @@ export default class Printer {
   }
 
   public checkPrinterStatus(): Severity {
-    const severities: Severity[] = [];
 
-    this.triggers.forEach((trigger) => severities.push(trigger.checkSeverity()));
-    return Math.max(...severities);
+    let max: Severity = Severity.NORMAL;
+
+    this.triggers.forEach(
+      (trigger) => {
+
+        const severity = trigger.checkSeverity();
+
+        if(severity > max) {
+          max = severity;
+        }
+      }
+    );
+
+    return max;
   }
 
 }

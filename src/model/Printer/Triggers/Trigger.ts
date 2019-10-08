@@ -1,4 +1,5 @@
 import Printer from '../Printer';
+import { Severity } from '@/model/Severity';
 
 export abstract class Trigger {
 
@@ -19,11 +20,4 @@ export abstract class Trigger {
     return this.checkSeverity() > Severity.NORMAL;
   }
 
-}
-
-export enum Severity {
-  NORMAL,
-  WARNING,
-  URGENT,
-  UNKNOWN,
 }

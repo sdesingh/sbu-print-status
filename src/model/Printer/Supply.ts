@@ -30,7 +30,6 @@ export class Supply {
 
       }
 
-
       return new Supply(type, percent, threshold, currentCapacity, maxCapacity);
 
     } catch (e) {
