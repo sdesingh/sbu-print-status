@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+
+// Pages
 import Home from './views/Home.vue';
 
 Vue.use(Router);
@@ -12,6 +14,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home,
+    },
+    {
+      path: '/printers',
+      name: 'printers',
+      component: () => import('./views/Printers/Printers.vue'),
     },
     {
       path: '/about',

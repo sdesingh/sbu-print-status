@@ -9,7 +9,7 @@ export class Tray {
 
     let setting: TraySetting;
 
-    switch(json[_setting]) {
+    switch (json[_setting]) {
       case 'Letter':
         setting = TraySetting.LETTER;
         break;
@@ -26,9 +26,9 @@ export class Tray {
 
     let status: TrayStatus;
 
-    switch(json[_status]) {
+    switch (json[_status]) {
 
-      case 0: 
+      case 0:
         status = TrayStatus.FULL;
         break;
       case 1:

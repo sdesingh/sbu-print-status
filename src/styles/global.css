@@ -1,0 +1,6 @@
+@import url('./fonts.css');
+
+body, .v-application, #inspire {
+    font-family: 'Product Sans' !important;
+    
+}

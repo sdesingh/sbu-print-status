@@ -3,15 +3,14 @@ import Printer from '@/model/Printer/Printer';
 
 
 export default class API {
-  
 
-  static GetPrinters(callback: (printers: Printer[]) => any): Promise<void> {
+
+  public static async GetPrinters(callback: (printers: Printer[]) => any) {
     return this.instance.get('/printers')
       .then(
         (response) => {
           const data = response.data;
           const printers: Printer[] = [];
-          console.log(data);
 
           data.forEach((json: any) => printers.push(Printer.FromJSON(json)) );
 

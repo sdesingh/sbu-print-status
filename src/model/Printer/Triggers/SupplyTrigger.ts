@@ -6,7 +6,7 @@ export default class SupplyTrigger extends Trigger {
     return this.printer.statusMessage.includes('Jam') ? Severity.URGENT : Severity.NORMAL;
   }
   public createTriggerShortMessage(): string {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 
 }
