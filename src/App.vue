@@ -5,7 +5,10 @@
     <app-bar/>
 
     <v-content>
-      <router-view/>
+      <v-scroll-y-transition mode="out-in">
+          <router-view/>
+      </v-scroll-y-transition>
+
     </v-content>
   </v-app>
 </template>

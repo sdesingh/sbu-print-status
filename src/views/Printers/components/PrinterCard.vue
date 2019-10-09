@@ -1,22 +1,21 @@
 <template>
 
   <v-card 
-    outlined 
+     
     class="printer-card" 
     
-    :style="{border: `1px solid ${severityColor}`}
-  ">
+
+  >
 
     <!-- Printer Name -->
+
     <v-card-text class="printer-card-title" :style="{background: severityColor, color: 'white' }"> 
       <h1 class="font-weight-bold"> {{ data.locationName }} </h1>
-      <div class="pt-5"> {{ data.statusMessage }} </div>
+      <div class="pt-5 text-truncate"> {{ data.statusMessage }} </div>
     </v-card-text>
 
-    <v-divider></v-divider>
-
     <!-- Tray Information -->
-    <v-list dense>
+    <v-list dense class="py-0">
 
       <v-list-item-group >
         <v-list-item
@@ -35,6 +34,21 @@
 
     </v-list>
 
+    <!-- Card Footer -->
+    <div class="printer-card-footer py-2 px-4" :style="{background: severityColor, color: 'white' }">
+
+      <!-- Printer Status Icon -->
+      <v-icon color="white">{{ getStatusIcon }}</v-icon>
+
+      <span class="ml-2 font-weight-regular"> {{ printerSubMessage }} </span>
+
+      <router-link to="/about">
+        
+        <v-icon color="white" style="position: absolute; right: 15px;">mdi-link</v-icon>
+
+      </router-link>
+      
+    </div>
 
   </v-card>
   
@@ -44,6 +58,7 @@
 import Vue from 'vue'
 import Printer from '@/model/Printer/Printer';
 import { GetSeverityColor } from '@/styles/Colors';
+import { Severity } from '@/model/Severity';
 
 export default Vue.extend({
   props: {
@@ -56,10 +71,27 @@ export default Vue.extend({
 
   },
   computed: {
-    severityColor() {
+    severityColor() : string {
       const printer: Printer = this.data;
       return GetSeverityColor(printer.checkPrinterStatus());
-    }
+    },
+    getStatusIcon() : string {
+      const printer = this.data;
+      switch(printer.checkPrinterStatus()) {
+        case Severity.NORMAL: return 'mdi-check-circle';
+        case Severity.WARNING: return 'mdi-alert';
+        case Severity.URGENT: return 'mdi-close-circle';
+        default: return 'mdi-help-circle';
+      }
+    },
+    printerSubMessage() : string {
+      const printer = this.data;
+      if(this.data.checkPrinterStatus() == Severity.UNKNOWN){
+        return 'Cannot reach the printer.';
+      }else{
+        return 'Pages Printed: ' + printer.pageCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+    },
   }
 })
 </script>

@@ -61,6 +61,11 @@ export default Vue.extend({
           icon: 'mdi-printer'
         },
         {
+          name: 'Logs',
+          to: '/printers/logs',
+          icon: 'mdi-database-search'
+        },
+        {
           name: 'About',
           to: '/about',
           icon: 'mdi-information'

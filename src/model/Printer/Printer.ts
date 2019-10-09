@@ -3,6 +3,7 @@ import { Tray } from './Tray';
 import { Trigger } from './Triggers/Trigger';
 import { Severity } from '@/model/Severity';
 import PrinterJam from './Triggers/PrinterJam';
+import SupplyTrigger from './Triggers/SupplyTrigger';
 
 export default class Printer {
 
@@ -23,6 +24,7 @@ export default class Printer {
     const date: string = Date.parse(json[_date]).toString();
 
     const printer = new Printer(id, name, message, web, date);
+    printer.pageCount = json[_pageCount];
 
     const trays = json[_trays];
     const supplies = json[_supplies];
@@ -32,6 +34,7 @@ export default class Printer {
     trays.forEach( (tray: any) => printer.trays.push(Tray.ParseFromJSON(tray)) );
 
     printer.triggers.push(new PrinterJam(printer));
+    printer.triggers.push(new SupplyTrigger(printer));
 
     return printer;
 
@@ -43,6 +46,7 @@ export default class Printer {
   public statusMessage: string;
   public webServerURL: string;
   public updatedAt: string;
+  public pageCount: number;
 
   // Supplies.
   public trays: Tray[];
@@ -58,6 +62,7 @@ export default class Printer {
     this.statusMessage = message;
     this.webServerURL = url;
     this.updatedAt = date;
+    this.pageCount = -1;
 
     this.trays = [];
     this.supplies = [];

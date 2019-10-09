@@ -7,6 +7,7 @@ import { actions } from './actions';
 const state: PrinterDataState = {
   printers: [],
   loadingData: false,
+  ticker: 0,
 };
 
 export const PrinterData: Module<PrinterDataState, RootState> = {
