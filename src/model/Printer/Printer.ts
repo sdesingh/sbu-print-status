@@ -4,6 +4,7 @@ import { Trigger } from './Triggers/Trigger';
 import { Severity } from '@/model/Severity';
 import PrinterJam from './Triggers/PrinterJam';
 import SupplyTrigger from './Triggers/SupplyTrigger';
+import PaperSupplyTrigger from './Triggers/PaperSupply';
 
 export default class Printer {
 
@@ -34,6 +35,7 @@ export default class Printer {
     trays.forEach( (tray: any) => printer.trays.push(Tray.ParseFromJSON(tray)) );
 
     printer.triggers.push(new PrinterJam(printer));
+    printer.triggers.push(new PaperSupplyTrigger(printer));
     printer.triggers.push(new SupplyTrigger(printer));
 
     return printer;

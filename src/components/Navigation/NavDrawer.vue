@@ -13,7 +13,7 @@
   </template>
 
   <!-- List Items -->
-  <v-list class="mx-5">
+  <v-list class="mx-5" rounded>
 
     <v-list-item
       v-for="route in routes"

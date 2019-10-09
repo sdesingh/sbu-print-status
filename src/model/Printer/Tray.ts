@@ -59,14 +59,14 @@ export class Tray {
 
 }
 
-enum TraySetting {
+export enum TraySetting {
     LETTER = 'Letter',
     A4 = 'A4',
     EXECUTIVE = 'Executive',
     UNKNOWN = 'Unknown',
 }
 
-enum TrayStatus {
+export enum TrayStatus {
   FULL = 'Full',
   LOW = 'Low',
   EMPTY = 'Empty',
