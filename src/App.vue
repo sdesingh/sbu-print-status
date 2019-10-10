@@ -30,6 +30,8 @@ export default Vue.extend({
       drawer: null,
 
     }),
+    mounted() {
+    }
   })
 </script>
 

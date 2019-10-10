@@ -4,6 +4,7 @@
     v-model="show"
     id="drawer"
     app
+    elevation="10"
     clipped
   >
 
@@ -62,7 +63,7 @@ export default Vue.extend({
         },
         {
           name: 'Logs',
-          to: '/printers/logs',
+          to: '/logs',
           icon: 'mdi-database-search'
         },
         {

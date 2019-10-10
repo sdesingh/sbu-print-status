@@ -16,6 +16,11 @@ export default new Router({
       component: Home,
     },
     {
+      path: '/logs',
+      name: 'logs',
+      component: () => import('@/views/PrinterLogs/Logs.vue'),
+    },
+    {
       path: '/printers',
       name: 'printers',
       component: () => import('./views/Printers/Printers.vue'),
