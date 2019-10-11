@@ -4,7 +4,7 @@ export class Supply {
     const _name = 'name';
     const _currCap = 'currentCapacity';
     const _maxCap = 'maxCapacity';
-    const _perRemain = 'percentRemaining';
+    const _perRemain = 'percentageRemaining';
     const _warningThreshold = 'warningThreshold';
 
     try {
@@ -45,14 +45,14 @@ export class Supply {
   public currentCapacity: number;
   public maxCapacity: number;
   public warningThreshold: number;
-  public supplyType: SupplyType;
+  public type: SupplyType;
 
   constructor(type: SupplyType, percent: number, threshold: number, currCap: number, maxCap: number) {
     this.percentRemaining = percent;
     this.currentCapacity = currCap;
     this.maxCapacity = maxCap;
     this.warningThreshold = threshold;
-    this.supplyType = type;
+    this.type = type;
   }
 
   public isBelowThreshold(): boolean {
@@ -66,7 +66,7 @@ export class Supply {
 
 }
 
-enum SupplyType {
+export enum SupplyType {
   TONER = 'TONER',
   MAINTENANCE_KIT = 'MAINTENANCE_KIT',
   DRUM_KIT = 'DRUM_KIT',
