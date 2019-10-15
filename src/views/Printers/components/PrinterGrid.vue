@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import Printer from '@/model/Printer/Printer';
+import Printer from '@/model/Printers/Printer';
 import PrinterCard from './PrinterCard.vue';
 
 export default Vue.extend({

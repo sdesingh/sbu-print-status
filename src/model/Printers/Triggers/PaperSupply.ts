@@ -1,6 +1,6 @@
 import { Trigger } from './Trigger';
 import { Severity } from '@/model/Severity';
-import { TrayStatus } from '@/model/Printer/Tray';
+import { TrayStatus } from '@/model/Printers/Tray';
 
 export default class PaperSupplyTrigger extends Trigger {
 

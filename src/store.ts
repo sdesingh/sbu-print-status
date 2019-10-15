@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
 import { UI } from './store/UI';
 import { RootState } from './store/types';
-import { PrinterData } from './store/PrinterData/_index';
+import { PrinterData } from './store/PrinterData/PrinterData';
 
 Vue.use(Vuex);
 

@@ -31,7 +31,11 @@ export default Vue.extend({
 
     }),
     mounted() {
-
+      // this.$vuetify.theme.themes.light.primary = '#e67e22'
+      this.$vuetify.theme.themes.dark.primary = '#d35400'
+      this.$vuetify.theme.themes.light.primary = '#990000'
+      // this.$vuetify.theme.dark = true;
+      this.$store.dispatch('data/init')
     }
   })
 </script>

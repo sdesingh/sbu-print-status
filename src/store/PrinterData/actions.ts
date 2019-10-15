@@ -1,8 +1,11 @@
 import { ActionTree } from 'vuex';
 import { PrinterDataState } from './types';
+import { types } from './mutations';
 import { RootState } from '../types';
 import axios, { AxiosInstance } from 'axios';
-import Printer from '@/model/Printer/Printer';
+import Printer from '@/model/Printers/Printer';
+import Group from '@/model/Locations/Group';
+
 
 const api: AxiosInstance = axios.create(
   {
@@ -14,23 +17,54 @@ const api: AxiosInstance = axios.create(
 
 export const actions: ActionTree<PrinterDataState, RootState> = {
 
-  fetchData({ commit }): any {
+  fetchGroupMetaData({ commit }): any {
 
-    api.get('/printers')
+    commit(types.IS_LOADING, true);
+
+    api.get('/groupmeta')
       .then(
         (response) => {
           const data = response.data;
-          const printers: Printer[] = [];
+          const groups: Group[] = [];
+          data.forEach( (json: any) =>  groups.push(Group.ParseFromJSON(json)));
 
-          data.forEach((json: any) => printers.push(Printer.FromJSON(json)) );
+          commit(types.GROUP_META, groups);
 
-          commit('newData', printers);
+        }
+      )
+      .catch((err) => {
+          console.log(err);
         },
       )
-      .catch(
-        (error) => {
-          console.log('Error: ' + error);
-        },
-      );
+      .finally(() => commit(types.IS_LOADING, false));
   },
+
+
+  fetchData({ commit, state }) {
+
+    state.toRetrieve.forEach((id: number) => {
+
+      api.get(`/printers/${id}`)
+        .then((response) => {
+
+          const printer = Printer.FromJSON(response.data);
+          commit(types.PRINTER_DATA, printer);
+
+        })
+        .catch((err) => {
+          console.log(`Unable to retrieve data for Printer ID [${id}].`);
+          console.log(`Error: ${err}`);
+        });
+    });
+
+  },
+
+  init({ commit }) {
+
+    setInterval(() => commit(types.DECREMENT_TICKER), 1000);
+
+  },
+
 };
+
+

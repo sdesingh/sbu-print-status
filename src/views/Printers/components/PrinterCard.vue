@@ -61,14 +61,13 @@
     <!-- Printer Supplies -->
     <div class="printer-card-supplies py-2">
 
-
       <v-tooltip top v-for="supply in data.supplies" :key="supply.type" color="black">
         <template  v-slot:activator="{ on }" >
 
-          <div color="warning" class="printer-card-supply body-1 text-center" v-on="on">
+          <v-sheet class="printer-card-supply body-1 text-center" v-on="on">
             <v-icon left>{{ getSupplyIcon(supply.type) }}</v-icon>
             {{ supply.percentRemaining }}%
-          </div>
+          </v-sheet>
 
 
         </template>
@@ -102,11 +101,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import Printer from '@/model/Printer/Printer';
+import Printer from '@/model/Printers/Printer';
 import { GetSeverityColor, Colors } from '@/styles/Colors';
 import { Severity } from '@/model/Severity';
-import { TrayStatus } from '@/model/Printer/Tray';
-import { SupplyType } from '@/model/Printer/Supply';
+import { TrayStatus } from '@/model/Printers/Tray';
+import { SupplyType } from '@/model/Printers/Supply';
 
 export default Vue.extend({
   props: {

@@ -7,4 +7,5 @@ export interface RootState {
 
 export interface UIState {
   showNavDrawer: boolean;
+  showPrinterSettings: boolean;
 }

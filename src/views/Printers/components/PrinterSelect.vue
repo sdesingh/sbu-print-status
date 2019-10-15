@@ -3,7 +3,7 @@
     class="mx-auto"
     max-width="500"
   >
-    <v-sheet class="pa-4 primary lighten-2">
+    <v-sheet class="pa-4 primary">
       <v-text-field
         v-model="search"
         label="Search Printers"
@@ -29,11 +29,11 @@
         :search="search"
         :filter="filter"
         :open.sync="open"
+        color="primary"
         selection-type="leaf"
         open-on-click
         selectable
         hoverable
-        return-object
       >
         <template v-slot:prepend="{ item }">
           <v-icon
@@ -50,7 +50,7 @@
 import Vue from 'vue'
 export default Vue.extend({
   data: () => ({
-      selected: [],
+      selected: [ 201, 202],
       items: [
         {
           id: 1,
@@ -124,8 +124,8 @@ export default Vue.extend({
         },
 
       ],
-      open: [1, 120,],
-      search: null,
+      open: [1, 2],
+      search: '',
       caseSensitive: false,
     }),
   computed: {
@@ -135,6 +135,7 @@ export default Vue.extend({
         : undefined
     },
   },
+
   
 })
 </script>
