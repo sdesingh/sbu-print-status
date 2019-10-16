@@ -10,6 +10,7 @@ export const types = {
   IS_LOADING: 'isLoading',
   GROUP_META: 'groupMetaData',
   DECREMENT_TICKER: 'decrementTicker',
+  RESET_TICKER: 'resetTicker',
 };
 
 
@@ -17,7 +18,6 @@ export const mutations: MutationTree<PrinterDataState> = {
 
   [types.PRINTER_DATA](state, printer: Printer) {
     Vue.set(state.printers, printer.id, printer);
-
   },
 
   [types.IS_LOADING](state, isLoading: boolean) {
@@ -30,10 +30,11 @@ export const mutations: MutationTree<PrinterDataState> = {
 
   [types.DECREMENT_TICKER](state) {
     state.tickerValue -= 1;
-    if( state.tickerValue === 0 ) {
-      state.tickerValue = 60;
-    }
   },
+
+  [types.RESET_TICKER](state) {
+    state.tickerValue = 60
+  }
   
 
 };

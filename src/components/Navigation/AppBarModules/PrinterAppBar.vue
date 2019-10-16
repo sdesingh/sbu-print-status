@@ -1,6 +1,11 @@
 <template>
   <div id="printer-app-bar" >
     <div id="printer-refresh-status" class="font-weight-bold mx-1">Refreshing Data in {{tickerValue}}s ...</div>
+    
+    <v-btn icon @click="showPrinterSelect">
+        <v-icon>mdi-view-grid-plus</v-icon>
+    </v-btn>
+    
     <v-btn icon @click="showSettings">
         <v-icon>mdi-settings</v-icon>
     </v-btn>
@@ -13,6 +18,9 @@ export default Vue.extend({
   methods: {
     showSettings(): void {
       this.$store.commit('ui/showPrinterSettings', true);
+    },
+    showPrinterSelect(): void {
+      this.$store.commit('ui/showPrinterSelect', true);
     }
   },
   computed: {

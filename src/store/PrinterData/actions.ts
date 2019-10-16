@@ -59,9 +59,18 @@ export const actions: ActionTree<PrinterDataState, RootState> = {
 
   },
 
-  init({ commit }) {
+  init({ commit, state, dispatch }) {
 
-    setInterval(() => commit(types.DECREMENT_TICKER), 1000);
+    setInterval(() => {
+      commit(types.DECREMENT_TICKER)
+      
+      if(state.tickerValue == 0) {
+        commit(types.RESET_TICKER);
+        dispatch('fetchData');
+        console.log('getting data');
+      }
+    
+    }, 1000);
 
   },
 

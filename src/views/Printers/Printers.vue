@@ -1,23 +1,6 @@
 <template>
   <v-container fluid>
 
-    <div style="display: block">
-      <h2>Print Stats</h2>
-
-      <v-btn class="mx-2" fab dark small color="primary" @click="fetch">
-        <v-icon dark>mdi-cached</v-icon>
-      </v-btn>
-
-      <v-btn class="mx-2" fab dark small color="primary" @click="showSelect">
-        <v-icon dark>mdi-view-grid-plus</v-icon>
-      </v-btn>
-
-      <v-btn class="mx-2" fab dark small color="primary" @click="showSettings">
-        <v-icon dark>mdi-settings</v-icon>
-      </v-btn>
-
-    </div>
-
     <v-dialog v-model="showPrinterSelect" max-width="500px">
       <printer-select/>
     </v-dialog>
@@ -27,7 +10,6 @@
     </v-dialog>
 
     <printer-grid :data="printerData" :isLoading="isLoadingData"/>
-
 
   </v-container>
 </template>
@@ -40,6 +22,9 @@ import PrinterSettingsModal from './components/PrinterSettingsModal.vue';
 import Printer from '@/model/Printers/Printer';
 
 export default Vue.extend({
+  mounted() {
+    this.$store.dispatch('data/fetchData')
+  },
   components: {
     PrinterGrid,
     PrinterSelect,
@@ -48,9 +33,6 @@ export default Vue.extend({
   methods: {
     fetch(): void {
       this.$store.dispatch('data/fetchData')
-    },
-    showSelect(): void {
-      this.showPrinterSelect = true;
     },
     showSettings(): void {
       this.$store.commit('ui/showPrinterSettings', true);
@@ -73,15 +55,15 @@ export default Vue.extend({
       set(value) {
         this.$store.commit('ui/showPrinterSettings', value);
       }
+    },
+    showPrinterSelect: {
+      get() {
+        return this.$store.state.ui.showPrinterSelect;
+      },
+      set(value) {
+        this.$store.commit('ui/showPrinterSelect');
+      }
     }
-  },
-  data() {
-    return {
-      showPrinterSelect: false,
-    }
-  },
-  mounted() {
-    
   },
 })
 </script>

@@ -4,6 +4,7 @@ import { UIState, RootState } from './types';
 const state: UIState = {
   showNavDrawer: false,
   showPrinterSettings: false,
+  showPrinterSelect: false,
 };
 
 const mutations: MutationTree<UIState> = {
@@ -13,6 +14,9 @@ const mutations: MutationTree<UIState> = {
   },
   showPrinterSettings(state, show: boolean) {
     state.showPrinterSettings = show;
+  },
+  showPrinterSelect(state, show: boolean) {
+    state.showPrinterSelect = show;
   },
   toggleNavDrawer(state) {
     state.showNavDrawer = !state.showNavDrawer;

@@ -3,7 +3,7 @@ import { PrinterDataState } from './types';
 import { RootState } from '../types';
 import { mutations } from './mutations';
 import { actions } from './actions';
-import Printer from '@/model/Printers/Printer';
+
 
 const state: PrinterDataState = {
   printers: {},

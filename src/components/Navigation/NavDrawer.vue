@@ -10,7 +10,8 @@
 
   <!-- Header for Nav Drawer. -->
   <template v-slot:prepend>
-    <h3 class="text-center pa-5">Stony Brook University</h3>
+    <v-img src="../../assets/sbu_logo.png" width="100" class="mx-auto my-5" alt=""/>
+    <!-- <h3 class="text-center pa-5">Stony Brook University</h3> -->
   </template>
 
   <!-- List Items -->

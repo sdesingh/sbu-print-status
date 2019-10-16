@@ -3,7 +3,7 @@
     class="mx-auto"
     max-width="500"
   >
-    <v-sheet class="pa-4 primary">
+    <!-- <v-sheet class="pa-4 primary">
       <v-text-field
         v-model="search"
         label="Search Printers"
@@ -21,7 +21,12 @@
         hide-details
         label="Case sensitive search"
       ></v-checkbox>
+    </v-sheet> -->
+
+    <v-sheet class="pa-4 primary" dark>
+      <h2>Printer Select</h2>
     </v-sheet>
+
     <v-card-text>
       <v-treeview
         v-model="selected"
@@ -50,7 +55,7 @@
 import Vue from 'vue'
 export default Vue.extend({
   data: () => ({
-      selected: [ 201, 202],
+      selected: [201, 202],
       items: [
         {
           id: 1,

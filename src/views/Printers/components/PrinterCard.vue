@@ -15,7 +15,6 @@
           v-for="tray in data.trays"
           :key="tray.name"
           class="tray-list-item"
-          :style="{background: tray.setting == 'Letter' ? '': '#FFE9E9'}"
           @click=""
         >
 
