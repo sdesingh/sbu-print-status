@@ -5,6 +5,7 @@ import { RootState } from '../types';
 import axios, { AxiosInstance } from 'axios';
 import Printer from '@/model/Printers/Printer';
 import Group from '@/model/Locations/Group';
+import AppSettings from '@/model/AppSettings';
 
 
 const api: AxiosInstance = axios.create(
@@ -17,11 +18,11 @@ const api: AxiosInstance = axios.create(
 
 export const actions: ActionTree<PrinterDataState, RootState> = {
 
-  fetchGroupMetaData({ commit }): any {
+  fetchGroupMetaData({ commit }) {
 
     commit(types.IS_LOADING, true);
 
-    api.get('/groupmeta')
+    api.get('/printers/groupmeta')
       .then(
         (response) => {
           const data = response.data;
@@ -39,7 +40,10 @@ export const actions: ActionTree<PrinterDataState, RootState> = {
       .finally(() => commit(types.IS_LOADING, false));
   },
 
-
+  /**
+   * Fetch data for printers specified.
+   * @param ActionContext Context to commit changes.
+   */
   fetchData({ commit, state }) {
 
     state.toRetrieve.forEach((id: number) => {
@@ -61,13 +65,15 @@ export const actions: ActionTree<PrinterDataState, RootState> = {
 
   init({ commit, state, dispatch }) {
 
+    commit(types.LOAD_SETTINGS, AppSettings.loadFromCookies());
+    dispatch('fetchGroupMetaData');
+
     setInterval(() => {
       commit(types.DECREMENT_TICKER)
       
       if(state.tickerValue == 0) {
         commit(types.RESET_TICKER);
         dispatch('fetchData');
-        console.log('getting data');
       }
     
     }, 1000);

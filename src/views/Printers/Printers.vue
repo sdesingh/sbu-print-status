@@ -43,7 +43,6 @@ export default Vue.extend({
       const map: {[key: number]: Printer} = this.$store.state.data.printers;
       const printers: Printer[] = Object.values(map)
       return printers;
-      
     },
     isLoadingData(): boolean {
       return this.$store.state.data.isLoadingData;

@@ -9,7 +9,7 @@ export default class Group {
     // Add Printers if they exist.
     if ( json.hasOwnProperty('printerIDs') ) {
 
-      json.printerIds.forEach((id: number) => group.printerIDs.push(id));
+      json.printerIDs.forEach((id: number) => group.printerIDs.push(id));
 
     }
 
@@ -39,6 +39,38 @@ export default class Group {
     this.description = description;
     this.printerIDs = [];
     this.subGroups = [];
+  }
+
+  public get children(): any {
+    if(this.hasChildren()) {
+      const items: any[] = []
+      this.subGroups.forEach(
+        (group, i) => {
+          items.push(
+            {
+              id: group.name,
+              name: group.name,
+              children: group.children 
+            }
+          )
+        }
+      )
+      return items
+    }
+    else {
+      const items: any[] = []
+      this.printerIDs.forEach(
+        (id, i) => {
+          items.push(
+            {
+              id: id,
+              name: id 
+            }
+          )
+        }
+      )
+      return items;
+    }
   }
 
   public hasChildren(): boolean {

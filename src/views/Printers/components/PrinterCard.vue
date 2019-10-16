@@ -95,7 +95,7 @@
     </div>
 
   </v-card>
-  
+
 </template>
 
 <script lang="ts">

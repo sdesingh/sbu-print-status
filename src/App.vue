@@ -36,6 +36,7 @@ export default Vue.extend({
       this.$vuetify.theme.themes.light.primary = '#990000'
       // this.$vuetify.theme.dark = true;
       this.$store.dispatch('data/init')
+
     }
   })
 </script>

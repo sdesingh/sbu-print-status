@@ -24,16 +24,15 @@
     </v-sheet> -->
 
     <v-sheet class="pa-4 primary" dark>
-      <h2>Printer Select</h2>
+      <h2>Select Printers</h2>
     </v-sheet>
 
     <v-card-text>
       <v-treeview
         v-model="selected"
-        :items="items"
+        :items="groups"
         :search="search"
         :filter="filter"
-        :open.sync="open"
         color="primary"
         selection-type="leaf"
         open-on-click
@@ -42,8 +41,8 @@
       >
         <template v-slot:prepend="{ item }">
           <v-icon
-            v-if="item.children"
-            v-text="`mdi-${item.id < 5 ? 'home-variant' : 'folder-network'}`"
+            v-if="item.subGroups"
+            v-text="`mdi-${item.subGroups ? 'home-variant' : 'folder-network'}`"
           ></v-icon>
         </template>
       </v-treeview>
@@ -53,83 +52,10 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import Group from '@/model/Locations/Group'
+
 export default Vue.extend({
   data: () => ({
-      selected: [201, 202],
-      items: [
-        {
-          id: 1,
-          name: 'Campus Residences',
-          children: [
-            {
-              id: 120,
-              name: 'Print From Anywhere',
-              children: [
-                {
-                  id: 201,
-                  name: 'Irving',
-                },
-                {
-                  id: 202,
-                  name: 'GLS',
-                },
-                {
-                  id: 203,
-                  name: 'West Commons',
-                },
-                {
-                  id: 204,
-                  name: 'Roth SSO',
-                },
-              ],
-            },
-            {
-              id: 130,
-              name: 'RCC Labs',
-              children: [
-                {
-                  id: 301,
-                  name: 'Chavez RCC',
-                },
-                {
-                  id: 302,
-                  name: 'Tubman RCC',
-                },
-                {
-                  id: 303,
-                  name: 'O\'Neill RCC',
-                },
-                {
-                  id: 304,
-                  name: 'Cardozo RCC',
-                },
-                {
-                  id: 305,
-                  name: 'Douglass RCC',
-                },
-                {
-                  id: 306,
-                  name: 'Benedict RCC',
-                },                                
-              ],
-            },
-          ],
-        },
-        {
-          id: 2,
-          name: 'SINC Sites',
-          children: [
-            {
-              id: 210,
-              name: 'Melville Library',
-              children: [
-              ]
-            },
-          ]
-        },
-
-      ],
-      open: [1, 2],
       search: '',
       caseSensitive: false,
     }),
@@ -139,6 +65,28 @@ export default Vue.extend({
         ? (item: any, search: any, textKey: any) => item[textKey].indexOf(search) > -1
         : undefined
     },
+    selected: {
+      get(): number[] {
+        return this.$store.state.data.toRetrieve;
+      },
+      set(value): void {
+        this.$store.commit('data/toRetrieve', value);
+        this.$store.commit('data/resetPrinterData');
+        this.$store.dispatch('data/fetchData');
+      }
+    },
+    groups(): any[] {
+      const groups: any[] = this.$store.state.data.groups;
+      return groups.map(
+        g => {
+          return {
+            id: g.name,
+            name: g.name,
+            children: g.children
+          }
+        }
+      )
+    }
   },
 
   

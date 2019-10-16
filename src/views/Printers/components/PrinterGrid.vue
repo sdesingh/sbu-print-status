@@ -1,6 +1,6 @@
 <template>
   <div id="printer-grid" class="my-3">
-    <printer-card class="printer-card" :data="printer" v-for="(printer, i) in data" :key="i"/>
+      <printer-card class="printer-card" :data="printer" v-for="(printer, i) in data" :key="i"/>
   </div>
 </template>
 

@@ -2,7 +2,6 @@ import Cookie from 'js-cookie';
 
 export default class AppSettings {
 
-    
     public printersToRetrive: number[] = [];
     public refreshRate: number = 1;
     public enableDarkMode: boolean = false;
@@ -21,8 +20,8 @@ export default class AppSettings {
         }
     }
 
-    saveSettings(): void {
-        Cookie.set('settings', JSON.stringify(this));
+    public static saveSettings(settings: AppSettings): void {
+        Cookie.set('settings', JSON.stringify(settings));
     }
 
 }

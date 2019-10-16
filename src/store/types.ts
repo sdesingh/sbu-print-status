@@ -1,5 +1,3 @@
-
-
 export interface RootState {
   version: string;
   devMode: boolean;
