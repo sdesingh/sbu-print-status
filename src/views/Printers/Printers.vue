@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid :fill-height="printerData.length == 0">
 
     <v-dialog v-model="showPrinterSelect" max-width="500px">
       <printer-select/>
@@ -9,7 +9,20 @@
       <printer-settings-modal/>
     </v-dialog>
 
-    <printer-grid :data="printerData" :isLoading="isLoadingData"/>
+    <!-- <v-scroll-x-transition mode="out-in"> -->
+      <printer-grid v-if="printerData.length != 0" :data="printerData" :isLoading="isLoadingData"/>
+    <!-- </v-scroll-x-transition> -->
+
+    <v-scroll-x-transition mode="out-in">
+      <v-container class="mx-auto" v-if="printerData.length == 0">
+        <h3 class="py-5"> No printers selected. Please select printers to track them.</h3>
+        <v-btn large color="primary" @click="showSelect">
+          <v-icon left>mdi-view-grid-plus</v-icon>
+          Select Printers
+        </v-btn>
+      </v-container>
+    </v-scroll-x-transition>
+
 
   </v-container>
 </template>
@@ -36,6 +49,9 @@ export default Vue.extend({
     },
     showSettings(): void {
       this.$store.commit('ui/showPrinterSettings', true);
+    },
+    showSelect(): void {
+      this.$store.commit('ui/showPrinterSelect', true);
     }
   },
   computed: {

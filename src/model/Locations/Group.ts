@@ -1,3 +1,5 @@
+import PrinterMeta from '@/util/PrinterMeta';
+
 export default class Group {
 
   public static ParseFromJSON(json: any): Group {
@@ -42,6 +44,7 @@ export default class Group {
   }
 
   public get children(): any {
+
     if(this.hasChildren()) {
       const items: any[] = []
       this.subGroups.forEach(
@@ -64,7 +67,7 @@ export default class Group {
           items.push(
             {
               id: id,
-              name: id 
+              name: PrinterMeta.instance.data[id].name
             }
           )
         }

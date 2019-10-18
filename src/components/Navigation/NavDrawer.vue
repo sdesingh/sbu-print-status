@@ -5,7 +5,7 @@
     id="drawer"
     app
     elevation="10"
-    clipped
+    temporary
   >
 
   <!-- Header for Nav Drawer. -->
@@ -35,13 +35,6 @@
   </v-list>
 
 
-  <!-- Footer for Nav Drawer -->
-  <template v-slot:append>
-    <div class="pa-2">
-      <v-btn block>Logout</v-btn>
-    </div>
-  </template>
-
 
   </v-navigation-drawer>
 </template>
@@ -53,15 +46,15 @@ export default Vue.extend({
     return {
       routes: [
         {
-          name: 'Home',
-          to: '/',
-          icon: 'mdi-home'
-        },
-        {
           name: 'Printers',
-          to: '/printers',
+          to: '/',
           icon: 'mdi-printer'
         },
+        // {
+        //   name: 'Printers',
+        //   to: '/printers',
+        //   icon: 'mdi-printer'
+        // },
         {
           name: 'Logs',
           to: '/logs',

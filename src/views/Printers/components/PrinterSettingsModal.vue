@@ -10,9 +10,9 @@
       <v-list two-line subheader>
         <v-subheader>General</v-subheader>
 
-        <v-list-item @click="">
+        <v-list-item @click="" disabled>
           <v-list-item-content>
-            <v-list-item-title>Thresholds</v-list-item-title>
+            <v-list-item-title>Thresholds (Disabled)</v-list-item-title>
             <v-list-item-subtitle>Set specific supply thresholds.</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
@@ -41,6 +41,7 @@ import Vue from 'vue'
 export default Vue.extend({
   methods: {
     toggleDarkMode() {
+      this.$store.commit('ui/setDarkMode', !this.$vuetify.theme.dark)
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     }
   },

@@ -33,19 +33,9 @@
         <!-- Added to pad out the trays. -->
         <div v-if="data.trays.length < 4">
 
-          <v-list-item class="tray-list-item">
+          <v-list-item class="tray-list-item" v-for="i in (4 - data.trays.length)" :key="i+'l'">
 
             <div class="text-center"> - </div>
-            <div class="text-center"> - </div>
-
-            <div class="text-center"> - </div>
-
-
-          </v-list-item>
-
-          <v-list-item class="tray-list-item">
-
-            <div class="text-center font-weight-bold"> - </div>
             <div class="text-center"> - </div>
 
             <div class="text-center"> - </div>
@@ -74,7 +64,7 @@
         <span> {{ supply.type }} </span>
       </v-tooltip>
 
-
+      <h4 class="text-center" v-if="data.supplies.length === 0">No supplies.</h4>
     </div>
 
 
@@ -86,12 +76,10 @@
 
       <span class="ml-2 font-weight-regular"> {{ printerSubMessage }} </span>
 
-      <router-link to="/about">
-        
+      <a target="_blank" :href="data.webServerURL">
         <v-icon color="white" style="position: absolute; right: 15px;">mdi-link</v-icon>
-
-      </router-link>
-      
+      </a>
+        
     </div>
 
   </v-card>

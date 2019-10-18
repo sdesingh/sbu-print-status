@@ -32,10 +32,11 @@ export default Vue.extend({
     }),
     mounted() {
       // this.$vuetify.theme.themes.light.primary = '#e67e22'
-      this.$vuetify.theme.themes.dark.primary = '#8e44ad'
+      this.$vuetify.theme.themes.dark.primary = '#e67e22'
       this.$vuetify.theme.themes.light.primary = '#990000'
-      // this.$vuetify.theme.dark = true;
-      this.$store.dispatch('data/init')
+      this.$store.dispatch('data/init');
+      this.$store.commit('ui/init');
+      this.$vuetify.theme.dark = this.$store.state.ui.enableDarkMode;
 
     }
   })

@@ -10,8 +10,9 @@ const state: PrinterDataState = {
   printers: {},
   triggers: [],
   groups: [],
-  toRetrieve: [0, 1, 2, 3, 4, 5, 6, 7, 17, 20],
+  toRetrieve: [],
   settings: AppSettings.loadFromCookies(),
+  printerMetaData: null,
 
   isLoadingData: false,
   refreshRate: 1,

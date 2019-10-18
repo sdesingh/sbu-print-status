@@ -1,16 +1,16 @@
 <template>
   <div id="printer-app-bar" >
-    <div id="printer-refresh-status" class="font-weight-bold">Refreshing Data in {{tickerValue}}s ...</div>
+    <div id="printer-refresh-status" class="font-weight-bold">Refreshing in... {{tickerValue}}s</div>
 
-   <v-btn icon @click="refreshData">
+   <v-btn class="icon" icon @click="refreshData">
         <v-icon>mdi-sync</v-icon>
     </v-btn>
 
-    <v-btn icon @click="showPrinterSelect">
+    <v-btn class="icon" icon @click="showPrinterSelect">
         <v-icon>mdi-view-grid-plus</v-icon>
     </v-btn>
     
-    <v-btn icon @click="showSettings">
+    <v-btn class="icon" icon @click="showSettings">
         <v-icon>mdi-settings</v-icon>
     </v-btn>
   </div>
@@ -49,8 +49,9 @@ export default Vue.extend({
   #printer-refresh-status {
     float: left;
     line-height: 48px;
-    font-size: 15px;
+
   }
+
 
 
 

@@ -12,6 +12,7 @@ export const types = {
   PRINTERS_TO_RETRIEVE: 'toRetrieve',
   IS_LOADING: 'isLoading',
   GROUP_META: 'groupMetaData',
+  PRINTER_META: 'printerMetaData',
   DECREMENT_TICKER: 'decrementTicker',
   RESET_TICKER: 'resetTicker',
   LOAD_SETTINGS: 'loadSettings',
@@ -34,6 +35,10 @@ export const mutations: MutationTree<PrinterDataState> = {
 
   [types.GROUP_META](state, groups: Group[]) {
     state.groups = groups;
+  },
+
+  [types.PRINTER_META](state, metaData: any) {
+    state.printers = metaData;
   },
 
   [types.DECREMENT_TICKER](state) {

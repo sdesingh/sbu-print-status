@@ -31,20 +31,20 @@
       <v-treeview
         v-model="selected"
         :items="groups"
-        :search="search"
-        :filter="filter"
         color="primary"
         selection-type="leaf"
         open-on-click
         selectable
         hoverable
       >
+
         <template v-slot:prepend="{ item }">
           <v-icon
             v-if="item.subGroups"
             v-text="`mdi-${item.subGroups ? 'home-variant' : 'folder-network'}`"
-          ></v-icon>
+          />
         </template>
+
       </v-treeview>
     </v-card-text>
   </v-card>

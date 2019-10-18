@@ -9,6 +9,7 @@ export interface PrinterDataState {
   groups: Group[];
   toRetrieve: number[];
   settings: AppSettings;
+  printerMetaData: any;
 
   isLoadingData: boolean;
   refreshRate: number;
