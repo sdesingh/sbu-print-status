@@ -1,4 +1,4 @@
-import { Supply } from './Supply';
+import Supply from './Supply';
 import { Tray } from './Tray';
 import { Trigger } from './Triggers/Trigger';
 import { Severity } from '@/model/Severity';

@@ -1,4 +1,4 @@
-export class Supply {
+export default class Supply {
 
   public static FromJSON(json: any): Supply {
     const _name = 'name';
@@ -62,7 +62,6 @@ export class Supply {
   public needsReplacement(): boolean {
     return this.percentRemaining <= 1;
   }
-
 
 }
 

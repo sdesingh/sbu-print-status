@@ -2,11 +2,25 @@ import { Trigger } from './Trigger';
 import {Severity } from '@/model/Severity';
 
 export default class SupplyTrigger extends Trigger {
+
   public checkSeverity(): Severity {
-    return this.printer.statusMessage.includes('Jam') ? Severity.URGENT : Severity.NORMAL;
+
+    let max = Severity.NORMAL;
+
+    this.printer.supplies.forEach(supply => {
+      if(supply.needsReplacement()){
+        max = Severity.URGENT;
+      }
+      else if(supply.isBelowThreshold()) {
+        if(Severity.WARNING > max)
+          max = Severity.WARNING;
+      }
+    });
+
+    return max;
   }
   public createTriggerShortMessage(): string {
-    throw new Error('Method not implemented.');
+    return 'Supply Status...';
   }
 
 }

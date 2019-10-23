@@ -48,15 +48,15 @@
     </v-list>
 
     <!-- Printer Supplies -->
-    <div class="printer-card-supplies py-2">
+    <div class="printer-card-supplies my-2">
 
       <v-tooltip top v-for="supply in data.supplies" :key="supply.type" color="black">
         <template  v-slot:activator="{ on }" >
 
-          <v-sheet class="printer-card-supply body-1 text-center" v-on="on">
+          <v-btn outlined class="printer-card-supply body-1 text-center mx-3" :color="getSupplyColor(supply)"  v-on="on">
             <v-icon left>{{ getSupplyIcon(supply.type) }}</v-icon>
             {{ supply.percentRemaining }}%
-          </v-sheet>
+          </v-btn>
 
 
         </template>
@@ -89,6 +89,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import Printer from '@/model/Printers/Printer';
+import Supply from '@/model/Printers/Supply';
 import { GetSeverityColor, Colors } from '@/styles/Colors';
 import { Severity } from '@/model/Severity';
 import { TrayStatus } from '@/model/Printers/Tray';
@@ -110,6 +111,14 @@ export default Vue.extend({
         case TrayStatus.MISSING:  return Colors.unknown;
         default:                  return Colors.unknown;
       }
+    },
+    getSupplyColor(supply: Supply): string {
+      if(supply.needsReplacement())
+        return 'error';
+      else if(supply.isBelowThreshold())
+        return 'warning';
+      else
+        return 'success';
     },
     getSupplyIcon(supply: SupplyType): string {
       switch(supply) {
@@ -163,12 +172,12 @@ export default Vue.extend({
   .printer-card-supplies {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    grid-template-rows: 30px;
+    line-height: 40px;
+    grid-template-rows: 40px;
   }
 
   .printer-card-supply {
     border-radius: 0px !important;
-    color: ;
   }
 
   .tray-list-item {

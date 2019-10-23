@@ -84,6 +84,7 @@ export const actions: ActionTree<PrinterDataState, RootState> = {
 
     commit(types.LOAD_SETTINGS, AppSettings.loadFromCookies());
     dispatch('fetchGroupMetaData');
+    dispatch('fetchData');
     PrinterMeta.instance.GetPrinterMeta();
 
     setInterval(() => {
