@@ -1,27 +1,24 @@
-import Cookie from 'js-cookie';
+import Cookie from "js-cookie";
 
 export default class AppSettings {
+  public printersToRetrive: number[] = [];
+  public refreshRate: number = 1;
+  public enableDarkMode: boolean = false;
+  public version: string = "0.1.0";
+  public firstTime: boolean = true;
 
-    public printersToRetrive: number[] = [];
-    public refreshRate: number = 1;
-    public enableDarkMode: boolean = false;
-    public version: string = '0.1.0';
-    public firstTime: boolean = true;
-
-    static loadFromCookies(): AppSettings {
-        const json = Cookie.get('settings');
-        if(!json) {
-            // Create defaults.
-            return new AppSettings();
-        }
-        else {
-            const settings: AppSettings = JSON.parse(json!);
-            return settings;
-        }
+  static loadFromCookies(): AppSettings {
+    const json = Cookie.get("settings");
+    if (!json) {
+      // Create defaults.
+      return new AppSettings();
+    } else {
+      const settings: AppSettings = JSON.parse(json!);
+      return settings;
     }
+  }
 
-    public static saveSettings(settings: AppSettings): void {
-        Cookie.set('settings', JSON.stringify(settings));
-    }
-
+  public static saveSettings(settings: AppSettings): void {
+    Cookie.set("settings", JSON.stringify(settings), { expires: 9999 });
+  }
 }

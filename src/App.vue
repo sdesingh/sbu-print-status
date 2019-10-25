@@ -29,21 +29,6 @@ export default Vue.extend({
     drawer: null
   }),
   mounted() {
-    // this.$vuetify.theme.themes.light.primary = '#e67e22'
-    // this.$vuetify.theme.themes.dark.primary = "#3c40c6";
-    // for (let key in Object.keys(Colors["light"])) {
-    //   let color = Colors.light[key];
-    //   this.$vuetify.theme.themes.light[key] = color;
-    // }
-
-    // for (let key in Object.keys(Colors.dark)) {
-    //   let color = Colors.dark[key];
-    //   console.log(color);
-    //   this.$vuetify.theme.themes.dark[key] = color;
-    // }
-
-    // console.log(this.$vuetify.theme.themes.dark);
-
     this.$store.dispatch("data/init");
     this.$store.commit("ui/init");
     this.$vuetify.theme.dark = this.$store.state.ui.enableDarkMode;

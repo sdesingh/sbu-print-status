@@ -1,41 +1,38 @@
 <template>
-  <v-app-bar
-    app
-    clipped-left
-    color="primary"
-    dark
-    dense
-  >
+  <v-app-bar app clipped-left color="primary" dark dense>
     <v-app-bar-nav-icon @click.stop="toggleNavDrawer"></v-app-bar-nav-icon>
 
     <div class="flex-grow-1"></div>
 
     <v-scroll-x-transition mode="out-in">
-      <div :is="currentModule"/>
+      <div :is="currentModule" />
     </v-scroll-x-transition>
-    
   </v-app-bar>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import PrinterAppBar from './AppBarModules/PrinterAppBar.vue';
+import Vue from "vue";
+import PrinterAppBar from "./AppBarModules/PrinterAppBar.vue";
+import { mutate as ui, mutate } from "@/store/ui/mutations";
+
 export default Vue.extend({
   components: {
-    'printers': PrinterAppBar,
+    printers: PrinterAppBar
   },
   methods: {
     toggleNavDrawer(): void {
-      this.$store.commit('ui/toggleNavDrawer');
+      this.$store.commit("ui/" + mutate.SHOW_NAV_DRAWER, true);
     }
   },
   computed: {
     currentModule(): string {
-      switch(this.$route.name) {
-        case 'printers': return 'printers';
-        default: return '';
+      switch (this.$route.name) {
+        case "printers":
+          return "printers";
+        default:
+          return "";
       }
     }
   }
-})
+});
 </script>

@@ -7,6 +7,7 @@ import Vue from "vue";
 
 export const mutate = {
   PRINTER_DATA: "newPrinterData",
+  PRINTER_META: "printerMetaData",
   RESET_PRINTER_DATA: "resetPrinterData",
   PRINTERS_TO_RETRIEVE: "toRetrieve",
   IS_LOADING: "isLoading",
@@ -19,6 +20,10 @@ export const mutate = {
 export const mutations: MutationTree<DataState> = {
   [mutate.PRINTER_DATA](state, printer: Printer) {
     Vue.set(state.printers, printer.id, printer);
+  },
+
+  [mutate.PRINTER_META](state, meta: any[]) {
+    state.printerMeta = meta;
   },
 
   [mutate.RESET_PRINTER_DATA](state) {

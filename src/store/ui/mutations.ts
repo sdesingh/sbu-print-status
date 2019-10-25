@@ -31,5 +31,6 @@ export const mutations: MutationTree<UIState> = {
 
   [mutate.SET_DARK_MODE](state, isEnabled: boolean) {
     state.enableDarkMode = isEnabled;
+    Cookie.set("darkMode", isEnabled.toString(), { expires: 9999 });
   }
 };
