@@ -2,7 +2,7 @@ import { ActionTree } from "vuex";
 import { DataState } from "./types";
 import { mutate } from "./mutations";
 import { RootState } from "../types";
-import * as api from "@/util/api.ts";
+import * as api from "@/util/api";
 import Printer from "@/model/Printers/Printer";
 import AppSettings from "@/model/AppSettings";
 import Group from "@/model/Locations/Group";

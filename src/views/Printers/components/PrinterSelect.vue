@@ -5,29 +5,34 @@
     </v-sheet>
 
     <v-tabs fixed-tabs background-color="primary" dark>
-      <v-tab @click="currentMenu = 'select'">Select</v-tab>
-      <v-tab @click="currentMenu = 'sort'">Organize</v-tab>
+      <v-tab @click="currentMenu = 1">Select</v-tab>
+      <v-tab @click="currentMenu = 2">Organize</v-tab>
     </v-tabs>
 
-    <v-card-text>
-      <v-treeview
-        v-if="currentMenu == 'select'"
-        v-model="selected"
-        :items="groups"
-        color="primary"
-        selection-type="leaf"
-        selected-color="success"
-        open-on-click
-        selectable
-        hoverable
-      ></v-treeview>
-    </v-card-text>
+    <v-window v-model="currentMenu">
+      <v-window-item :value="1">
+        <v-card-text>
+          <v-treeview
+            v-model="selected"
+            :items="groups"
+            color="primary"
+            selection-type="leaf"
+            selected-color="success"
+            open-on-click
+            selectable
+            hoverable
+          ></v-treeview>
+        </v-card-text>
+      </v-window-item>
 
-    <v-list dense v-if="currentMenu == 'sort'">
-      <draggable v-model="selected" group="people" @start="drag=true" @end="drag=false">
-        <v-list-item v-for="(item, i) in selected" :key="i" @click>{{ printerMeta[item].name }}</v-list-item>
-      </draggable>
-    </v-list>
+      <v-window-item :value="2">
+        <v-list dense>
+          <draggable v-model="selected" group="people" @start="drag=true" @end="drag=false">
+            <v-list-item v-for="(item, i) in selected" :key="i" @click>{{ printerMeta[item].name }}</v-list-item>
+          </draggable>
+        </v-list>
+      </v-window-item>
+    </v-window>
   </v-card>
 </template>
 
@@ -51,9 +56,9 @@ export default Vue.extend({
   mounted() {
     // this.getGroupData();
   },
-  data() {
+  data: () => {
     return {
-      currentMenu: Menu.SELECT,
+      currentMenu: 1,
       loading: true
     };
   },
@@ -70,7 +75,7 @@ export default Vue.extend({
       }
     },
     menuTitle() {
-      if (this.currentMenu == Menu.SELECT) {
+      if (this.currentMenu == 1) {
         return "Select Printers";
       } else {
         return "Organize Printers";

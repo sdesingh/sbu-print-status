@@ -3,9 +3,13 @@
     <nav-drawer />
     <app-bar />
 
-    <v-content>
+    <v-btn id="stat-card" color="success">
+      <v-icon>mdi-plus</v-icon>
+    </v-btn>
+
+    <v-content id="content">
       <v-scroll-y-transition mode="out-in">
-        <router-view />
+        <router-view id="view" />
       </v-scroll-y-transition>
     </v-content>
   </v-app>
@@ -13,6 +17,7 @@
 
 <script lang="ts">
 import Vue from "vue";
+import StatCard from "@/components/Stats/StatCard.vue";
 import NavDrawer from "./components/Navigation/NavDrawer.vue";
 import AppBar from "./components/Navigation/AppBar.vue";
 import { Colors } from "@/styles/Colors";
@@ -23,7 +28,8 @@ export default Vue.extend({
   },
   components: {
     NavDrawer,
-    AppBar
+    AppBar,
+    StatCard
   },
   data: () => ({
     drawer: null
@@ -38,4 +44,16 @@ export default Vue.extend({
 
 <style>
 @import url("./styles/global.css");
+#stat-card {
+  display: inline-flex;
+  bottom: 20px;
+  right: 20px;
+  position: absolute;
+  z-index: 100000;
+}
+
+#content {
+  height: 100vh;
+  overflow-y: auto;
+}
 </style>

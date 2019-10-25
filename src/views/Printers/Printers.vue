@@ -26,6 +26,7 @@
 <script lang="ts">
 import Vue from "vue";
 import PrinterGrid from "./components/PrinterGrid.vue";
+
 import PrinterSelect from "./components/PrinterSelect.vue";
 import PrinterSettingsModal from "./components/PrinterSettingsModal.vue";
 import Printer from "@/model/Printers/Printer";
